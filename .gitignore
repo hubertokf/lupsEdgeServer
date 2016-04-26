@@ -63,3 +63,6 @@ target/
 /.project
 /lupsEdgeServer.sublime-project
 /lupsEdgeServer.sublime-workspace
+
+#__pycache__
+/lupsEdgeServer/projects/lupsEdgeServer/moduleOfRules/__pycache__/
