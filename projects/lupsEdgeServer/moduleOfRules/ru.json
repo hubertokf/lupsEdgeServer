@@ -8,8 +8,8 @@
       },
 
   "actions": [
-      { "name": "string_action",
-        "params": {"test": 0.25}
+      { "name": "test_post_Event",
+        "params": {"inf": "funf"}
       }
   ]}
 ]
