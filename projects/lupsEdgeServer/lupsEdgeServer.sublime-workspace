@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"Sens",
+				"SensorsTypes"
+			],
+			[
+				"Conte",
+				"ContextServers"
+			],
+			[
 				"for",
 				"for	for …"
 			],
@@ -247,6 +255,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "lupsEdgeServer/models.py",
+			"settings":
+			{
+				"buffer_size": 1835,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
+			"settings":
+			{
+				"buffer_size": 1465,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -321,8 +345,9 @@
 	},
 	"expanded_folders":
 	[
-		"/home/huberto/projects/lupsEdgeServer",
-		"/home/huberto/projects/lupsEdgeServer/lupsEdgeServer"
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/__pycache__"
 	],
 	"file_history":
 	[
@@ -474,6 +499,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"s",
 			"sensor.",
 			"idcontextointeresse_id",
 			"id",
@@ -600,8 +626,7 @@
 			"fabricante",
 			"set",
 			"tiposensor",
-			"tipo_sensor",
-			"pesquisa"
+			"tipo_sensor"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -660,8 +685,67 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "lupsEdgeServer/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1835,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1265,
+								1265
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1465,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								370,
+								370
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -728,7 +812,7 @@
 		[
 			[
 				"",
-				"~/projects/lupsEdgeServer.sublime-workspace"
+				"/var/www/html/lups.contextServer/lups.contextServer.sublime-project"
 			]
 		],
 		"width": 380.0
