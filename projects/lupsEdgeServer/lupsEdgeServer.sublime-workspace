@@ -259,7 +259,7 @@
 			"file": "lupsEdgeServer/models.py",
 			"settings":
 			{
-				"buffer_size": 1835,
+				"buffer_size": 2007,
 				"line_ending": "Unix"
 			}
 		},
@@ -694,15 +694,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1835,
+						"buffer_size": 2007,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1265,
-								1265
+								326,
+								326
 							]
 						],
 						"settings":
@@ -711,7 +711,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

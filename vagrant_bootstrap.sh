@@ -6,6 +6,7 @@ echo 'Installing git, Python 3, pip and django...'
 sudo apt-get -qq install git python3 python3-dev libjpeg-dev libtiff5-dev zlib1g-dev > /dev/null 2>&1
 curl -s https://bootstrap.pypa.io/get-pip.py | python3.4 > /dev/null 2>&1
 pip install Django==1.9.5
+alias python=python3
 
 # Install virtualenv / virtualenvwrapper
 echo 'Installing and configuring virtualenv and virtualenvwrapper...'
