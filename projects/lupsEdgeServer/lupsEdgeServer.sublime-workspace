@@ -255,22 +255,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "lupsEdgeServer/models.py",
-			"settings":
-			{
-				"buffer_size": 2007,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
-			"settings":
-			{
-				"buffer_size": 1465,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -347,10 +331,25 @@
 	[
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/__pycache__"
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/__pycache__",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite"
 	],
 	"file_history":
 	[
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/apps.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/admin.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/models.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite/settings.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite/urls.py",
+		"/home/huberto/projects/lupsEdgeServer/vagrant_bootstrap.sh",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/requirements.txt",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/=",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/installPackages",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/runserver",
+		"/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/README.md",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/manage.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/migrations/0001_initial.py",
 		"/home/huberto/projects/lupsEdgeServer/lupsEdgeServer.sublime-project",
 		"/home/huberto/projects/lupsEdgeServer/lupsEdgeServer/models.py",
 		"/home/huberto/projects/lupsEdgeServer/mysite/settings.py",
@@ -464,25 +463,11 @@
 		"/home/huberto/Área de Trabalho/fazernelsi",
 		"/home/huberto/projects/gatewayMCU-LUPS/platformio.ini",
 		"/home/huberto/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/huberto/projects/gatewayMCU-LUPS/lib/ESP8266UPnP/library.json",
-		"/home/huberto/projects/gatewayMCU-LUPS/lib/readme.txt",
-		"/home/huberto/projects/plat/src/main.cpp",
-		"/home/huberto/Arduino/teste/teste.ino",
-		"/var/www/html/exehda-rm/js/helper.js",
-		"/var/www/html/exehda-rm/application/controllers/cadastros/CI_regras.php",
-		"/var/www/html/exehda-rm/application/controllers/CI_login.php",
-		"/home/huberto/Área de Trabalho/monitora/application/views/cadastros/sensor/cadastro.php",
-		"/home/huberto/Área de Trabalho/monitora/application/controllers/cadastros/ci_sensor.php",
-		"/home/huberto/Área de Trabalho/monitora/application/models/m_sensor.php",
-		"/var/www/html/exehda-rm/application/controllers/configuracoes/CI_configuracoes.php",
-		"/home/huberto/Área de Trabalho/monitora/js/jquery.mask.min.js",
-		"/home/huberto/Área de Trabalho/monitora/js/helper.js",
-		"/home/huberto/Área de Trabalho/monitora/application/config/config.php",
-		"/var/www/html/exehda-rm/application/views/inc/topoPesquisa.php"
+		"/home/huberto/projects/gatewayMCU-LUPS/lib/ESP8266UPnP/library.json"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -499,6 +484,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"REST",
+			"zone",
+			"Question",
+			"class",
+			"blank",
+			"Gateway",
 			"s",
 			"sensor.",
 			"idcontextointeresse_id",
@@ -620,13 +611,7 @@
 			"configuracao",
 			"Configuracao",
 			"configuracao",
-			"M_configuracao",
-			"configuracao",
-			"fabricante_nome",
-			"fabricante",
-			"set",
-			"tiposensor",
-			"tipo_sensor"
+			"M_configuracao"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -685,67 +670,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "lupsEdgeServer/models.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2007,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								326,
-								326
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1465,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								370,
-								370
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
