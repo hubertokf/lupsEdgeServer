@@ -8,30 +8,36 @@ from Parameters import Parameters
 import simplejson
 import os
 #metodo que recebe o json que contem regras de contigencia
-def get_rules(a):
+class EngyneRule(object):
+    """docstring for EngyneRule"""
+    def __init__(self, arg):
+        super(EngyneRule, self).__init__()
+        self.arg = arg
 
-    with open ('ru.json') as f:
-        rules = simplejson.load(f)
-    return rules
+    def get_rules(self,a):
 
-def get_parameters(json):
+        with open ('ru.json') as f:
+            rules = simplejson.load(f)
+        return rules
 
-    with open (json) as f:
-        parameters = simplejson.load(f)
-    return parameters
+    def get_parameters(self,json):
+        # modificar caso passe o json por string
+        with open (json) as f:
+            parameters = simplejson.load(f)
+        return parameters
 
-def trigger_ruler():
-    # aqui deve inserir a busca da regra no BD a partir do id do sensor
-    get_rules(files)
+    def trigger_ruler(self):
+        # aqui deve inserir a busca da regra no BD a partir do id do sensor
+        get_rules(files)
 
-if __name__ == "__main__":
+    def run_rules(self,a,b):
 
-    parameters = get_parameters("teste/testeparameters.json")
-    obj_parameters= Parameters(parameters['evento'],parameters['id'],parameters['valor'])
-    rules = get_rules("ok")
+        parameters = self.get_parameters("teste/testeparameters.json") #
+        obj_parameters= Parameters(parameters['evento'],parameters['id'],parameters['valor'])
+        rules = self.get_rules("ok")
 
-    run_all(rule_list=rules,
-            defined_variables=ConditionsRules(3),
-            defined_actions=ActionRules(obj_parameters),
-            stop_on_first_trigger=True
-           )
+        run_all(rule_list=rules,
+                defined_variables=ConditionsRules(3),
+                defined_actions=ActionRules(obj_parameters),
+                stop_on_first_trigger=True
+            )
