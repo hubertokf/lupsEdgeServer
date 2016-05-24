@@ -8,8 +8,8 @@ from Parameters import Parameters
 import simplejson
 import os
 #metodo que recebe o json que contem regras de contigencia
-class EngyneRule(object):
-    """docstring for EngyneRule"""
+class EngineRule(object):
+    """docstring for EngineRule"""
     def __init__(self, arg):
         super(EngyneRule, self).__init__()
         self.arg = arg

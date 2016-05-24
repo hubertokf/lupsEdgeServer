@@ -1,5 +1,5 @@
-from EngyneRuleEdge import EngyneRule
+from EngineRuleEdge import EngineRule
 
 if __name__ == '__main__':
-    engyne = EngyneRule("ss")
+    engyne = EngineRule("ss")
     engyne.run_rules("toto","313")
