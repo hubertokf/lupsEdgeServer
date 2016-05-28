@@ -15,23 +15,26 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
+from lupsEdgeServer.views import *
 
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
 
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
+router.register(r'groups', GroupViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'manufacturers', ManufacturerViewSet)
+router.register(r'gateways', GatewayViewSet)
+router.register(r'actuators', ActuatorViewSet)
+router.register(r'baseParameters', BaseParameterViewSet)
+router.register(r'contextServers', ContextServerViewSet)
+router.register(r'sensorsTypes', SensorTypeViewSet)
+router.register(r'sensors', SensorViewSet)
+router.register(r'persistances', PersistanceViewSet)
+router.register(r'rules', RuleViewSet)
+router.register(r'schedules', ScheduleViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

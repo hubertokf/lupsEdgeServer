@@ -1,16 +1,16 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(Manufacturers)
-admin.site.register(Gateways)
-admin.site.register(Actuators)
-admin.site.register(BaseParameters)
-admin.site.register(ContextServers)
-admin.site.register(SensorsTypes)
-admin.site.register(Sensors)
-admin.site.register(Persistances)
-admin.site.register(Rules)
-admin.site.register(Schedules)
+admin.site.register(Manufacturer)
+admin.site.register(Gateway)
+admin.site.register(Actuator)
+admin.site.register(BaseParameter)
+admin.site.register(ContextServer)
+admin.site.register(SensorType)
+admin.site.register(Sensor)
+admin.site.register(Persistance)
+admin.site.register(Rule)
+admin.site.register(Schedule)
 
 
 # Register your models here.
