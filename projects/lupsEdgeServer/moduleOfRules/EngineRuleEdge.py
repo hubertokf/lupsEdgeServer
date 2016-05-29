@@ -11,12 +11,12 @@ import os
 class EngineRule(object):
     """docstring for EngineRule"""
     def __init__(self, arg):
-        super(EngyneRule, self).__init__()
+        super(EngineRule, self).__init__()
         self.arg = arg
 
     def get_rules(self,a):
 
-        with open ('ru.json') as f:
+        with open ("teste/sensorRules18.json") as f:
             rules = simplejson.load(f)
         return rules
 
@@ -37,7 +37,7 @@ class EngineRule(object):
         rules = self.get_rules("ok")
 
         run_all(rule_list=rules,
-                defined_variables=ConditionsRules(3),
+                defined_variables=ConditionsRules(100),
                 defined_actions=ActionRules(obj_parameters),
                 stop_on_first_trigger=True
             )

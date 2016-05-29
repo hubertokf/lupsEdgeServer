@@ -28,4 +28,4 @@ class ActionRules(BaseActions):
         decoJson = {'event' : params_event,
                     'id' : params_id}
         coJson = json.dumps(decoJson)
-        print(coJson)
+        print(inf)

@@ -6,4 +6,7 @@ if __name__ == '__main__':
     #while True:
     #    time.sleep(1)
     test_sched = SchedulerEdge()
-    test_sched.add_job('interval-3')
+    #test_sched.add_job(3)
+    test_sched.add_job('interval-8')
+    test_sched.add_job('interval-12')
+    test_sched.add_job('interval-45')

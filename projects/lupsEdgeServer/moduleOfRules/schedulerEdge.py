@@ -21,11 +21,11 @@ class SchedulerEdge(object):
         self.th.start()
 
     def add_job (self, a):
-
-        self.scheduler.add_job(self.tick, 'cron', second = str(a)+','+str(a*2) , id = str(a))
+        c,d = a.split("-")
+        self.scheduler.add_job(self.tick, 'cron', second = d, id = d, args = [a])
 
     def remove_job(self, a):
         self.scheduler.remove_jobe(a)
 
-    def tick(self):
-        print("okkkk")
+    def tick(self,response):
+        print(response)
