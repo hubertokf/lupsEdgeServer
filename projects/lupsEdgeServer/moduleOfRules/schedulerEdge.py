@@ -28,10 +28,16 @@ class SchedulerEdge(object):
         if(jsonObject['modo']=='cron'):
             self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+
         elif(jsonObject['modo']=='interval'):
-            print("ok1")
+            self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
+            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+
         elif(jsonObject['modo']=='date'):
-            print("ok2")
+            variabledate = datetime.date(int(jsonObject['info']['year']),int(jsonObject['info']['month'])
+            ,int(jsonObject['info']['day']))
+
+            self.scheduler.add_job(self.tick, jsonObject['modo'],run_time = datetime.date(variabledate),id = a, args = [a])
 
     def remove_job(self, a):
         self.scheduler.remove_job(a)
