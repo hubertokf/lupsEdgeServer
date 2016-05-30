@@ -24,9 +24,14 @@ class SchedulerEdge(object):
     def add_job (self, a): # cria uma nova tarefa no escalonador
     #  analisar o modo (interval,date,cron) para executar de forma correta
         jsonObject = json.loads(a)
-        print(jsonObject['modo'],jsonObject['info']['day'])
-        self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
-        hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+
+        if(jsonObject['modo']=='cron'):
+            self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
+            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+        elif(jsonObject['modo']=='interval'):
+            print("ok1")
+        elif(jsonObject['modo']=='date'):
+            print("ok2")
 
     def remove_job(self, a):
         self.scheduler.remove_job(a)
