@@ -1,5 +1,6 @@
 
 from datetime import datetime
+import json
 import time
 import re
 import os
@@ -22,8 +23,10 @@ class SchedulerEdge(object):
 
     def add_job (self, a): # cria uma nova tarefa no escalonador
     #  analisar o modo (interval,date,cron) para executar de forma correta
-        c,d = a.split("-")
-        self.scheduler.add_job(self.tick, 'cron', second = d, id = a, args = [a])
+        jsonObject = json.loads(a)
+        print(jsonObject['modo'],jsonObject['info']['day'])
+        self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
+        hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
 
     def remove_job(self, a):
         self.scheduler.remove_job(a)
