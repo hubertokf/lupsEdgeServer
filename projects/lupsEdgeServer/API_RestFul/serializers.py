@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User, Group
 
-from lupsEdgeServer.models import *
+from API_RestFul.models import *
 
 # Serializers define the API representation.
 class GroupSerializer(serializers.ModelSerializer):

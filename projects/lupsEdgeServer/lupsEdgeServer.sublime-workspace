@@ -255,6 +255,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "mysite/settings.py",
+			"settings":
+			{
+				"buffer_size": 3786,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -330,33 +338,45 @@
 	"expanded_folders":
 	[
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/__pycache__",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite"
 	],
 	"file_history":
 	[
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite/urls.py",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/views.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/settings.py",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite/settings.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/apps.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/serializers.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/views.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/tests.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer2/mysite/settings.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API_RestFul/admin.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/README.md",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/mysite/urls.py",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/admin.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/installPackages",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/manage.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer2/lupsEdgeServer/__init__.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API/apps.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/db.sqlite3",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/API/admin.py",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/models.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/ES_API/serializers.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/ES_API/views.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/serializers.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/views.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/migrations/0001_initial.py",
+		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/=",
 		"/home/huberto/Downloads/libusb-1.0.20/INSTALL",
 		"/var/www/html/lups.contextServer/testes de sql.sql",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/serializers.py",
 		"/var/www/html/multiplastShop/var/log/install.log",
 		"/var/www/html/multiplastShop/var/log/debug.log",
 		"/home/huberto/Área de Trabalho/comprar",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/apps.py",
 		"/home/huberto/projects/lupsEdgeServer/vagrant_bootstrap.sh",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/requirements.txt",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/=",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/installPackages",
 		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/runserver",
 		"/home/huberto/projects/lupsEdgeServer/projects/scheduler/testeBasico.py",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/README.md",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/manage.py",
-		"/home/huberto/projects/lupsEdgeServer/projects/lupsEdgeServer/lupsEdgeServer/migrations/0001_initial.py",
 		"/home/huberto/projects/lupsEdgeServer/lupsEdgeServer.sublime-project",
 		"/home/huberto/projects/lupsEdgeServer/lupsEdgeServer/models.py",
 		"/home/huberto/projects/lupsEdgeServer/mysite/settings.py",
@@ -450,20 +470,7 @@
 		"/var/www/html/embrapa.contextServer/application/models/M_geral.php",
 		"/var/www/html/embrapa.contextServer/application/models/M_fabricante.php",
 		"/var/www/html/embrapa.contextServer/application/models/M_configuracoes.php",
-		"/var/www/html/embrapa.contextServer/application/models/M_agenda.php",
-		"/var/www/html/embrapa.contextServer/application/models/M_tipo_sensor.php",
-		"/var/www/html/embrapa.contextServer/application/models/M_servidorcontexto.php",
-		"/var/www/html/embrapa.contextServer/application/models/M_servidorborda.php",
-		"/var/www/html/embrapa.contextServer/application/models/M_sensor_bkp.php",
-		"/var/www/html/embrapa.contextServer/application/views/cadastros/gateway/cadastro.php",
-		"/var/www/html/embrapa.contextServer/application/views/cadastros/servidorborda/cadastro.php",
-		"/home/huberto/projects/gatewayMCU-LUPS/lib/ESP8266UPnP/src/ESP8266UPnP.cpp",
-		"/home/huberto/projects/gatewayMCU-LUPS/lib/ESP8266UPnP/src/ESP8266UPnP.h",
-		"/home/huberto/.config/sublime-text-3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
-		"/home/huberto/projects/gatewayMCU-LUPS/src/main.cpp",
-		"/home/huberto/Área de Trabalho/monitoravelho/application/controllers/cadastros/ci_sensor.php",
-		"/home/huberto/Área de Trabalho/monitoravelho/application/models/m_sensor.php",
-		"/home/huberto/Área de Trabalho/monitoravelho/application/views/cadastros/sensor/cadastro.php"
+		"/var/www/html/embrapa.contextServer/application/models/M_agenda.php"
 	],
 	"find":
 	{
@@ -484,6 +491,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"lupsEdgeServer",
+			"API",
+			"ES_API",
+			"lupsEdgeServer",
 			"admin.ModelAdmin",
 			"authentication",
 			"fields = ('url', 'username', 'email', 'is_staff')",
@@ -607,11 +618,7 @@
 			"$this->load->model('M_geral');",
 			"$this->dados['title'] = \"Interface do EXEHDA-RM\";",
 			"usuario_id",
-			"id",
-			"_POST[\"item\"]",
-			"img_cabecalho",
-			"cover_image",
-			"ImgCabecalho"
+			"id"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -619,6 +626,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"API_RestFul",
+			"API",
 			"if (isset($this->M_configuracoes->selByUser($this->session->userdata('usuario_id'))->result_array()[0][\"titulo\"]))\n			$this->dados['title'] = $this->M_configuracoes->selByUser($this->session->userdata('usuario_id'))->result_array()[0][\"titulo\"];\n		else\n			$this->dados['title'] = $title = $this->M_configuracoes->selecionar(1)->result_array()[0][\"titulo\"];",
 			"\n		$this->load->model('M_geral');\n		$this->load->model('M_configuracoes');",
 			"if (isset($this->M_configuracoes->selByUser($this->session->userdata('usuario_id'))->result_array()[0][\"title\"]))\n			$this->dados['title'] = $this->M_configuracoes->selByUser($this->session->userdata('usuario_id'))->result_array()[0][\"title\"];\n		else\n			$this->dados['title'] = $title = $this->M_configuracoes->selecionar(1)->result_array()[0][\"title\"];",
@@ -670,6 +679,42 @@
 	"groups":
 	[
 		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "mysite/settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3786,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1045,
+								1045
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
 			"sheets":
 			[
 			]
@@ -692,11 +737,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":

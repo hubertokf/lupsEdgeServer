@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.contrib.auth.models import User, Group
-from lupsEdgeServer.models import *
-from lupsEdgeServer.serializers import *
+from API_RestFul.models import *
+from API_RestFul.serializers import *
 
 # Create your views here.
 

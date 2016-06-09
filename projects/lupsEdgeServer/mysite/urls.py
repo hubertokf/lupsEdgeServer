@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
-from lupsEdgeServer.views import *
+from API_RestFul.views import *
 from rest_framework.authtoken import views
 
 # Routers provide an easy way of automatically determining the URL conf.
