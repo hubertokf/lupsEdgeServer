@@ -17,9 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from lupsEdgeServer.views import *
-
-
-
+from rest_framework.authtoken import views
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -41,5 +39,7 @@ router.register(r'schedules', ScheduleViewSet)
 urlpatterns = [
 	url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #To obtain auth token (API key) passing User and Password by POST
+    url(r'^api-token-auth/', views.obtain_auth_token)
 ]
