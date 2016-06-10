@@ -15,18 +15,20 @@ class ActionRules(BaseActions):
 
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def publish(self,info_adicional):
-        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+    def publish(self,info_adicional): # ação que ativa o evento de publicação
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+        print(json)
         #chamar tratador de evento
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def gathering(self,info_adicional):
-        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+    def gathering(self,info_adicional): # ação que ativa o evento de coleta
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
         #chamar tratador de evento
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def proceding(self,info_adicional):
-        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+    def proceding(self,info_adicional): # ação que ativa o evento de atuação
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor":{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+        print (json)
         #chamar tratador de evento
 
     @rule_action(params = {"inf": FIELD_TEXT})
