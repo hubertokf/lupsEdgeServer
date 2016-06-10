@@ -17,7 +17,9 @@ class EngineRule(object):
 
 
         headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
-        r = requests.get('http://localhost:8000/rules/2/?format=json', headers=headers)
+    #url = 'http://localhost:8000/rules/{0}/?format=json'.format(a) # quando o servidor estiver em funcionamento
+        url = 'http://localhost:8000/rules/{0}/?format=json'.format(2) # a fins de teste
+        r = requests.get(url, headers=headers)
 
         rules = r.json() # coleta os dados recebidos da APIrestfull
         rules = json.loads(rules['jsonRule']) # transforma json em dist
