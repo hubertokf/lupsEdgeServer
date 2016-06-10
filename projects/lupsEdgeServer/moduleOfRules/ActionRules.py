@@ -13,13 +13,21 @@ class ActionRules(BaseActions):
     def __init__ (self, parameters):
         self.parameters = parameters
 
-    @rule_action(params={"teste": FIELD_TEXT})
-    def atuar(self,teste):
-            print("ok")
 
-    @rule_action(params={"test":FIELD_NUMERIC })
-    def string_action(self,test):
-        print (self.parameters.event,self.parameters.id,self.parameters.value)
+    @rule_action(params={"info_adicional":FIELD_NUMERIC })
+    def publish(self,info_adicional):
+        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+        #chamar tratador de evento
+
+    @rule_action(params={"info_adicional":FIELD_NUMERIC })
+    def gathering(self,info_adicional):
+        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+        #chamar tratador de evento
+
+    @rule_action(params={"info_adicional":FIELD_NUMERIC })
+    def proceding(self,info_adicional):
+        json = '{"id_sensor: {0}, "event": "{1}", "valor",{2}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+        #chamar tratador de evento
 
     @rule_action(params = {"inf": FIELD_TEXT})
     def test_post_Event(self, inf):
