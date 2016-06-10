@@ -5,7 +5,7 @@ from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
 from ActionRules import ActionRules
 from ConditionsRules import ConditionsRules
 from Parameters import Parameters
-import simplejson
+import json
 import os
 #metodo que recebe o json que contem regras de contigencia
 class EngineRule(object):
@@ -17,13 +17,13 @@ class EngineRule(object):
     def get_rules(self,a):
 
         with open ("teste/sensorRules18.json") as f:
-            rules = simplejson.load(f)
+            rules = json.load(f)
         return rules
 
-    def get_parameters(self,json):
+    def get_parameters(self,obj_json):
         # modificar caso passe o json por string
-        with open (json) as f:
-            parameters = simplejson.load(f)
+        with open (obj_json) as f:
+            parameters = json.load(f)
         return parameters
 
     def trigger_ruler(self):
