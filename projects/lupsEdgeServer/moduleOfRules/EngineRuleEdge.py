@@ -16,14 +16,12 @@ class EngineRule(object):
 
     def get_rules(self,a):
 
-        with open ("teste/sensorRules18.json") as f:
-            rules = json.load(f)
+        rules = json.loads(a)
         return rules
 
     def get_parameters(self,obj_json):
-        # modificar caso passe o json por string
-        with open (obj_json) as f:
-            parameters = json.load(f)
+
+        parameters = json.load(f)
         return parameters
 
     def trigger_ruler(self):
@@ -32,9 +30,9 @@ class EngineRule(object):
 
     def run_rules(self,a,b):
 
-        parameters = self.get_parameters("teste/testeparameters.json") #
+        parameters = self.get_parameters(a) #
         obj_parameters= Parameters(parameters['evento'],parameters['id'],parameters['valor'])
-        rules = self.get_rules("ok")
+        rules = self.get_rules(b)
 
         run_all(rule_list=rules,
                 defined_variables=ConditionsRules(100),
