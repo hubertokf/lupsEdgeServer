@@ -10,9 +10,7 @@ import os
 #metodo que recebe o json que contem regras de contigencia
 class EngineRule(object):
     """docstring for EngineRule"""
-    def __init__(self, arg):
-        super(EngineRule, self).__init__()
-        self.arg = arg
+
 
     def get_rules(self,a):
 
@@ -21,12 +19,12 @@ class EngineRule(object):
 
     def get_parameters(self,obj_json):
 
-        parameters = json.load(f)
+        parameters = json.loads(obj_json)
         return parameters
 
-    def trigger_ruler(self):
+    #def trigger_ruler(self):
         # aqui deve inserir a busca da regra no BD a partir do id do sensor
-        get_rules(files)
+
 
     def run_rules(self,a,b):
 

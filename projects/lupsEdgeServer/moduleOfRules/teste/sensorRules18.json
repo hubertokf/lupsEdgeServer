@@ -1,4 +1,4 @@
-[ {"conditions": { "all": [
+'[ {"conditions": { "all": [
       { "name": "getNumber",
         "operator": "greater_than",
         "value": 5
@@ -31,4 +31,4 @@
           "params": {"inf": "deuruim"}
         }
     ]}
-]
+]'
