@@ -1,1 +1,1 @@
-{"virtualbox":{"vagrant-root":{"id":"vagrant-root","mount_options":["dmode=777","fmode=777"],"guestpath":"/vagrant","hostpath":"/home/huberto/projects/lupsEdgeServer","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"vagrant-root":{"id":"vagrant-root","mount_options":["dmode=777","fmode=777"],"guestpath":"/vagrant","hostpath":"/home/leonardo/Documents/Pesquisa/lupsEdgeServer","disabled":false,"__vagrantfile":true}}}
