@@ -1,3 +1,6 @@
+# Vagrant Folder
+.vagrant/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -63,6 +66,8 @@ target/
 /.project
 /lupsEdgeServer.sublime-project
 /lupsEdgeServer.sublime-workspace
+lupsEdgeServer.sublime-workspace
+
 
 #__pycache__
 /lupsEdgeServer/projects/lupsEdgeServer/moduleOfRules/__pycache__/
