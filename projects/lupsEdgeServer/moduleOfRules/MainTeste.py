@@ -8,7 +8,7 @@ if __name__ == '__main__':
     a = a +  '"actions": [ { "name": "test_post_Event",  "params": {"inf": "deuruim"} } ]}]'
 
     j = json.loads(a)
-    print(type(j))
+
     engine = EngineRule()
     engine.run_rules('{ "evento": "e", "id": 18,'+
-      '"valor": 15 }')
+      '"valor": 100 }')
