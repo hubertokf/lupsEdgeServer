@@ -39,6 +39,7 @@ class Event_Treatment(object):
             #event = Gathering()
             #event.
         else:
+            print("Nenhum do casos no TRATAMENTO EVENTO")
             #print(self.get_tipo_evento())
-            print(type("publish"))
-            print(type(self.get_tipo_evento()))
+            #print(type("publish"))
+            #print(type(self.get_tipo_evento()))
