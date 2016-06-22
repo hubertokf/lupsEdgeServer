@@ -14,12 +14,14 @@ class Manufacturer(models.Model):
 class Gateway(models.Model):
 	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
 	uuID = models.CharField(max_length=36)
+	url = models.URLField(max_length=200,null=True)
 
 	def __str__(self):
 		return self.uuID
 
 class Actuator(models.Model):
 	gateway = models.ForeignKey(Gateway, on_delete=models.CASCADE)
+	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
 	uuID = models.CharField(max_length=36)
 
 	def __str__(self):

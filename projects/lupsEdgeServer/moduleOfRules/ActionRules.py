@@ -1,12 +1,18 @@
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
-import json
 from business_rules import run_all
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
 from ConditionsRules import ConditionsRules
 from Parameters import Parameters
 import os
+import json
+import email
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.utils import formatdate
+import smtplib
+
 
 class ActionRules(BaseActions):
 
@@ -33,9 +39,28 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"inf": FIELD_TEXT})
     def test_post_Event(self, inf):
-        params_event = self.parameters.event
-        params_id = self.parameters.id
-        decoJson = {'event' : params_event,
-                    'id' : params_id}
-        coJson = json.dumps(decoJson)
-        print(inf)
+        sender = 'tainaribeiro.rs@gmail.com'
+        receivers = ['tainaribeiro.rs@hotmail.com']
+
+        message = "Houve um erro de leitura no sensor{0}.\n Por favor, verifique a situação do sensor assim como a sua comunicação com o gateway".format(self.parameters.id)
+        subject = "Problema no sensor {0}".format(self.parameters.id)
+
+        # build the message
+        msg = MIMEMultipart()
+        msg['From'] = sender
+        msg['To'] = ', '.join(receivers)
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message))
+        print(msg.as_string())
+        try:
+          smtpObj = smtplib.SMTP('smtp.gmail.com',587)
+          smtpObj.ehlo()
+          smtpObj.starttls()
+          smtpObj.login(sender,"3123123123121")
+          smtpObj.sendmail(sender, receivers, msg.as_string())
+          print ("Successfully sent email")
+          smtpObj.quit()
+        except :
+          print ("Error: unable to send email")
+          smtpObj.quit()
