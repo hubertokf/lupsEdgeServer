@@ -38,8 +38,9 @@ router.register(r'schedules', ScheduleViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
 	url(r'^', include(router.urls)),
-    url(r'^teste/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #To obtain auth token (API key) passing User and Password by POST
-    url(r'^api-token-auth/', views.obtain_auth_token)
+    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^sensors/(?P<pk>[^/.]+)/getSchedules/$', SensorViewSet.getSchedules),
 ]

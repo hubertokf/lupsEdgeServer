@@ -4,8 +4,14 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User, Group
 from API_RestFul.models import *
 from API_RestFul.serializers import *
-from rest_framework import filters
-from rest_framework import generics
+from django.http import HttpResponse
+from django.core import serializers
+from rest_framework import filters, generics
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+import json
 
 # Create your views here.
 
@@ -51,6 +57,17 @@ class SensorViewSet(viewsets.ModelViewSet):
     serializer_class = SensorSerializer
     filter_backends = [filters.DjangoFilterBackend]
     filter_fields = ['uuID', 'gateway', 'sensorType', 'manufacturer']
+
+    @api_view(['GET',])
+    def getSchedules(request, *args, **kwargs):
+        queryset = Schedule.objects.filter(sensor_id=1)
+        serializer_class = ScheduleSerializer
+        response = HttpResponse(content_type="application/json")
+        serializers.serialize("json", queryset, stream=response)
+
+        #posts = (Schedule.objects.filter(sensor_id=1).values('id', 'schType', 'status', 'cron', 'interval', 'date', 'sensor'))
+        #json_posts = json.dumps(list(posts))
+        return response
 
 class PersistanceViewSet(viewsets.ModelViewSet):
     queryset = Persistance.objects.all()

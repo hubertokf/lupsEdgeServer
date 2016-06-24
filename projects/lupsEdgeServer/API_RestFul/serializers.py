@@ -9,57 +9,57 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = '__all__'
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'is_staff', 'groups')
 
-class ManufactureSerializer(serializers.HyperlinkedModelSerializer):
+class ManufactureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manufacturer
         fields = '__all__'
 
-class GatewaySerializer(serializers.HyperlinkedModelSerializer):
+class GatewaySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gateway
         fields = '__all__'
 
-class ActuatorSerializer(serializers.HyperlinkedModelSerializer):
+class ActuatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actuator
         fields = '__all__'
 
-class BaseParameterSerializer(serializers.HyperlinkedModelSerializer):
+class BaseParameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseParameter
         fields = '__all__'
 
-class ContextServerSerializer(serializers.HyperlinkedModelSerializer):
+class ContextServerSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContextServer
         fields = '__all__'
 
-class SensorTypeSerializer(serializers.HyperlinkedModelSerializer):
+class SensorTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SensorType
         fields = '__all__'
 
-class SensorSerializer(serializers.HyperlinkedModelSerializer):
+class SensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sensor
         fields = '__all__'
 
-class PersistanceSerializer(serializers.HyperlinkedModelSerializer):
+class PersistanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Persistance
         fields = '__all__'
 
-class RuleSerializer(serializers.HyperlinkedModelSerializer):
+class RuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rule
         fields = '__all__'
 
-class ScheduleSerializer(serializers.HyperlinkedModelSerializer):
+class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
         fields = '__all__'
