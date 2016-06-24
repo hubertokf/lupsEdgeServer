@@ -5,5 +5,5 @@ class ConditionsRules(BaseVariables):
         self.number = number
 
     @numeric_rule_variable
-    def getNumber(self): 
+    def getNumber(self):
         return self.number
