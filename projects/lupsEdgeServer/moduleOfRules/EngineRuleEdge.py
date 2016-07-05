@@ -18,11 +18,12 @@ class EngineRule(object):
 
         headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
     #url = 'http://localhost:8000/rules/{0}/?format=json'.format(a) # quando o servidor estiver em funcionamento
-        url = 'http://localhost:8000/rules/{0}/?format=json'.format(2) # a fins de teste
+        url = 'http://localhost:8000/rules/?format=json&id_of_sensor={0}'.format(2) # a fins de teste
         r = requests.get(url, headers=headers)
 
         rules = r.json() # coleta os dados recebidos da APIrestfull
-        rules = json.loads(rules['jsonRule']) # transforma json em dist
+        #rules = json.loads(rules) # transforma json em dist
+        #print(type(rules))
         return rules
 
     def get_parameters(self,obj_json): # pega os parametros enviados pelo tratador de evento e retorna um disct destes parametros
@@ -37,8 +38,10 @@ class EngineRule(object):
         obj_parameters= Parameters(parameters['evento'],parameters['id'],parameters['valor'])
         rules = self.get_rules(parameters['id'])
 
-        run_all(rule_list=rules,
+        for i in range(0,len(rules),1): # percorre a lista que contem as regras
+            rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
+            run_all(rule_list=rule,
                 defined_variables=ConditionsRules(parameters['valor']),
                 defined_actions=ActionRules(obj_parameters),
                 stop_on_first_trigger=True
-            )
+                )

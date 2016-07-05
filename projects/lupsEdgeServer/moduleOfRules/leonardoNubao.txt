@@ -1,0 +1,16 @@
+Como executar uma regra?
+
+Simples, primeiramente voce importa a classe EngineRuleEdge, (from EngineRuleEdge import EngineRule,talvez tenha que indicar o path do arquivo python), e em seguida instanciar um objeto para tal.
+Após os passos descirtos anteriormentes, deve ser chamado o objeto run_rules(), onde deve ser passado como parametros uma string com o JSON escrito.
+o json deve conter :
+
+    id
+    valor
+    evento
+
+Pronto, a regra sera executada.
+ exemplo:
+
+ engine = EngineRule()
+   engine.run_rules('{ "evento": "e", "id": 18,'+
+     '"valor": 100 }')

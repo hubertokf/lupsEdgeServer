@@ -1,4 +1,4 @@
-#from EngineRuleEdge import EngineRule
+from EngineRuleEdge import EngineRule
 import createConditions
 import json
 if __name__ == '__main__':
@@ -8,8 +8,8 @@ if __name__ == '__main__':
     a = a +  '{"conditions": { "all": [ { "name": "getNumber", "operator": "greater_than", "value": 99 } ] },'
     a = a +  '"actions": [ { "name": "test_post_Event",  "params": {"inf": "deuruim"} } ]}]'
 
-    j = json.loads(a)
-    createConditions.create_condition(30);
-    #engine = EngineRule()
-    #engine.run_rules('{ "evento": "e", "id": 18,'+
-     # '"valor": 100 }')
+    #j = json.loads(a)
+    #createConditions.create_condition(30);
+    engine = EngineRule()
+    engine.run_rules('{ "evento": "e", "id": 18,'+
+      '"valor": 100 }')
