@@ -1,48 +1,39 @@
+from GetValuesSensor import *
 import json
 
 class Gathering(object):
 
-    base_dir = "/mnt/1wire/uncached/"
-    device_folder = ""
-    device_file = ""
-
-    def set_id(self, id):
-        self.id = id
+    def set_id(self, id_sensor):
+        self.id_sensor = id_sensor
 
     def get_id(self):
-        return self.id
+        return self.id_sensor
 
     def set_val_sensor(self, vsensor):
         self.vsensor = vsensor
 
-    def get_valor(self):
+    def get_val_sensor(self):
         return self.vsensor
 
-    # Realiza toda a operação do proceeding utilizando o métodos criados
-    def processamento(self,a):  #device_folder <--- id do sensor, referente a pasta
-        jsonObject = json.loads(a)
+    def regra(self,id_sensor,valor):   # Verificar argumentos e criar objeto p chamar regras
+        #engine = EngineRule()
+        #engine.run_rules('{ "evento": "e", "id": 18,'+
+        #'"valor": 100 }')
+        print('ENTROU NA REGRA')
 
-        self.set_id(jsonObject['id_real'])
+    def processamento(self,id_sensor,select_features): # 0 = OBJECT or 1 = FUNCTION
+                                # Cria um objeto COMMUNICATION, que retorna um valor do sensor
+                                # Realiza um if, verificando se precisa criar um  REGRA ou apenas
+                                # retorna um dado
+        #valor_sensor =
+        colecter_sensor = GetValuesSensor;
+        colecter_sensor.get_values_on_gatway();             # <--------- Passar argumentos
+        #self.set_val_sensor(valor_sensor);
 
-        device_file = base_dir + self.get_id() + "/temperature12"
+        if select_features == 0:              # Chama a REGRA
+            #self.regra(id,self.get_val_sensor(),evento);
+            print("REGRA 0")
 
-        ler = 0
-        valor_temp = float("99.3")
-
-        while ((valor_temp == 99.3 or valor_temp == 85.0) and (ler < 10)):  #Utilizado na verificação de erros ao requisitar dados
-            result = ""
-            try:
-                f = open(device_file)
-                saida = f.readline()
-                f.close()
-            except IOError:
-                saida = "        99.3"
-            # Logando...
-            saida_temp = saida[0:12]
-            try:
-                valor_temp = float(saida_temp)
-            except ValueError:
-                valor_temp = float("99.1")
-                ler = ler + 1
-
-            self.set_val_sensor(saida[0:12].strip())
+        else :                  # Retorna o valor do sensor
+            #return self.get_val_sensor();
+            print("REGRA 1")

@@ -28,7 +28,7 @@ class SchedulerEdge(object):
 
         #def verifica_DB():
         #    print("Aqui")
-        self.verifica_sensores()
+        #self.verifica_sensores()
 
     def add_job(self, a): # cria uma nova tarefa no escalonador
     #  analisar o modo (interval,date,cron) para executar de forma correta
@@ -37,6 +37,9 @@ class SchedulerEdge(object):
         if(jsonObject['modo']=='cron'):
             self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+        #    self.scheduler.add_job(self.tick, jsonObject['modo'], second = 0, minute = jsonObject['info']['minute'],
+        #    hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
+
 
         elif(jsonObject['modo']=='interval'):
             self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
@@ -53,7 +56,8 @@ class SchedulerEdge(object):
 
     def tick(self,response):
         object_events = Event_Treatment()
-        object_events.event(response)
+        object_events.event(1,response)
+        print("Pi")
         #print(response)
 
     def verifica_sensores(self):    # Verifica os sensores cadastrados no DB, colocando-os em uma tabela para
