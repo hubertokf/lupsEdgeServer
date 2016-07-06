@@ -35,7 +35,7 @@ class EngineRule(object):
     def run_rules(self,a): # executa a regra
 
         parameters = self.get_parameters(a)
-        obj_parameters= Parameters(parameters['evento'],parameters['id'],parameters['valor'])
+        obj_parameters= Parameters(parameters['id'],parameters['valor'])
         rules = self.get_rules(parameters['id'])
 
         for i in range(0,len(rules),1): # percorre a lista que contem as regras

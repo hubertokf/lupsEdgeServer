@@ -20,9 +20,9 @@ class ActionRules(BaseActions):
         self.parameters = parameters
 
 
-    @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def publish(self,info_adicional): # ação que ativa o evento de publicação
-        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+    @rule_action(params={"event": FIELD_TEXT })
+    def publish(self,event): # ação que ativa o evento de publicação
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,event,self.parameters.value)
         print(json)
         #chamar tratador de evento
 

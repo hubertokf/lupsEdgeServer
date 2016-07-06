@@ -1,6 +1,6 @@
 class Parameters(object):
 
-    def __init__(self, event,ide,value):
-        self.event = event
+    def __init__(self,ide,value):
+        
         self.id = ide
         self.value = value
