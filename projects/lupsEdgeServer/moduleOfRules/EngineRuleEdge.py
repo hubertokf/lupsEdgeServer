@@ -2,9 +2,9 @@
 from business_rules import run_all
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
-from ActionRules import ActionRules
-from ConditionsRules import ConditionsRules
-from Parameters import Parameters
+from moduleOfRules.ActionRules import ActionRules
+from moduleOfRules.ConditionsRules import ConditionsRules
+from moduleOfRules.Parameters import Parameters
 import requests
 import json
 import os
