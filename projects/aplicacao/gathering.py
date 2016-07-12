@@ -38,3 +38,4 @@ class Gathering(object):
         else :                  # Retorna o valor do sensor
             #return self.get_val_sensor();
             print("REGRA 1")
+            #iasdhajkhsdjhad
