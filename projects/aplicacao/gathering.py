@@ -1,5 +1,5 @@
 from GetValuesSensor import *
-from ../moduleOfRules/EngineRuleEdge import EngineRule
+from moduleOfRules.EngineRuleEdge import EngineRule
 import json
 
 class Gathering(object):
@@ -18,8 +18,8 @@ class Gathering(object):
 
     def regra(self,id_sensor,valor):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
-        engine.run_rules('{ "evento": "e", "id": 18,'+
-        '"valor": 100 }')
+        string_rule = '{ "evento": "e", "id": {0},"valor": 100 }'.format(self.id_sensor)
+        engine.run_rules()
         print('ENTROU NA REGRA')
 
     def processamento(self,id_sensor,select_features): # 0 = OBJECT or 1 = FUNCTION
