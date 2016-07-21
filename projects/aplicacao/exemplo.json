@@ -1,0 +1,51 @@
+
+[
+   {
+      "conditions":{
+         "all":[
+            {
+               "name":"getNumber",
+               "operator":"greater_than",
+               "value":5
+            },
+            {
+               "name":"getNumber",
+               "operator":"less_than",
+               "value":99
+            }
+         ]
+      },
+      "actions":[
+         {
+            "name":"publish",
+            "params":{
+               "info_adicional":10
+            }
+         }
+      ]
+   },
+      {
+      "conditions":{
+         "all":[
+            {
+               "name":"getNumber",
+               "operator":"greater_than",
+               "value":80.0
+            },
+{
+               "name":"getContador",
+               "operator":"greater_than",
+               "value":0
+            }
+         ]
+      },
+      "actions":[
+         {
+            "name":"gathering_error",
+            "params":{
+               "ruler":"deuruim"
+            }
+         }
+      ]
+   }
+]

@@ -57,7 +57,7 @@ class SchedulerEdge(object):
     def tick(self,response):
         object_events = Event_Treatment()
         object_events.event(1,response)
-        print("Pi")
+        #print("Pi")
         #print(response)
 
     def verifica_sensores(self):    # Verifica os sensores cadastrados no DB, colocando-os em uma tabela para

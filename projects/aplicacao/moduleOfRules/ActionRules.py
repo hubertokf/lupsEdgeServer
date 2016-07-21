@@ -3,8 +3,8 @@ from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
 from business_rules import run_all
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
-from ConditionsRules import ConditionsRules
-from Parameters import Parameters
+from moduleOfRules.ConditionsRules import ConditionsRules
+from moduleOfRules.Parameters import Parameters
 import os
 import json
 import email
@@ -64,3 +64,11 @@ class ActionRules(BaseActions):
         except :
           print ("Error: unable to send email")
           smtpObj.quit()
+
+    @rule_action(params = {"ruler": FIELD_TEXT})
+    def gathering_error(self,ruler):
+
+        contador = self.parameters.contador - 1
+        json = '{{"id_sensor": {0}, "event": "e", "valor":{1}, "contador": {2}}}'.format(self.parameters.id,self.parameters.value,contador)
+        object_events = Event_Treatment()
+        object_events.event(1,json)

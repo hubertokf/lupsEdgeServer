@@ -22,22 +22,22 @@ class Event_Treatment(object):
 
         jsonObject = json.loads(response)
 
-        self.set_id(jsonObject['id_sensor_virtual'])
+        self.set_id(jsonObject['id_sensor'])
         self.set_tipo_evento(jsonObject['event'])
 
         if select_features == 0:
 
             if self.get_tipo_evento() == "proceeding":        # Cria objeto Proceeding
-                #print('Proceeding')
-                event = Proceeding()
+                print('Proceeding')
+                #event = Proceeding()
 
             elif self.get_tipo_evento() == "publisher":   # Cria objeto Publisher
-                #print('Publisher')
-                event = Publisher()
+                print('Publisher')
+                #event = Publisher()
 
             elif self.get_tipo_evento() == "gathering":   # Cria objeto Gathering
                 #print('Gathering')
-                event = Gathering()
+                #event = Gathering()
                 print('FOI')
 
             else:
@@ -50,6 +50,6 @@ class Event_Treatment(object):
                 event = Publisher()
             elif self.get_tipo_evento() == "gathering":
                 event = Gathering()
-                event.processamento(self, 1, select_features)
+                event.processamento(1, select_features) # 1 em referencia ao sensor 1
             else:
                 print("Nenhum do casos no TRATAMENTO EVENTO 2")
