@@ -38,6 +38,10 @@ class ActionRules(BaseActions):
         print(json)
         #chamar tratador de evento
 
+    @rule_action(params={"inf": FIELD_NO_INPUT})
+    def none(self,inf):
+        return None
+
     @rule_action(params = {"inf": FIELD_TEXT})
     def test_post_Event(self, inf):
         sender = 'tainaribeiro.rs@gmail.com'
