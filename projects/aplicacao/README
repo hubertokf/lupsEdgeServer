@@ -1,0 +1,6 @@
+
+
+Json_conect
+
+  Responsável por varrer no DB todos os sensores cadastrados, mandando o json
+com os dados para o Scheduler.
