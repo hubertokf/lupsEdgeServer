@@ -5,7 +5,7 @@ from io import BytesIO
 
 sensor_ant = []
 
-def verificar_DB():
+def verificar_DB():     # Pega todos os sensores cadastrados na API
 
     #-------------------Usado para pegar dados em formato JSON----------------------
     headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
@@ -22,19 +22,33 @@ def verificar_DB():
         b = row['id']
         sensors_atual.append(row)
 
-    compara_DB(sensors_atual)
+    compara_DB(sensors_atual)   # Repassa um JSON com todos os dados de sensores cadastrados "NOVOS"
+
+    teste = verifica_schedules()# JSON com dados, utilizado no CRONTAB
+
+    activa_scheduler(teste)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
+
+def verifica_schedules():   # Pega dados cadastrados em relação aos sensores, usado no CRONTAB
+
+    #-------------------Usado para pegar dados em formato JSON----------------------
+    headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+    url = 'http://localhost:8000/schedules/?format=json'
+    request = requests.get(url, headers=headers)
+    jsonObject = request.json()
+    #-------------------------------------------------------------------------------
+    return jsonObject
+
+def activa_scheduler(dados_scheduler):         # Recebe dois JSONs, sensores cadastrados e dados em relação a eles
+
+    for row in dados_scheduler:                 # OBS: Falta retirar os sensores removidos da API                
+        print(row)
+
+    print("-----------PASSOUUU----------")
 
 def compara_DB(dados):
 
     not_existe = 1
-    #for row in dados:
-    #    for sens in sensor_ant:
-    #        if row['id'] == sens:
-    #            existe = 1
-    #    if existe == 0:
-    #        sensor_ant.append(row)
-    #        print(row)
-
+    existe = 0
 
     if len(sensor_ant) == 0:
         print('TABELA VAZIA')
@@ -44,29 +58,39 @@ def compara_DB(dados):
 
     else:
         print('TABELA COM DADOS')
+        # sensor_ant -> Cadastrado do sensores que estão rodando no CRON
+        # dados -> Sensores que estão no DB
+        #-------------------Deleta os sensores na tabela antiga-----------------
         for sens in sensor_ant:
-            #print(sens['id'])
             for row in dados:
                 if sens['id'] == row['id']:
-                    print('Sensores iguais')
+                    #print('Sensores iguais')
+                    print('Sensores iguais: ')
+                    print(row['id'])
                     not_existe = 0
 
             if not_existe == 1:
                 print("Sensor removido")
-            #    sensor_ant.remove(sens)
-            #    not_existe = 0
-            #else:
-            #    print("Sensor novo cadastrado")
-            #    sensor_ant.append(row)
-                #print(row)
+                sensor_ant.remove(sens)
+            not_existe = 0
+        #-----------------------------------------------------------------------
 
-    #for sens in sensor_ant:
-    #    print(sens['id'])
+        #-------------Adiciona sensores não cadastrados no CRON-----------------
+        for row in dados:
+            for sens in sensor_ant:
+                if row['id'] == sens['id']:
+                    existe = 1
+
+            if existe == 0:
+                print('Sensor adicionado: ')
+                print(row['id'])
+                sensor_ant.append(row)
+            existe = 0
+        #-----------------------------------------------------------------------
+
 
     print("\n---------------------")
 
-# Gravar esses dados em algum lugar, pois quando tiver alteração no DB deve
-# ocorrer uma comparação para alterar os eventos agendados(Scheduler)
 
 while True:
     verificar_DB()
