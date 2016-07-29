@@ -36,20 +36,23 @@ class Event_Treatment(object):
                 #event = Publisher()
 
             elif self.get_tipo_evento() == "gathering":   # Cria objeto Gathering
-                #print('Gathering')
+                print('Gathering')
                 #event = Gathering()
-                print('FOI')
+                #print('FOI')
 
             else:
                 print("Nenhum do casos no TRATAMENTO EVENTO 1")
                 #print(self.get_tipo_evento())
         else:
             if self.get_tipo_evento() == "proceeding":
-                event = Proceeding()
+                print('Proceeding')
+                #event = Proceeding()
             elif self.get_tipo_evento() == "publisher":
-                event = Publisher()
+                print('Publisher')
+                #event = Publisher()
             elif self.get_tipo_evento() == "gathering":
-                event = Gathering()
-                event.processamento(1, select_features) # 1 em referencia ao sensor 1
+                print('Gathering')
+                #event = Gathering()
+                #event.processamento(1, select_features) # 1 em referencia ao sensor 1
             else:
                 print("Nenhum do casos no TRATAMENTO EVENTO 2")
