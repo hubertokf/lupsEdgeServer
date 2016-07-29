@@ -45,7 +45,7 @@ def activa_scheduler(dados_scheduler):
     for sens in sensor_ant:
         json_new = cria_JSON(sens,dados_scheduler) # Mescla os sensores no DB com dados do scheduler da API
         if asd < 2:
-            #sched.add_job(json_new)
+            sched.add_job(json_new)
             asd = asd + 1
 
     print("-----------PASSOUUU----------")
@@ -77,7 +77,7 @@ def compara_DB(dados):
 
             if not_existe == 1:     # Chamar o método do scheduler para remover o sensor do cron
                 print("Sensor removido")    # remover em relação ao ID, pois é único
-                sched.remove_job(sens['id'])
+                #sched.remove_job(sens['id'])
                 sensor_ant.remove(sens)
             not_existe = 0
         #-----------------------------------------------------------------------
@@ -106,10 +106,10 @@ def cria_JSON(sensor,dados_sched):  # Cria um JSON no formato exato que SCHEDULE
         if row['sensor'] == sensor['id']:
 
             job['modo'] = "cron"
-            job['id_sensor'] = sensor['id']
+            job['id_sensor'] = str(sensor['id'])
             job['event'] = "gathering"
 
-            info['second'] = row['cron']
+            info['second'] = str("*/"+row['cron'])
             info['minute']  = "*"
             info['hour'] = "*"
             info['day'] = "*"
