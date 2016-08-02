@@ -28,7 +28,7 @@ class SchedulerEdge(object):
     def add_job(self, a): # cria uma nova tarefa no escalonador
     #  analisar o modo (interval,date,cron) para executar de forma correta
         jsonObject = json.loads(a)
-        print(jsonObject)
+        #print(jsonObject)
 
         if(jsonObject['modo']=='cron'):
             print("ENTROU NO CRON")

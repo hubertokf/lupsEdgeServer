@@ -5,6 +5,7 @@ from io import BytesIO
 from scheduler import  *
 
 sensor_ant = []
+sensor_add = []
 
 
 def verificar_DB():     # Pega todos os sensores cadastrados na API
@@ -42,11 +43,13 @@ def verifica_schedules():   # Pega dados cadastrados em relação aos sensores, 
 
 def activa_scheduler(dados_scheduler):
     global asd
-    for sens in sensor_ant:
+    for sens in sensor_add:
         json_new = cria_JSON(sens,dados_scheduler) # Mescla os sensores no DB com dados do scheduler da API
-        if asd < 2:
-            sched.add_job(json_new)
-            asd = asd + 1
+        #if asd > 2:
+        sched.add_job(json_new)
+        sensor_add.remove(sens)
+        #asd = asd + 1
+
 
     print("-----------PASSOUUU----------")
 
@@ -60,6 +63,7 @@ def compara_DB(dados):
         print('TABELA VAZIA')
         for row in dados:
             sensor_ant.append(row)
+            sensor_add.append(row)
             #print(row)
 
     else:
@@ -74,10 +78,8 @@ def compara_DB(dados):
                     #print('Sensores iguais: ')
                     #print(row['id'])
                     not_existe = 0
-
-            if not_existe == 1:     # Chamar o método do scheduler para remover o sensor do cron
-                print("Sensor removido")    # remover em relação ao ID, pois é único
-                #sched.remove_job(sens['id'])
+            if not_existe == 1:    # remover em relação ao ID, pois é único
+                sched.remove_job(sens['id'])
                 sensor_ant.remove(sens)
             not_existe = 0
         #-----------------------------------------------------------------------
@@ -92,6 +94,7 @@ def compara_DB(dados):
                 print('Sensor adicionado: ')
                 #print(row['id'])
                 sensor_ant.append(row)
+                sensor_add.append(row)
             existe = 0
         #-----------------------------------------------------------------------
 
@@ -121,9 +124,15 @@ def cria_JSON(sensor,dados_sched):  # Cria um JSON no formato exato que SCHEDULE
     #print(json.dumps(job))
     return json.dumps(job)
 #-------------------------------------------------------------------------------
+def set_add(valor):
+    global asd
+    asd = valor
+#-------------------------------------------------------------------------------
 
 sched = SchedulerEdge()
 asd = 0
 while True:
+    #if(asd == 1):
     verificar_DB()
+    #asd=0
     time.sleep(5)
