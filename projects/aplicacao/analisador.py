@@ -13,9 +13,9 @@ class Analisador_Complexo(object):
         self.sched = SchedulerEdge()
         asd = 0
         while True:
-            #if(asd == 1):
-            self.verificar_DB()
-            #asd=0
+            if(asd == 1):
+                self.verificar_DB()
+                asd=0
             time.sleep(5)
 
 
