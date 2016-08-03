@@ -1,3 +1,3 @@
-from main import  *
+from analisador import  *
 
-set_add(1)
+juca = Analisador_Complexo()

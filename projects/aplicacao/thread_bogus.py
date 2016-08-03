@@ -1,4 +1,4 @@
-import  main.set_add
+from analisador import  *
 import socket
 import _thread
 
@@ -32,5 +32,6 @@ tcp.listen(1)
 while True:
     con, cliente = tcp.accept()
     _thread.start_new_thread(conectado, tuple([con, cliente]))
+    _thread.start_new_thread(teste = )
 
 tcp.close()

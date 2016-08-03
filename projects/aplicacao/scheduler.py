@@ -23,7 +23,7 @@ class SchedulerEdge(object):
         self.scheduler.start()                          # inicia o agendador
         self.th = threading.Thread(target= run_thread)  # thread executa outtro fluxo para o agendador rodar
         self.th.start()
-        print("THREAD CRIADA")
+        #print("THREAD CRIADA")
 
     def add_job(self, a): # cria uma nova tarefa no escalonador
     #  analisar o modo (interval,date,cron) para executar de forma correta
@@ -31,7 +31,7 @@ class SchedulerEdge(object):
         #print(jsonObject)
 
         if(jsonObject['modo']=='cron'):
-            print("ENTROU NO CRON")
+            #print("ENTROU NO CRON")
             self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = a, args = [a])
         #    self.scheduler.add_job(self.tick, jsonObject['modo'], second = 0, minute = jsonObject['info']['minute'],
@@ -52,6 +52,6 @@ class SchedulerEdge(object):
         self.scheduler.remove_job(a)
 
     def tick(self,response):    # response - É JSON passado como argumento
-        print("JOB ADICIONADO")
+        #print("JOB ADICIONADO")
         object_events = Event_Treatment()
         object_events.event(1,response)

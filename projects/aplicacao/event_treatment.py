@@ -51,7 +51,7 @@ class Event_Treatment(object):
                 print('Publisher')
                 #event = Publisher()
             elif self.get_tipo_evento() == "gathering":
-                print('Gathering')
+                print('Gathering', jsonObject['id_sensor'])
                 #event = Gathering()
                 #event.processamento(1, select_features) # 1 em referencia ao sensor 1
             else:
