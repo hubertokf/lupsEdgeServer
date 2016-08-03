@@ -2,29 +2,49 @@ from analisador import  *
 import socket
 import _thread
 
-HOST = '192.168.15.10'              # Endereco IP do Servidor
+HOST = '10.0.50.184'              # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
 #var = main.set_add(1)
-def conectado(con, cliente):
+asd = 0
+
+class Asd(object):
+    def __init__(self):
+        self.asd = 0
+
+    def set_asd(self, val):
+        self.asd = val
+
+    def get_asd(self):
+        return self.asd
+
+def conectado(con, cliente, asd):
+    #global asd
     print("Conectado por", cliente)
 
     while True:
         msg = con.recv(1024)
         if not msg: break
         #print cliente, msg
-        if msg is '1':
+        print(type(msg.decode()))
+        if msg.decode() == "aba":
             #set_add(1)         <--- CHAMAR METODO PARA SETAR VALOR
-            #juca.set_add(1)
+
+            #asd = 1
+            asd.set_asd(1);
             print("FOI")
         else:
-            self.juca.set_add(1)
+            #self.juca.set_add(1)
+            #asd = 0
+            asd.set_asd(0);
             print("JUCA")
 
+        print(asd.get_asd())
     print("Finalizando conexao do cliente", cliente)
     con.close()
     _thread.exit()
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tcp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 orig = (HOST, PORT)
 
@@ -33,7 +53,8 @@ tcp.listen(1)
 
 while True:
     con, cliente = tcp.accept()
-    _thread.start_new_thread(conectado, tuple([con, cliente]))
-    _thread.start_new_thread(juca = Analisador_Complexo())
+    asd = Asd();
+    _thread.start_new_thread(conectado, tuple([con, cliente, asd]))
+    _thread.start_new_thread(juca = Analisador_Complexo(asd))#, tuple([asd]))
 
 tcp.close()

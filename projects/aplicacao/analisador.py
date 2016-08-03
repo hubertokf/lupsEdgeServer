@@ -8,14 +8,18 @@ class Analisador_Complexo(object):
 
     sensor_ant = []
     sensor_add = []
+    #global asd
 
-    def __init__(self):
+    def __init__(self,asd):
+
+
+        print (asd.get_asd())
         self.sched = SchedulerEdge()
-        asd = 0
         while True:
-            if(asd == 1):
+            print(asd.get_asd())
+            if(asd.get_asd() == 1):
                 self.verificar_DB()
-                asd=0
+                asd.set_asd(0);
             time.sleep(5)
 
 
@@ -38,9 +42,12 @@ class Analisador_Complexo(object):
 
         self.compara_DB(sensors_atual)         # Repassa um JSON com todos os dados de sensores cadastrados "NOVOS"
 
-        dados_sched = self.verifica_schedules()# JSON com dados, utilizado no CRONTAB
+        teste2 = self.sensor_add
+        if len(teste2) != 0:
+            print("SENSOR activa_scheduler")
+            dados_sched = self.verifica_schedules()# JSON com dados, utilizado no CRONTAB
 
-        self.activa_scheduler(dados_sched)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
+            self.activa_scheduler(dados_sched)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
 
     def verifica_schedules(self):   # Pega dados cadastrados em relação aos sensores, usado no CRONTAB
 
@@ -58,9 +65,10 @@ class Analisador_Complexo(object):
             json_new = self.cria_JSON(sens,dados_scheduler) # Mescla os sensores no DB com dados do scheduler da API
             #if asd > 2:
             self.sched.add_job(json_new)        #           <----------------------
-            self.sensor_add.remove(sens)
+            ##self.sensor_add.remove(sens)
             #asd = asd + 1
-
+        #for sens in self.sensor_add:
+        self.sensor_add.clear()
 
         #print("-----------PASSOUUU----------")
 
@@ -68,6 +76,7 @@ class Analisador_Complexo(object):
     def compara_DB(self, dados):
         global sensor_ant
         global sensor_add
+        add = 0
         not_existe = 1
         existe = 0
         teste = self.sensor_ant
@@ -75,11 +84,15 @@ class Analisador_Complexo(object):
         if len(teste) == 0:
             #print('TABELA VAZIA')
             for row in dados:
+                add = add +1
                 self.sensor_ant.append(row)
                 self.sensor_add.append(row)
                 #print(row)
 
+            print("ADD", add)
+
         else:
+            print("SEGUNDO CASO DA TABELA")
             #print('TABELA COM DADOS')
             # sensor_ant -> Cadastrado do sensores que estão rodando no CRON
             # dados -> Sensores que estão no DB
@@ -87,14 +100,13 @@ class Analisador_Complexo(object):
             for sens in self.sensor_ant:
                 for row in dados:
                     if sens['id'] == row['id']:
-                        #print('Sensores iguais')
-                        #print('Sensores iguais: ')
-                        #print(row['id'])
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
+                    print("TENTOU REMOVER")
                     self.sched.remove_job(sens['id'])
                     self.sensor_ant.remove(sens)
-                not_existe = 0
+
+                not_existe = 1
         #-----------------------------------------------------------------------
 
         #-------------Adiciona sensores não cadastrados no CRON-----------------
@@ -104,8 +116,7 @@ class Analisador_Complexo(object):
                         existe = 1
 
                 if existe == 0:
-                    #print('Sensor adicionado: ')
-                    #print(row['id'])
+                    print("Novo sensor")
                     self.sensor_ant.append(row)
                     self.sensor_add.append(row)
                 existe = 0
