@@ -2,7 +2,11 @@ from analisador import  *
 import socket
 import _thread
 
-HOST = '10.0.50.184'              # Endereco IP do Servidor
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(('google.com', 0))
+#print s.getsockname()[0]
+
+HOST = s.getsockname()[0]              # Endereco IP do Servidor
 PORT = 5000            # Porta que o Servidor esta
 #var = main.set_add(1)
 asd = 0
