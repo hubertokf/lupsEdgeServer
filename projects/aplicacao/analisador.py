@@ -13,10 +13,10 @@ class Analisador_Complexo(object):
     def __init__(self,asd):
 
 
-        print (asd.get_asd())
+        #print (asd.get_asd())
         self.sched = SchedulerEdge()
         while True:
-            print(asd.get_asd())
+            #print(asd.get_asd())
             if(asd.get_asd() == 1):
                 self.verificar_DB()
                 asd.set_asd(0);
@@ -44,7 +44,7 @@ class Analisador_Complexo(object):
 
         teste2 = self.sensor_add
         if len(teste2) != 0:
-            print("SENSOR activa_scheduler")
+            #print("SENSOR activa_scheduler")
             dados_sched = self.verifica_schedules()# JSON com dados, utilizado no CRONTAB
 
             self.activa_scheduler(dados_sched)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
@@ -103,8 +103,8 @@ class Analisador_Complexo(object):
                     if sens['id'] == row['id']:
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
-                    print("TENTOU REMOVER")
-                    #self.sched.remove_job(sens['id'])      <------------------------------------------------------
+                    print("TENTOU REMOVER: ", sens['id'])
+                    self.sched.remove_job(sens['id'])   #   <------------------------------------------------------
                     sensor_remove.append(sens)
                     #self.sensor_ant.remove(sens)
 

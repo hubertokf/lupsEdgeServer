@@ -29,20 +29,20 @@ def conectado(con, cliente, asd):
         msg = con.recv(1024)
         if not msg: break
         #print cliente, msg
-        print(type(msg.decode()))
+        #print(type(msg.decode()))
         if msg.decode() == "aba":
             #set_add(1)         <--- CHAMAR METODO PARA SETAR VALOR
 
             #asd = 1
             asd.set_asd(1);
-            print("FOI")
+            #print("FOI")
         else:
             #self.juca.set_add(1)
             #asd = 0
             asd.set_asd(0);
-            print("JUCA")
+            #print("JUCA")
 
-        print(asd.get_asd())
+        #print(asd.get_asd())
     print("Finalizando conexao do cliente", cliente)
     con.close()
     _thread.exit()
