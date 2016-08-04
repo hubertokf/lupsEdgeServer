@@ -76,6 +76,7 @@ class Analisador_Complexo(object):
     def compara_DB(self, dados):
         global sensor_ant
         global sensor_add
+        sensor_remove = []
         add = 0
         not_existe = 1
         existe = 0
@@ -103,11 +104,20 @@ class Analisador_Complexo(object):
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
                     print("TENTOU REMOVER")
-                    self.sched.remove_job(sens['id'])
-                    self.sensor_ant.remove(sens)
+                    #self.sched.remove_job(sens['id'])      <------------------------------------------------------
+                    sensor_remove.append(sens)
+                    #self.sensor_ant.remove(sens)
 
                 not_existe = 1
         #-----------------------------------------------------------------------
+            ##---------REMOVE SENSORES DA TABELA ANTIGA-------------------------
+            for sens_r in sensor_remove:
+                print("REMOVIDO: ", sens_r['id'])
+                self.sensor_ant.remove(sens_r)
+
+            sensor_remove.clear()
+            #-------------------------------------------------------------------
+
 
         #-------------Adiciona sensores não cadastrados no CRON-----------------
             for row in dados:
