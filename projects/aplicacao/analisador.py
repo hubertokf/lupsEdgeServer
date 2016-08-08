@@ -104,6 +104,7 @@ class Analisador_Complexo(object):
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
                     print("TENTOU REMOVER: ", sens['id'])
+                    print(type(sens['id']))
                     self.sched.remove_job(sens['id'])   #   <------------------------------------------------------
                     sensor_remove.append(sens)
                     #self.sensor_ant.remove(sens)

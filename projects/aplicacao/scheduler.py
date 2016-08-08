@@ -33,6 +33,7 @@ class SchedulerEdge(object):
         if(jsonObject['modo']=='cron'):
             #print("ENTROU NO CRON")
             print("ID SENSOR: ", jsonObject['id_sensor'])
+            print(type(jsonObject['id_sensor']))
             self.scheduler.add_job(self.tick, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a])
         #    self.scheduler.add_job(self.tick, jsonObject['modo'], second = 0, minute = jsonObject['info']['minute'],
@@ -51,8 +52,9 @@ class SchedulerEdge(object):
 
     def remove_job(self, a):    # a - É ID do sensor a ser removido
         #jsonObject = json.loads(a)
-
-        self.scheduler.remove_job(a)
+        print(type(a))
+        teste = str(a)
+        self.scheduler.remove_job(teste)
 
     def tick(self,response):    # response - É JSON passado como argumento
         jsonObject = json.loads(response)
