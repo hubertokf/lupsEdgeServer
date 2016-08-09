@@ -8,19 +8,19 @@ class Analisador_Complexo(object):
 
     sensor_ant = []
     sensor_add = []
-    #global asd
 
     def __init__(self,asd):
-
-
-        #print (asd.get_asd())
         self.sched = SchedulerEdge()
+#----------------------Variável do OBJETO ------------------------
         while True:
-            #print(asd.get_asd())
             if(asd.get_asd() == 1):
                 self.verificar_DB()
                 asd.set_asd(0);
             time.sleep(5)
+# Essa variável é setada pela outra THREAD(processo "anterior"),
+    #avisando que teve alteração no DB. Então fica sempre nesse laço
+    #verificando essa variável.
+#-----------------------------------------------------------------
 
 
     def verificar_DB(self):     # Pega todos os sensores cadastrados na API
@@ -63,15 +63,8 @@ class Analisador_Complexo(object):
         global asd
         for sens in self.sensor_add:
             json_new = self.cria_JSON(sens,dados_scheduler) # Mescla os sensores no DB com dados do scheduler da API
-            #if asd > 2:
-            self.sched.add_job(json_new)        #           <----------------------
-            ##self.sensor_add.remove(sens)
-            #asd = asd + 1
-        #for sens in self.sensor_add:
+            self.sched.add_job(json_new)
         self.sensor_add.clear()
-
-        #print("-----------PASSOUUU----------")
-
 
     def compara_DB(self, dados):
         global sensor_ant
@@ -82,20 +75,15 @@ class Analisador_Complexo(object):
         existe = 0
         teste = self.sensor_ant
 
-        if len(teste) == 0:
-            #print('TABELA VAZIA')
+        if len(teste) == 0:         # Quando nenhuma JOB está no CRON
             for row in dados:
                 add = add +1
                 self.sensor_ant.append(row)
                 self.sensor_add.append(row)
-                #print(row)
 
-            print("ADD", add)
-
-        else:
-            print("SEGUNDO CASO DA TABELA")
-            #print('TABELA COM DADOS')
-            # sensor_ant -> Cadastrado do sensores que estão rodando no CRON
+        else:                       # Quando já possui JOBs no CRON
+            # sensor_add -> Sensores que serão add no CRON, após add a tab fica vazia
+            # sensor_ant -> Sensores que estão rodando no CRON
             # dados -> Sensores que estão no DB
             #-------------------Deleta os sensores na tabela antiga-----------------
             for sens in self.sensor_ant:
@@ -103,19 +91,15 @@ class Analisador_Complexo(object):
                     if sens['id'] == row['id']:
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
-                    print("TENTOU REMOVER: ", sens['id'])
-                    print(type(sens['id']))
+                    print("Removeu JOB: ", sens['id'])
                     self.sched.remove_job(sens['id'])   #   <------------------------------------------------------
                     sensor_remove.append(sens)
-                    #self.sensor_ant.remove(sens)
 
                 not_existe = 1
         #-----------------------------------------------------------------------
             ##---------REMOVE SENSORES DA TABELA ANTIGA-------------------------
             for sens_r in sensor_remove:
-                print("REMOVIDO: ", sens_r['id'])
                 self.sensor_ant.remove(sens_r)
-
             sensor_remove.clear()
             #-------------------------------------------------------------------
 
@@ -127,14 +111,10 @@ class Analisador_Complexo(object):
                         existe = 1
 
                 if existe == 0:
-                    print("Novo sensor")
                     self.sensor_ant.append(row)
                     self.sensor_add.append(row)
                 existe = 0
         #-----------------------------------------------------------------------
-
-
-        #print("\n---------------------")
 
     def cria_JSON(self, sensor,dados_sched):  # Cria um JSON no formato exato que SCHEDULER
                                     # irá utilizar. QQ tratamento deve ocorrer aqui.
@@ -156,10 +136,5 @@ class Analisador_Complexo(object):
                 info['year'] = "*"
 
                 job['info'] = info
-            #print(json.dumps(job))
         return json.dumps(job)
-#-------------------------------------------------------------------------------
-    def set_add(self, valor):
-        global asd
-        asd = valor
 #-------------------------------------------------------------------------------
