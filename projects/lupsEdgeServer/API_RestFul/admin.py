@@ -21,7 +21,7 @@ class PersistanceAdmin(admin.ModelAdmin):
 class RuleAdmin(admin.ModelAdmin):
 	list_display = ('sensor', 'jsonRule', 'status')
 class ScheduleAdmin(admin.ModelAdmin):
-	list_display = ('sensor', 'schType', 'status', 'cron', 'interval', 'date')
+	list_display = ('sensor', 'status', 'year', 'month', 'day', 'hour', 'minute')
 
 admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Gateway, GatewayAdmin)
