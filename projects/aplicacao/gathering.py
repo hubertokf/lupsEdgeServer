@@ -18,8 +18,10 @@ class Gathering(object):
 
     def regra(self,id_sensor,valor,id_gateway,contador):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
+
         string_rule = '{{ "evento": "e", "id": {0},"valor": {1}, "id_gateway": {2}, "contador": {3} }}'.format(id_sensor,valor,id_gateway,contador)
         #engine.run_rules(string_rule)
+
         print('ENTROU NA REGRA')
 
     def processamento(self,id_sensor,select_features): # 0 = OBJECT or 1 = FUNCTION

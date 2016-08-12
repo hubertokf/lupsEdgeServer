@@ -3,8 +3,8 @@ from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
 from business_rules import run_all
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
-from ConditionsRules import ConditionsRules
-from Parameters import Parameters
+from moduleOfRules.ConditionsRules import ConditionsRules
+from moduleOfRules.Parameters import Parameters
 import os
 import json
 import email
@@ -26,16 +26,21 @@ class ActionRules(BaseActions):
         print(json)
         #chamar tratador de evento
 
-    @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def gathering(self,info_adicional): # ação que ativa o evento de coleta
-        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
+    @rule_action(params={"event": FIELD_TEXT })
+    def gathering(self,event): # ação que ativa o evento de coleta
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,event,self.parameters.value)
+        print(json)
         #chamar tratador de evento
 
-    @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def proceding(self,info_adicional): # ação que ativa o evento de atuação
-        json = '{{"id_sensor": {0}, "event": "{1}", "valor":{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
-        print (json)
+    @rule_action(params={"event": FIELD_TEXT })
+    def proceding(self,event): # ação que ativa o evento de atuação
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,event,self.parameters.value)
+        print(json)
         #chamar tratador de evento
+
+    @rule_action(params={"inf": FIELD_NO_INPUT})
+    def none(self,inf):
+        return None
 
     @rule_action(params = {"inf": FIELD_TEXT})
     def test_post_Event(self, inf):
