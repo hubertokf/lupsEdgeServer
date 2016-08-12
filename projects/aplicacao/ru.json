@@ -1,0 +1,15 @@
+[ {"conditions": { "all": [
+      { "name": "getNumber",
+        "operator": "less_than",
+        "value": 5
+      }
+    ]
+
+      },
+
+  "actions": [
+      { "name": "test_post_Event",
+        "params": {"inf": "funf"}
+      }
+  ]}
+]

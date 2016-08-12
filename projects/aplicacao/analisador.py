@@ -26,7 +26,7 @@ class Analisador_Complexo(object):
     def verificar_DB(self):     # Pega todos os sensores cadastrados na API
 
         #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
         url = 'http://localhost:8000/sensors/?format=json'
         request = requests.get(url, headers=headers)
         jsonObject = request.json()
@@ -52,7 +52,7 @@ class Analisador_Complexo(object):
     def verifica_schedules(self):   # Pega dados cadastrados em relação aos sensores, usado no CRONTAB
 
             #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
         url = 'http://localhost:8000/schedules/?format=json'
         request = requests.get(url, headers=headers)
         jsonObject = request.json()
@@ -127,7 +127,7 @@ class Analisador_Complexo(object):
                 job['id_sensor'] = str(sensor['id'])
                 job['event'] = "gathering"
 
-                info['second'] = str("*/"+row['cron'])
+                info['second'] = "*/{}".format(row['minute'])
                 info['minute']  = "*"
                 info['hour'] = "*"
                 info['day'] = "*"
