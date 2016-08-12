@@ -19,7 +19,7 @@ class Proceeding(object):
         return vatuador
 
     # Realiza toda a operação do proceeding utilizando o métodos criados
-    def processamento(self,a):  #device_folder <--- id do sensor, referente a pasta
+    def processamento(self,a, select_features):  #device_folder <--- id do sensor, referente a pasta
         jsonObject = json.loads(a)
 
         self.set_id(jsonObject['id_real'])
