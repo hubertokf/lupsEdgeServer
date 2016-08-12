@@ -1,5 +1,5 @@
-from business_rules.variables import BaseVariables, numeric_rule_variable
-from moduleOfRules.EngineRuleEdge import EngineRule
+from business_rules.variables import BaseVariables, numeric_rule_variable, boolean_rule_variable
+
 class ConditionsRules(BaseVariables):
     def __init__ (self, parameters):
         self.parameters = parameters
@@ -13,21 +13,15 @@ class ConditionsRules(BaseVariables):
 
         total_verificacao = 10
         contador = total_verificacao
-        engine = new EngineRule()
         trigger = False
-        ruler = self.ruler()
 
-        while (contador > 0 && trigger == False):
 
-                '''Instaciar objeto gathering'''
-                string = "{{"id": {0}, "event" : {1}, "value" : {2}}}".format(18,"e",105)
-                trigger = engine.run_rules_error(ruler,string)
+        while (contador > 0 and trigger == False):
+                # Colocar o objeto gathering
+                value_sensor = self.parameters.value
+                if(value_sensor < 99.9):
+                    trigger = True
+                    break
                 contador = contador - 1
 
         return trigger
-
-    def ruler():
-        rule =
-        """[{"conditions":{"all":[{"name":getNumber,"operator":"less_than","value":99.9}]}},{"actions":"none","params": {"inf":}}]"""
-
-    return rule

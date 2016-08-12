@@ -21,7 +21,7 @@ class EngineRule(object):
         url = 'http://localhost:8000/rules/?format=json&id_of_sensor={0}'.format(2) # a fins de teste
         request = requests.get(url, headers=headers)
         rules = request.json() # coleta os dados recebidos da APIrestful
-        
+
         return rules
 
     def get_parameters(self,obj_json): # pega os parametros enviados pelo tratador de evento e retorna um disct destes parametros
@@ -39,9 +39,9 @@ class EngineRule(object):
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
             rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
             trigger_rule =  run_all(rule_list=rule,
-                defined_variables=ConditionsRules(parameters['valor']),
+                defined_variables=ConditionsRules(obj_parameters),
                 defined_actions=ActionRules(obj_parameters),
-                stop_on_first_trigger=True
+                stop_on_first_trigger= False
                 )
 
     #método específico para executar avaliação de falha

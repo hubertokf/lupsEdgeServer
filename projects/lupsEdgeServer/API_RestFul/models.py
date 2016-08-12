@@ -2,7 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework.authtoken.models import Token
+from datetime import date
 
 class Manufacturer(models.Model):
 	name = models.CharField(max_length=200)
@@ -82,11 +84,13 @@ class Schedule(models.Model):
 		('c', 'Cron'),
 	)
 	sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
-	schType = models.CharField(max_length=1, choices=schedules_choices, default='i')
 	status = models.BooleanField()
-	cron = models.TextField(blank=True)
-	interval = models.TextField(blank=True)
-	date = models.TextField(blank=True)
+	year = models.IntegerField(default=date.today().year,blank=True,validators=[MinValueValidator(date.today().year-40),MaxValueValidator(date.today().year)])
+	month = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(12)])
+	day = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(31)])
+	hour = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(23)])
+	minute = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(59)])
+
 
 	def __str__(self):
 		return str(self.sensor)
