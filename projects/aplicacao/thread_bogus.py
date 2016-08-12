@@ -58,6 +58,5 @@ while True:                     # Cria duas THREADS, SOCKET e ANALIZADOR
     asd = Asd();
     _thread.start_new_thread(conectado, tuple([con, cliente, asd]))
     _thread.start_new_thread(juca = Analisador_Complexo(asd))#, tuple([asd]))
-
-
+    
 tcp.close()
