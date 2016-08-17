@@ -136,5 +136,6 @@ class Analisador_Complexo(object):
                 info['year'] = "*"
 
                 job['info'] = info
+                #print(job)
         return json.dumps(job)
 #-------------------------------------------------------------------------------
