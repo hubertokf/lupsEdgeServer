@@ -126,6 +126,7 @@ class Analisador_Complexo(object):
                 job['modo'] = "cron"
                 job['id_sensor'] = str(sensor['id'])
                 job['event'] = "gathering"
+                job['gateway'] = sensor['gateway']
 
                 info['second'] = "*/{}".format(row['minute'])
                 info['minute']  = "*"
