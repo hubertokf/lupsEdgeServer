@@ -61,7 +61,15 @@ class Asd(object):
 #while True:                     # Cria duas THREADS, SOCKET e ANALIZADOR
 #    con, cliente = tcp.accept()
 asd = Asd();
-_thread.start_new_thread(tes = MTServer(asd))
-_thread.start_new_thread(juca = Analisador_Complexo(asd))#, tuple([asd]))
+
+juca = Analisador_Complexo(asd)
+juca.start()
+tes = MTServer(asd)
+tes.start()
+
+
+#_thread.start_new_thread(tes = MTServer(asd))
+#_thread.start_new_thread(juca = Analisador_Complexo(asd))
+#, tuple([asd]))
 
 #tcp.close()

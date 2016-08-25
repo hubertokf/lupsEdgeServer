@@ -1,4 +1,4 @@
-#!/home/leonardo/Documents/Trabalhos/lupsEdgeServer/projects/aplicacao/microexample/bin/python3
+#!/home/leonardo/Desktop/lupsEdgeServer/projects/aplicacao/microexample/bin/python3
 # -*- coding: utf-8 -*-
 """
 Bottle is a fast and simple micro-framework for small web applications. It

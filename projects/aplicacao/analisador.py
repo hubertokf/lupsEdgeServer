@@ -3,19 +3,24 @@ import json
 import time
 from io import BytesIO
 from scheduler import  *
+import threading
 
-class Analisador_Complexo(object):
+class Analisador_Complexo(threading.Thread):
 
     sensor_ant = []
     sensor_add = []
+    asd = None
 
     def __init__(self,asd):
+        threading.Thread.__init__(self)
+        self.asd = asd
         self.sched = SchedulerEdge()
 #----------------------Variável do OBJETO ------------------------
+    def run(self):
         while True:
-            if(asd.get_asd() == 1):
+            if(self.asd.get_asd() == 1):
                 self.verificar_DB()
-                asd.set_asd(0);
+                self.asd.set_asd(0);
             time.sleep(5)
 # Essa variável é setada pela outra THREAD(processo "anterior"),
     #avisando que teve alteração no DB. Então fica sempre nesse laço
