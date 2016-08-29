@@ -1,0 +1,1 @@
+default_app_config = 'API_RestFul.apps.API_RestFulConfig'
