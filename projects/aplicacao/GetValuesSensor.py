@@ -7,6 +7,7 @@ class GetValuesSensor(object):
         url = 'http://10.0.50.186/temp?sensor=1'
         request = requests.get(url, headers=headers)
         information_of_sensor = request.json()
+        
         if(type(information_of_sensor['value'])=="string"):
 
             information_of_sensor['value'] = 1000
