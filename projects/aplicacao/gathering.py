@@ -16,11 +16,11 @@ class Gathering(object):
     def get_val_sensor(self):
         return self.vsensor
 
-    def regra(self,id_sensor,valor,id_gateway,contador):   # Verificar argumentos e criar objeto p chamar regras
+    def regra(self,id_sensor,valor,id_gateway):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
 
-        string_rule = '{{ "evento": "e", "id": {0},"valor": {1}, "id_gateway": {2}, "contador": {3} }}'.format(id_sensor,valor,id_gateway,contador)
-        #engine.run_rules(string_rule)
+        string_rule = '{{ "evento": "e", "id": {0},"valor": {1}, "id_gateway": {2} }}'.format(id_sensor,valor,id_gateway)
+        engine.run_rules(string_rule)
 
         print('ENTROU NA REGRA')
 
@@ -38,17 +38,17 @@ class Gathering(object):
         id_g = formation['id_gateway']
         id_s = formation['id_sensor']
         value = formation['value']
-        contador = formation['contador']
+        # contador = formation['contador']
 
         print(value)
 
 
         if select_features == 0:              # Chama a REGRA
-            self.regra(id_s,value,id_g,contador)
+            self.regra(id_sensor,value,id_g)
             print("REGRA 0")
 
         else :                  # Retorna o valor do sensor
             #return self.get_val_sensor();
-            self.regra(id_s,value,id_g,contador)
+            self.regra(id_s,value,id_g)
             print("REGRA 1")
             #iasdhajkhsdjhad

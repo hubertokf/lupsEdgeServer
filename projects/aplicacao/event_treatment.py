@@ -53,6 +53,6 @@ class Event_Treatment(object):
             elif self.get_tipo_evento() == "gathering":
                 print('Sensor: ', jsonObject['id_sensor'])
                 #event = Gathering()
-                #event.processamento(1, select_features) # 1 em referencia ao sensor 1
+                #event.processamento(jsonObject['id_sensor'], select_features) # 1 em referencia ao sensor 1
             else:
                 print("Nenhum do casos no TRATAMENTO EVENTO 2")

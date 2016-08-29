@@ -20,10 +20,11 @@ class ActionRules(BaseActions):
         self.parameters = parameters
 
 
-    @rule_action(params={"event": FIELD_TEXT })
-    def publish(self,event): # ação que ativa o evento de publicação
-        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,event,self.parameters.value)
-        print(json)
+    @rule_action(params={"info_adicional": FIELD_TEXT })
+    def publish(self,info_adicional): # ação que ativa o evento de publicação
+        json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,info_adicional,self.parameters.value)
+        resp = 'entrou no publicador {0}\n\n '.format(self.parameters.id)
+        print(resp)
         #chamar tratador de evento
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
@@ -34,11 +35,10 @@ class ActionRules(BaseActions):
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def proceding(self,info_adicional): # ação que ativa o evento de atuação
         json = '{{"id_sensor": {0}, "event": "{1}", "valor":{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
-        print (json)
         #chamar tratador de evento
 
-    @rule_action(params = {"inf": FIELD_TEXT})
-    def test_post_Event(self, inf):
+    @rule_action(params = {"info_adicional": FIELD_TEXT})
+    def test_post_Event(self, info_adicional):
         sender = 'tainaribeiro.rs@gmail.com'
         receivers = ['tainaribeiro.rs@hotmail.com']
 

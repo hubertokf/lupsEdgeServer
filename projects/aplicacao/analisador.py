@@ -3,19 +3,24 @@ import json
 import time
 from io import BytesIO
 from scheduler import  *
+import threading
 
-class Analisador_Complexo(object):
+class Analisador_Complexo(threading.Thread):
 
     sensor_ant = []
     sensor_add = []
+    asd = None
 
     def __init__(self,asd):
+        threading.Thread.__init__(self)
+        self.asd = asd
         self.sched = SchedulerEdge()
 #----------------------Variável do OBJETO ------------------------
+    def run(self):
         while True:
-            if(asd.get_asd() == 1):
+            if(self.asd.get_asd() == 1):
                 self.verificar_DB()
-                asd.set_asd(0);
+                self.asd.set_asd(0);
             time.sleep(5)
 # Essa variável é setada pela outra THREAD(processo "anterior"),
     #avisando que teve alteração no DB. Então fica sempre nesse laço
@@ -26,7 +31,7 @@ class Analisador_Complexo(object):
     def verificar_DB(self):     # Pega todos os sensores cadastrados na API
 
         #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
         url = 'http://localhost:8000/sensors/?format=json'
         request = requests.get(url, headers=headers)
         jsonObject = request.json()
@@ -52,7 +57,7 @@ class Analisador_Complexo(object):
     def verifica_schedules(self):   # Pega dados cadastrados em relação aos sensores, usado no CRONTAB
 
             #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
         url = 'http://localhost:8000/schedules/?format=json'
         request = requests.get(url, headers=headers)
         jsonObject = request.json()
@@ -126,8 +131,9 @@ class Analisador_Complexo(object):
                 job['modo'] = "cron"
                 job['id_sensor'] = str(sensor['id'])
                 job['event'] = "gathering"
+                job['gateway'] = sensor['gateway']
 
-                info['second'] = str("*/"+row['cron'])
+                info['second'] = "*/{}".format(row['minute'])
                 info['minute']  = "*"
                 info['hour'] = "*"
                 info['day'] = "*"
@@ -136,5 +142,6 @@ class Analisador_Complexo(object):
                 info['year'] = "*"
 
                 job['info'] = info
+                #print(job)
         return json.dumps(job)
 #-------------------------------------------------------------------------------
