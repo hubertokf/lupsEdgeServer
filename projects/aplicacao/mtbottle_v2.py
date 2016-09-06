@@ -9,9 +9,15 @@ class MTServer(bottle.ServerAdapter):
     def __init__(self,asd):
         app = bottle.Bottle()
 
-        @app.route('/sensor')
+        @app.route('/sigSchedule')
         def foo():
             asd.set_asd(1);
+            return 'Verificação\n'
+            #return str(datetime.datetime.now())
+
+        @app.route('/sigSensor')
+        def foo():
+            asd.set_asd(0);
             return 'Verificação\n'
             #return str(datetime.datetime.now())
 
