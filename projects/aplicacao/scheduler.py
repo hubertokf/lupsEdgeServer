@@ -15,6 +15,7 @@ class SchedulerEdge(object):
 
     sensor_ant = []
     sensor_add = []
+    scheduler_data_ant = []
 
     def __init__(self):             #instância do objeto e inicia o escalonador
 
@@ -34,11 +35,11 @@ class SchedulerEdge(object):
             self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a])
 
-    def remove_job(self, id_tarefa):    # id_tarefa - É ID do sensor a ser removido
+    def remove_job(self, id_tarefa):    # id_tarefa - É ID do sensor/atuador a ser removido do CRON
         teste = str(id_tarefa)
         self.scheduler.remove_job(teste)
 
-    def function(self,response):    # response - É JSON passado como argumento
+    def function(self,response):        # response - É JSON passado como argumento
         jsonObject = json.loads(response)
         object_events = Event_Treatment()
         object_events.event(1,response)
@@ -47,6 +48,8 @@ class SchedulerEdge(object):
 #-------------------------------------------------------------------------------
 
     def start_process(self):
+        global scheduler_data_ant
+
         sensors_data = self.check_sensor()
         scheduler_data = self.check_schedules()
 
@@ -59,10 +62,15 @@ class SchedulerEdge(object):
         self.compara_DB(sensors_actual)         # Repassa um JSON com todos os dados de sensores cadastrados "NOVOS"
 
         aux_sensor_add = self.sensor_add
+
         if len(aux_sensor_add) != 0:            # Por algum motivo não funciona colocando direto o "self.sensor_add"
                                                             #                oO
             self.activa_scheduler(scheduler_data)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
+        else:                                   # Teve modificação apenas no scheduler, sem add ou remove sensor/atuador
+            self.measure_schedulers(scheduler_data_ant, scheduler_data, sensors_data)
 
+        scheduler_data_ant = scheduler_data
+        print("------------------------------------------------------")
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
@@ -136,12 +144,12 @@ class SchedulerEdge(object):
         #-----------------------------------------------------------------------
 
     def activa_scheduler(self, dados_scheduler):
-        #global asd
         global sensor_add
 
         for sens in self.sensor_add:
             json_new = self.create_JSON(sens,dados_scheduler) # Mescla os sensores no DB com dados do scheduler da API
-            self.add_job(json_new)
+            if json_new !=0:
+                self.add_job(json_new)
 
         self.sensor_add.clear()
 
@@ -168,5 +176,28 @@ class SchedulerEdge(object):
 
                 job['info'] = info
                 #print(job)
-        return json.dumps(job)
+                return json.dumps(job)
+        return 0;
 #-------------------------------------------------------------------------------
+    def measure_schedulers(self, sched_data_old, sched_data_new, sensors_data):
+        aux_variable = 0
+        #print("ENTROU")
+
+        for data_new in sched_data_new:
+            for data_old in sched_data_old:
+                if data_old['minute'] == data_new['minute']:
+                    #print("Sensor: "+data_new['sensor']+"OLD: " + data_old['minute'] + "----- NEW: " + data_new['minute'])
+                    aux_variable = 1
+
+            for data_sens in sensors_data:
+                if str(data_new['sensor']) == str(data_sens['id']):
+                    sensor = data_sens
+
+            if aux_variable == 0:   # Chamar o NEW_JSON para ADD no CRON
+                #print("ENTROU 222222222")
+                self.remove_job(sensor['id'])
+                json_new = self.create_JSON(sensor, sched_data_new)
+
+                self.add_job(json_new)
+
+            aux_variable = 0
