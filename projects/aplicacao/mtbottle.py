@@ -6,18 +6,20 @@ import mtwsgi
 
 class MTServer(bottle.ServerAdapter):
 
-    def __init__(self,asd):
+    def __init__(self,scheduler):
         app = bottle.Bottle()
 
         @app.route('/sigSchedule')
         def foo():
-            asd.set_asd(1);
+            scheduler.start_process();
+            #asd.set_asd(1);
             return 'Verificação\n'
             #return str(datetime.datetime.now())
 
         @app.route('/sigSensor')
         def foo():
-            asd.set_asd(0);
+            #scheduler.start_process();
+            #asd.set_asd(0);
             return 'Verificação\n'
             #return str(datetime.datetime.now())
 
