@@ -18,9 +18,15 @@ class EngineRule(object):
 
         headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
     #url = 'http://localhost:8000/rules/{0}/?format=json'.format(a) # quando o servidor estiver em funcionamento
-        url = 'http://localhost:8000/rules/?format=json&sensor={0}'.format(a) # a fins de teste
+        url = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(a)
         r = requests.get(url, headers=headers)
+        getSensor = r.json()
+        # getSensor = json.loads(getSensor)
+        print(type(getSensor))
+        id_sensor =  getSensor[0]['id']
 
+        url = 'http://localhost:8000/rules/?format=json&sensor={0}'.format(id_sensor) # a fins de teste
+        r = requests.get(url, headers=headers)
         rules = r.json() # coleta os dados recebidos da APIrestfull
         #rules = json.loads(rules) # transforma json em dist
         return rules
