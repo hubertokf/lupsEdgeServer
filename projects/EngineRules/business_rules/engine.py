@@ -1,5 +1,6 @@
 from .fields import FIELD_NO_INPUT
-
+import gc
+i = 0
 def run_all(rule_list,
             defined_variables,
             defined_actions,
@@ -24,6 +25,7 @@ def run(rule, defined_variables, defined_actions):
 
 
 def check_conditions_recursively(conditions, defined_variables):
+
     keys = list(conditions.keys())
     if keys == ['all']:
         assert len(conditions['all']) >= 1
@@ -50,11 +52,11 @@ def check_condition(condition, defined_variables):
     variables, values, and the comparison operator. The defined_variables
     object must have a variable defined for any variables in this condition.
     """
-    name, op, value = condition['name'], condition['operator'], condition['value']
-    operator_type = _get_variable_value(defined_variables, name)
+    name, op, value,parameters = condition['name'], condition['operator'], condition['value'], condition['parameters']
+    operator_type = _get_variable_value(defined_variables, name,parameters)
     return _do_operator_comparison(operator_type, op, value)
 
-def _get_variable_value(defined_variables, name):
+def _get_variable_value(defined_variables, name,parameters):
     """ Call the function provided on the defined_variables object with the
     given name (raise exception if that doesn't exist) and casts it to the
     specified type.
@@ -64,9 +66,19 @@ def _get_variable_value(defined_variables, name):
     def fallback(*args, **kwargs):
         raise AssertionError("Variable {0} is not defined in class {1}".format(
                 name, defined_variables.__class__.__name__))
-    method = getattr(defined_variables, name, fallback)
-    val = method()
-    return method.field_type(val)
+    global i
+    i = i + 1
+    # print("{0} a".format(i))
+    method = getattr(defined_variables, name)
+    # delattr(defined_variables, name)
+    # (parameters)
+    # print(method)
+    val = method(parameters)
+    ret = method.field_type(val)
+    # setattr(defined_variables, name,name)
+    # gc.collect(val)
+    # print(ret)
+    return ret
 
 def _do_operator_comparison(operator_type, operator_name, comparison_value):
     """ Finds the method on the given operator_type and compares it to the
