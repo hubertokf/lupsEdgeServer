@@ -19,18 +19,19 @@ class Gathering(object):
     def regra(self,id_sensor,valor,id_gateway):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
 
-        string_rule = '{{ "evento": "e", "id": {0},"valor": {1}, "id_gateway": {2} }}'.format(id_sensor,valor,id_gateway)
+        string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(id_sensor,valor,id_gateway)
+        print(string_rule)
         engine.run_rules(string_rule)
 
         print('ENTROU NA REGRA')
 
-    def processamento(self,id_sensor,select_features): # 0 = OBJECT or 1 = FUNCTION
+    def processamento(self,json): # 0 = OBJECT or 1 = FUNCTION
                                 # Cria um objeto COMMUNICATION, que retorna um valor do sensor
                                 # Realiza um if, verificando se precisa criar um  REGRA ou apenas
                                 # retorna um dado
         #valor_sensor =
         colecter_sensor = GetValuesSensor()
-        formation = colecter_sensor.get_values_on_gatway()            # <--------- Passar argumentos
+        formation = colecter_sensor.get_values_on_gatway(json)            # <--------- Passar argumentos
         #self.set_val_sensor(valor_sensor);
         #print(type(formation))
         #formation = json.loads(formation)
@@ -40,15 +41,10 @@ class Gathering(object):
         value = formation['value']
         # contador = formation['contador']
 
-        print(value)
+        # print(value)
 
 
-        if select_features == 0:              # Chama a REGRA
-            self.regra(id_sensor,value,id_g)
-            print("REGRA 0")
-
-        else :                  # Retorna o valor do sensor
-            #return self.get_val_sensor();
-            self.regra(id_s,value,id_g)
-            print("REGRA 1")
-            #iasdhajkhsdjhad
+        #return self.get_val_sensor();
+        self.regra(id_s,value,id_g)
+        print("REGRA 1")
+        #iasdhajkhsdjhad
