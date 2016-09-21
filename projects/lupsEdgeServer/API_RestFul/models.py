@@ -85,12 +85,17 @@ class Schedule(models.Model):
 	)
 	sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
 	status = models.BooleanField()
-	year = models.IntegerField(default=date.today().year,blank=True,validators=[MinValueValidator(date.today().year-40),MaxValueValidator(date.today().year)])
-	month = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(12)])
-	day = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(31)])
-	hour = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(23)])
-	minute = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(59)])
-
+	models.CharField(max_length=30)
+	# year = models.IntegerField(default=date.today().year,blank=True,validators=[MinValueValidator(date.today().year-40),MaxValueValidator(date.today().year)])
+	# month = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(12)])
+	# day = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(31)])
+	# hour = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(23)])
+	# minute = models.IntegerField(default=0,blank=True,validators=[MinValueValidator(0),MaxValueValidator(59)])
+	year = models.CharField(max_length=30)
+	month = models.CharField(max_length=30)
+	day = models.CharField(max_length=30)
+	hour = models.CharField(max_length=30)
+	minute = models.CharField(max_length=30)
 
 	def __str__(self):
 		return str(self.sensor)
