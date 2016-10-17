@@ -39,6 +39,7 @@ class BaseParameter(models.Model):
 class ContextServer(models.Model):
 	name = models.CharField(max_length=200)
 	addressUrl = models.URLField(max_length=200)
+	accessToken = models.CharField(max_length=200,null=True)
 
 	def __str__(self):
 		return self.name
