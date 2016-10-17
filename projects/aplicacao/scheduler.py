@@ -31,6 +31,8 @@ class SchedulerEdge(object):
     def add_job(self, a): # cria uma nova tarefa no escalonador
         jsonObject = json.loads(a)
 
+        #print(jsonObject['id_sensor'])
+
         if(jsonObject['modo']=='cron'):
             self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a])
@@ -70,7 +72,7 @@ class SchedulerEdge(object):
             self.measure_schedulers(scheduler_data_ant, scheduler_data, sensors_data)
 
         scheduler_data_ant = scheduler_data
-        print("------------------------------------------------------")
+        #print("------------------------------------------------------")
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
@@ -118,7 +120,7 @@ class SchedulerEdge(object):
                     if sens['id'] == row['id']:
                         not_existe = 0
                 if not_existe == 1:    # remover em relação ao ID, pois é único
-                    print("Removeu JOB: ", sens['id'])
+                    #print("Removeu JOB: ", sens['id'])
                     self.remove_job(sens['id'])   #   <------------------------------------------------------
                     sensor_remove.append(sens)
 
@@ -160,6 +162,7 @@ class SchedulerEdge(object):
         info = {}
         for row in dados_sched:
             if row['sensor'] == sensor['id']:
+                #print("-------------"+str(sensor['id'])+"-------------")
 
                 job['modo'] = "cron"
                 job['id_sensor'] = str(sensor['id'])

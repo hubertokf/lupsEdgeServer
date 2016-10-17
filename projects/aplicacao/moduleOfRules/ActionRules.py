@@ -24,7 +24,7 @@ class ActionRules(BaseActions):
     def publish(self,info_adicional): # ação que ativa o evento de publicação
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,info_adicional,self.parameters.value)
         resp = 'entrou no publicador {0}\n\n '.format(self.parameters.id)
-        print(resp)
+        #print(resp)
         #chamar tratador de evento
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
@@ -39,31 +39,32 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"info_adicional": FIELD_TEXT})
     def test_post_Event(self, info_adicional):
-        sender = 'tainaribeiro.rs@gmail.com'
-        receivers = ['tainaribeiro.rs@hotmail.com']
+        #sender = 'tainaribeiro.rs@gmail.com'
+        #receivers = ['tainaribeiro.rs@hotmail.com']
 
-        message = "Houve um erro de leitura no sensor{0}.\n Por favor, verifique a situação do sensor assim como a sua comunicação com o gateway".format(self.parameters.id)
-        subject = "Problema no sensor {0}".format(self.parameters.id)
+        #message = "Houve um erro de leitura no sensor{0}.\n Por favor, verifique a situação do sensor assim como a sua comunicação com o gateway".format(self.parameters.id)
+        #subject = "Problema no sensor {0}".format(self.parameters.id)
 
         # build the message
-        msg = MIMEMultipart()
-        msg['From'] = sender
-        msg['To'] = ', '.join(receivers)
-        msg['Date'] = formatdate(localtime=True)
-        msg['Subject'] = subject
-        msg.attach(MIMEText(message))
-        print(msg.as_string())
-        try:
-          smtpObj = smtplib.SMTP('smtp.gmail.com',587)
-          smtpObj.ehlo()
-          smtpObj.starttls()
-          smtpObj.login(sender,"3123123123121")
-          smtpObj.sendmail(sender, receivers, msg.as_string())
-          print ("Successfully sent email")
-          smtpObj.quit()
-        except :
-          print ("Error: unable to send email")
-          smtpObj.quit()
+        # msg = MIMEMultipart()
+        # msg['From'] = sender
+        # msg['To'] = ', '.join(receivers)
+        # msg['Date'] = formatdate(localtime=True)
+        # msg['Subject'] = subject
+        # msg.attach(MIMEText(message))
+        # print(msg.as_string())
+        # try:
+        #   smtpObj = smtplib.SMTP('smtp.gmail.com',587)
+        #   smtpObj.ehlo()
+        #   smtpObj.starttls()
+        #   smtpObj.login(sender,"3123123123121")
+        #   smtpObj.sendmail(sender, receivers, msg.as_string())
+        #   print ("Successfully sent email")
+        #   smtpObj.quit()
+        # except :
+        #   print ("Error: unable to send email")
+        #   smtpObj.quit()
+        print(" ")
 
     @rule_action(params = {"ruler": FIELD_TEXT})
     def gathering_error(self,ruler):

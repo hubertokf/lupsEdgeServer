@@ -1,4 +1,5 @@
 from GetValuesSensor import *
+from publisher import *
 from moduleOfRules.EngineRuleEdge import EngineRule
 import json
 
@@ -20,10 +21,10 @@ class Gathering(object):
         engine = EngineRule()
 
         string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(id_sensor,valor,id_gateway)
-        print(string_rule)
+        #print(string_rule)
         engine.run_rules(string_rule)
 
-        print('ENTROU NA REGRA')
+        #print('ENTROU NA REGRA')
 
     def processamento(self,json): # 0 = OBJECT or 1 = FUNCTION
                                 # Cria um objeto COMMUNICATION, que retorna um valor do sensor
@@ -36,15 +37,24 @@ class Gathering(object):
         #print(type(formation))
         #formation = json.loads(formation)
 
+        #print(json['id_sensor'])
+
         id_g = formation['id_gateway']
         id_s = formation['id_sensor']
         value = formation['value']
         # contador = formation['contador']
 
-        # print(value)
+        #print("VAL:  "+value)
+        #print("ID G: "+ id_g)
+        #print("ID S: "+ id_s)
 
-
+        #print(id_s)
         #return self.get_val_sensor();
         self.regra(id_s,value,id_g)
-        print("REGRA 1")
+
+        #id_sensor, value, contextServer
+        publicacao = Publisher()
+        publicacao.set_publisher_local(json['id_sensor'],value,id_g)
+        #publicacao.set_publisher_contexto(value,id_s,id_g)
+        #print("REGRA 1")
         #iasdhajkhsdjhad

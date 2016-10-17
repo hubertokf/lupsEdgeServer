@@ -17,9 +17,10 @@ class Event_Treatment(object):
             print('Publisher')
             #event = Publisher()
         elif jsonObject['event'] == "gathering":
-            print('Sensor: ', jsonObject['id_sensor'])
-            print('uuID: ', jsonObject['uuID'])
+            #print('Sensor: ', jsonObject['id_sensor'])
+            #print('uuID: ', jsonObject['uuID'])
             event = Gathering()
+            #print(jsonObject['id_sensor'])
             event.processamento(jsonObject) # 1 em referencia ao sensor 1
 
             #event.processamento(jsonObject['id_sensor'], select_features) # 1 em referencia ao sensor 1
