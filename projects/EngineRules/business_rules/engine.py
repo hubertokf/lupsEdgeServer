@@ -1,6 +1,6 @@
 from .fields import FIELD_NO_INPUT
 import gc
-i = 0
+import json
 def run_all(rule_list,
             defined_variables,
             defined_actions,
@@ -53,6 +53,7 @@ def check_condition(condition, defined_variables):
     object must have a variable defined for any variables in this condition.
     """
     name, op, value,parameters = condition['name'], condition['operator'], condition['value'], condition['parameters']
+    parameters = json.dumps(parameters)
     operator_type = _get_variable_value(defined_variables, name,parameters)
     return _do_operator_comparison(operator_type, op, value)
 
@@ -66,18 +67,10 @@ def _get_variable_value(defined_variables, name,parameters):
     def fallback(*args, **kwargs):
         raise AssertionError("Variable {0} is not defined in class {1}".format(
                 name, defined_variables.__class__.__name__))
-    global i
-    i = i + 1
-    # print("{0} a".format(i))
-    method = getattr(defined_variables, name)
-    # delattr(defined_variables, name)
-    # (parameters)
-    # print(method)
+
+    method = getattr(defined_variables, name,fallback)
     val = method(parameters)
     ret = method.field_type(val)
-    # setattr(defined_variables, name,name)
-    # gc.collect(val)
-    # print(ret)
     return ret
 
 def _do_operator_comparison(operator_type, operator_name, comparison_value):
