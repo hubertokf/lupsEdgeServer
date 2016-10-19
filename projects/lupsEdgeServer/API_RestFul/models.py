@@ -65,6 +65,7 @@ class Persistance(models.Model):
 	sensor = models.ForeignKey(Sensor, on_delete=models.PROTECT)
 	contextServer = models.ForeignKey(ContextServer, on_delete=models.PROTECT)
 	collectDate = models.DateTimeField(auto_now=False, auto_now_add=False)
+	publisher = models.BooleanField(default=False)
 	value = models.FloatField()
 
 	def __str__(self):
