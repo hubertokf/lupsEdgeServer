@@ -8,6 +8,7 @@ from moduleOfRules.Parameters import Parameters
 import os
 import json
 import email
+import requests
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
@@ -24,7 +25,6 @@ class ActionRules(BaseActions):
     def publish(self,info_adicional): # ação que ativa o evento de publicação
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,info_adicional,self.parameters.value)
         resp = 'entrou no publicador {0}\n\n '.format(self.parameters.id)
-        #print(resp)
         #chamar tratador de evento
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
@@ -73,3 +73,9 @@ class ActionRules(BaseActions):
         json = '{{"id_sensor": {0}, "event": "e", "valor":{1}, "contador": {2}}}'.format(self.parameters.id,self.parameters.value,contador)
         object_events = Event_Treatment()
         object_events.event(1,json)
+
+    @rule_action(params = {"uuid": FIELD_TEXT,"url": FIELD_TEXT})
+    def get_extern_sensor(self,uuid,url):
+        url  = "http://10.0.50.184:8081/sensor={0}".format(uuid)
+        r    = requests.get(url)
+        print(r.json())
