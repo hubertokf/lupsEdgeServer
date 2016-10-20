@@ -17,15 +17,17 @@ def run_all(rule_list,
 
 def run(rule, defined_variables, defined_actions):
     conditions, actions = rule['conditions'], rule['actions']
+    print("Iniciando avaliação das Condições")
     rule_triggered = check_conditions_recursively(conditions, defined_variables)
     if rule_triggered:
+        print("--------------------------------------------------------------------\n Condições satisfeitas. Executando Ações\n-------------------------------------------------------------------- ")
         do_actions(actions, defined_actions)
         return True
+    print("Condições não foram satisfeitas\n")
     return False
 
 
 def check_conditions_recursively(conditions, defined_variables):
-
     keys = list(conditions.keys())
     if keys == ['all']:
         assert len(conditions['all']) >= 1
