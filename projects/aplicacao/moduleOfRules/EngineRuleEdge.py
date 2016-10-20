@@ -30,8 +30,8 @@ class EngineRule(object):
 
     def get_parameters(self,obj_json): # pega os parametros enviados pelo tratador de evento e retorna um disct destes parametros
 
-        # parameters = json.loads(obj_json)
-        #print(parameters['valor'])
+        parameters = json.loads(obj_json)
+        print(parameters['valor'])
         return parameters
 
 
