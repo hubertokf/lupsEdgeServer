@@ -18,8 +18,13 @@ class ConditionsRules(BaseVariables):
 
     @numeric_rule_variable
     def get_verify_sensor(self,params):
-        data_condition: json.loads(params)
-        
+
+        gateways       = Gathering();
+        data_condition = json.loads(params)
+        uuid['uuID']   = data_condition['sensor']
+        value          = gateways.coleting_value_of_sensor(uuid['uuID'] )
+        return value
+
 
     @boolean_rule_variable
     def fault_check_x(self):
@@ -37,3 +42,5 @@ class ConditionsRules(BaseVariables):
                 contador = contador - 1
 
         return trigger
+
+from ./gathering import Gathering

@@ -35,7 +35,7 @@ class SchedulerEdge(object):
 
         if(jsonObject['modo']=='cron'):
             self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
-            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a])
+            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a],max_instances=3)
 
     def remove_job(self, id_tarefa):    # id_tarefa - É ID do sensor/atuador a ser removido do CRON
         teste = str(id_tarefa)

@@ -1,5 +1,5 @@
 import requests
-import json as fuckjson
+import json as prettyJson
 
 class GetValuesSensor(object):
 

@@ -58,3 +58,8 @@ class Gathering(object):
         #publicacao.set_publisher_contexto(value,id_s,id_g)
         #print("REGRA 1")
         #iasdhajkhsdjhad
+    def coleting_value_of_sensor(self,parameters_essential_for_colect):
+
+        colecter_sensor = GetValuesSensor()
+        formation       = colecter_sensor.get_values_on_gatway(parameters_essential_for_colect)
+        return formation['value']            # <--------- Passar argumentos

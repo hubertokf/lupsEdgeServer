@@ -41,8 +41,8 @@ class EngineRule(object):
         obj_parameters= Parameters(parameters['id'],parameters['valor'],parameters['id_gateway']) #id_gateway futuramente será trabalhado
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
-            #print(i)
-            if(rules[i][jsonRule]):
+            
+            if(rules[i]['status']):
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
                 run_all(rule_list=rule,
                 defined_variables=ConditionsRules(obj_parameters),
