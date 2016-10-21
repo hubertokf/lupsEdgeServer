@@ -1,5 +1,6 @@
 from business_rules.variables import BaseVariables, numeric_rule_variable, boolean_rule_variable
 import requests
+import json
 
 class ConditionsRules(BaseVariables):
     def __init__ (self, parameters):
@@ -14,6 +15,11 @@ class ConditionsRules(BaseVariables):
         uuid = "tenho que inserir"
         url  = "http://10.0.50.184:8081/sensor={0}".uuid
         r    = requests.get(url)
+
+    @numeric_rule_variable
+    def get_verify_sensor(self,params):
+        data_condition: json.loads(params)
+        
 
     @boolean_rule_variable
     def fault_check_x(self):
