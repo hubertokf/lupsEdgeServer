@@ -20,7 +20,6 @@ class ActionRules(BaseActions):
     def __init__ (self, parameters):
         self.parameters = parameters
 
-
     @rule_action(params={"info_adicional": FIELD_TEXT })
     def publish(self,info_adicional): # ação que ativa o evento de publicação
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,info_adicional,self.parameters.value)
@@ -74,8 +73,46 @@ class ActionRules(BaseActions):
         object_events = Event_Treatment()
         object_events.event(1,json)
 
+    '''Método de transição para proximo regra, desabilita o conjunto de regra acionadas,bem como regra atual.
+       Habilita proxima regra de transição, id's das regras di cinjunto encontranm-se no array rules,
+       id da regra atual=> id_current_rule, id da próxima regra=>id_next_rule'''
+
+    @rule_action(params={"rules": FIELD_SELECT,"id_next_rule": FIELD_NUMERIC,"id_current_rule":FIELD_NUMERIC)
+    def next_rule(self,rules,id_rule,id_current_rule):
+
+        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        payload = {'status':False}
+        url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
+        r       = requests.put(url, data=payload, headers=id_current_rule)
+        payload = {'status':True}
+        url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
+        r       = requests.put(url, data=payload, headers=headers)
+
+        for id_rule_set in rules:
+            payload = {'status':False}
+            url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
+            r       = requests.put(url, data=payload, headers=headers)
+
+
+
+    '''Método que desabilita todas as regras, ele só vai setar novamente quando receber um ok'''
+    @rule_action
+    def failure_transition(self,rules,id_rule,id_current_rule):
+                payload = {'status':False}
+                url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
+                r       = requests.put(url, data=payload, headers=id_current_rule)
+                payload = {'status':False}
+                url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
+                r       = requests.put(url, data=payload, headers=headers)
+
+                for id_rule_set in rules:
+                    payload = {'status':False}
+                    url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
+                    r       = requests.put(url, data=payload, headers=headers)
+
     @rule_action(params = {"uuid": FIELD_TEXT,"url": FIELD_TEXT})
     def get_extern_sensor(self,uuid,url):
+        #problema do gathring/LJ
         url  = "http://10.0.50.184:8081/sensor={0}".format(uuid)
         r    = requests.get(url)
         print(r.json())
