@@ -1,10 +1,12 @@
 import datetime
 
 import bottle
-import core.mtwsgi
+import mtwsgi
 import _thread
-from core.mtbottle import *
-from core.scheduler import *
+import os
+print(os.getcwd())#from analisador import  *
+from mtbottle import *
+from scheduler import *
 
 
 #---------------------Objeto compartilhado entre as THREADS---------------------

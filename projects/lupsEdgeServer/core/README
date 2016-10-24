@@ -1,0 +1,48 @@
+
+
+EXECUÇÃO:
+  python3 thread_bogus.py
+  python cliente_TCP.py
+
+
+
+Thread_bogus
+
+  - Finalidade de criar duas THREADS;
+    - 1° Recebe uma mensagem avisando que teve alteração no DB, em relação a
+        adição/remoção de sensores. Altera uma FLAG, utilizada na outra thread;
+    - 2° Sempre fica verificando essa FLAG, se for igual:
+        0: Não faz nd;
+        1: Verifica o DB, em busca de sensores não cadastrados no cron e/ou remove
+            os sensores alterados;
+
+Analisador
+
+  - Finalidade de varrer o DB, juntando em um único JSON os sensores cadastrados e
+      regras de coleta relacionados;
+  -
+
+Scheduler
+
+  - Finalidade de adicionar as jobs com os parâmetros relacionados no CRON;
+
+  - ADD: Recebe "tais e tais" parâmetros, adicionando as jobs no CRON;
+  - REMOVE: Recebe o ID do processo quando foi criado, para remover do CRON;
+
+  - TICK: Função é executada quando a JOB é acordada pelo CRON, recebendo como
+      argumento o mesmo JSON que foi passado ao cria-la(PASSADO PELO ANALISADOR).
+
+  OBS: Quando os sensores são adicionados no CRON, cada um deles possui um único ID.
+   Dessa forma, é possível remover do CRON utilizando esse ID.
+
+
+
+Json_conect
+
+  - Responsável por varrer no DB todos os sensores cadastrados;
+  - Procura na API os dados relacionados aos sensores(MODO: cron, interval e ... , data, hora, min, seg ...)
+        Todos esses dados são utilizados para adicionar este sensor no CRONTAB
+
+  Cria um objeto para realizar os seguintes itens:
+  - Adicionar as requisições desses sensores/atuadores no cron;
+  - Remover os sensores do CRON quando deletados da API
