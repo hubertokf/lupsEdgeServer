@@ -73,7 +73,7 @@ class PersistanceViewSet(viewsets.ModelViewSet):
     queryset = Persistance.objects.all()
     serializer_class = PersistanceSerializer
     filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['sensor', 'collectDate', 'contextServer']
+    filter_fields = ['sensor', 'collectDate', 'contextServer', 'publisher']
 
 class RuleViewSet(viewsets.ModelViewSet):
     queryset = Rule.objects.all()
