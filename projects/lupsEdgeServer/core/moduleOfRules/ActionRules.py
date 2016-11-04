@@ -36,6 +36,8 @@ class ActionRules(BaseActions):
         #r = requests.post("http://localhost:8000/persistances/", data=payload, headers=headers)
         #----------------------------------------------------------------------------------------------------
         #chamar tratador de evento
+        print("----------"+info_adicional)
+
         pass
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
@@ -127,7 +129,7 @@ class ActionRules(BaseActions):
         #problema do gathring/LJ
         url  = "http://10.0.50.184:8081/sensor={0}".format(uuid)
         r    = requests.get(url)
-        print(r.json())
+        #print(r.json())
 
     @rule_action(params={"foo": FIELD_TEXT})
     def get_sensor(self,foo ):

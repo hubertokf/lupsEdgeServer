@@ -14,7 +14,7 @@ class GetValuesSensor(object):
         # print(information_of_sensor)
         # information_of_sensor = fuckjson.loads(information_of_sensor)
         #print(type(information_of_sensor))
-        print(information_of_sensor)
+        #print(information_of_sensor)
         if(type(information_of_sensor['value'])=="string"):
 
              information_of_sensor['value'] = 1000

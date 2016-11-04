@@ -52,8 +52,8 @@ class Gathering(object):
         self.regra(id_s,value,id_g)
 
         #id_sensor, value, contextServer
-        publicacao = Publisher()
-        publicacao.set_publisher_local(json['id_sensor'],value,id_g)
+        #publicacao = Publisher()
+        #publicacao.set_publisher_local(json['id_sensor'],value,id_g)
         #publicacao.set_publisher_contexto(value,id_s,id_g)
 
         #print("REGRA 1")
