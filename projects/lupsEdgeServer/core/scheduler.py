@@ -37,6 +37,11 @@ class SchedulerEdge(object):
             self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
             hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a],max_instances=3)
 
+        elif(jsonObject['modo']=='publish'):    #Modificar function a chamar!
+            self.scheduler.add_job(self.function_publisher, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
+            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a],max_instances=1)
+
+
     def remove_job(self, id_tarefa):    # id_tarefa - É ID do sensor/atuador a ser removido do CRON
         teste = str(id_tarefa)
         self.scheduler.remove_job(teste)
@@ -45,6 +50,11 @@ class SchedulerEdge(object):
         jsonObject = json.loads(response)
         object_events = Event_Treatment()
         object_events.event(response)
+
+    def function_publisher(self,response):# Modificar
+        #jsonObject = json.loads(response)
+        #object_events = Event_Treatment()
+        #object_events.event(response)
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -202,3 +212,33 @@ class SchedulerEdge(object):
                 self.add_job(json_new)          #   <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
             aux_variable = 0
+
+#-------------------------------------------------------------------------------
+
+# Adiciona uma TAREFA no CRON, tornando resposavél pela publicação no contexto
+# quando não ocorreu com sucesso este ato no módulo de gathering.
+
+    def add_publish(self):
+
+        job = {}
+        info = {}
+
+        job['modo'] = "publish"
+        job['id_sensor'] = "0"
+        job['uuID'] = s"juca"
+        job['event'] = ""
+        job['id_gateway'] = "0"
+
+        info['second'] = "*"
+        info['minute']  = "*/10"
+        info['hour'] = "*"
+        info['day'] = "*"
+        info['week'] = "*"
+        info['month'] = "*"
+        info['year'] = "*"
+
+        job['info'] = info
+
+        self.add_job(json.dumps(job))
+                #print(job)
+                #return json.dumps(job)

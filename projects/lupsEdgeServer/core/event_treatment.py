@@ -1,5 +1,6 @@
 #from proceeding import *
 #from publisher import *
+#from publisher_context import *
 from core.gathering import *
 import json
 
@@ -16,6 +17,7 @@ class Event_Treatment(object):
         elif jsonObject['event'] == "publisher":
             print('Publisher')
             #event = Publisher()
+            #event.taina(jsonObject)
         elif jsonObject['event'] == "gathering":
             #print('Sensor: ', jsonObject['id_sensor'])
             #print('uuID: ', jsonObject['uuID'])

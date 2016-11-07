@@ -15,9 +15,9 @@ class Publisher(object):
         date_now = datetime.datetime.now()
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
 
-        id_sensor = jsonObject['sensor']
-        date_str_coleta = jsonObject['collectDate']
-        value = jsonObject['value']
+        id_sensor =         jsonObject['sensor']
+        date_str_coleta =   jsonObject['collectDate']
+        value =             jsonObject['value']
 
         date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
 
@@ -29,12 +29,33 @@ class Publisher(object):
         #print(r.text)
         return r.text
 
-    def publish_local(self, jsonObject):
+
+
+    def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
         headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
 
-        payload = {'publisher': False}
+        payload = {'publisher': True}
 
         r = requests.patch("http://localhost:8000/persistances/"+str(jsonObject['id'])+"/", data=payload, headers=headers)
+    #------------------------------------------------------------------------------------------------------------------------
+
+
+
+    def set_publisher_local(self, jsonObject, flag): # Publica na PERSISTENCIA
+
+        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
+        #print("---------------"+id_sensor+"------------------------")
+
+        date_now = datetime.datetime.now()
+        date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        id_sensor =         jsonObject['sensor']
+        date_str_coleta =   jsonObject['collectDate']
+        value =             jsonObject['value']
+
+        payload = {'collectDate': date_str, 'value': str(value), 'sensor': str(id_sensor), 'contextServer':'1', 'publisher': str(flag)}
+
+        r = requests.post("http://localhost:8000/persistances/", data=payload, headers=headers)
 
         #print(r.text)
 
@@ -58,3 +79,10 @@ class Publisher(object):
             except:
                 #flag FALSE
                 print("Servidor Desligado")
+
+    def taina(self, jsonObject):
+        try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
+            juca = self.publish_context(jsonObjectjsonObject)
+            set_publisher_local(jsonObject, "True")
+        except:
+            set_publisher_local(jsonObject, "False")
