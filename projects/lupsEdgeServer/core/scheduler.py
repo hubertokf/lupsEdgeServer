@@ -9,6 +9,7 @@ from array import array
 from io import BytesIO
 from core.event_treatment import *
 from apscheduler.schedulers.background import BackgroundScheduler
+from core.publish_context import *
 
 
 class SchedulerEdge(object):
@@ -52,6 +53,9 @@ class SchedulerEdge(object):
         object_events.event(response)
 
     def function_publisher(self,response):# Modificar
+        publicador = Publisher()
+        publicador.start()
+
         #jsonObject = json.loads(response)
         #object_events = Event_Treatment()
         #object_events.event(response)
@@ -225,7 +229,7 @@ class SchedulerEdge(object):
 
         job['modo'] = "publish"
         job['id_sensor'] = "0"
-        job['uuID'] = s"juca"
+        job['uuID'] = "juca"
         job['event'] = ""
         job['id_gateway'] = "0"
 

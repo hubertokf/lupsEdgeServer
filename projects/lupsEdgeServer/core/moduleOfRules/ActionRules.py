@@ -22,7 +22,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,info_adicional): # ação que ativa o evento de publicação
-                data_send_context['sensor']      =  uuid_sensor
+                data_send_context['sensor']      =  uuid_sensor     # Mudar para sensor
                 data_send_context['value']       =  parameters[uuid_sensor]
                 data_send_context['event']       =  "publisher"
                 obj_event                        = Event_Treatment()
