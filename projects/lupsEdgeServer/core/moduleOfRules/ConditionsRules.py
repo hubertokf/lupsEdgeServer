@@ -11,7 +11,9 @@ class ConditionsRules(BaseVariables):
 
     @numeric_rule_variable
     def getNumber(self,a):
-        return self.parameters.value
+
+        self.parameters.set_i(a)
+        return 9
 
     @numeric_rule_variable
     def get_extern_sensor(self):

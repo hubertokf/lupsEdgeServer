@@ -1,13 +1,14 @@
 class Parameters(object):
 
     def __init__(self):
-        self.vector = {}
-        self.i = 0;
+        self.vector = []
 
     def avanced(self):
         self.i = self.i + 1
         self.vector[self.i]
 
+    def create_obj(self,all):
+        pass
     def getvalue(self,a):
         return self.vector[a]
 

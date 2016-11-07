@@ -8,7 +8,6 @@ class Event_Treatment(object):
 
     def event(self, response):
         #print(response)
-
         jsonObject = json.loads(response)
 
         if jsonObject['event'] == "proceeding":
@@ -16,8 +15,8 @@ class Event_Treatment(object):
                 #event = Proceeding()
         elif jsonObject['event'] == "publisher":
             print('Publisher')
-            #event = Publisher()
-            #event.taina(jsonObject)
+            event = Publisher()
+            event.publish_to_rules(jsonObject)
         elif jsonObject['event'] == "gathering":
             #print('Sensor: ', jsonObject['id_sensor'])
             #print('uuID: ', jsonObject['uuID'])

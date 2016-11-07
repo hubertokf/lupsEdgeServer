@@ -50,7 +50,7 @@ class Publisher(object):
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
 
         id_sensor =         jsonObject['sensor']
-        date_str_coleta =   jsonObject['collectDate']
+        date_str_coleta =   date_str
         value =             jsonObject['value']
 
         payload = {'collectDate': date_str, 'value': str(value), 'sensor': str(id_sensor), 'contextServer':'1', 'publisher': str(flag)}
@@ -80,7 +80,7 @@ class Publisher(object):
                 #flag FALSE
                 print("Servidor Desligado")
 
-    def taina(self, jsonObject):
+    def publish_to_rules(self, jsonObject):
         try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
             juca = self.publish_context(jsonObjectjsonObject)
             set_publisher_local(jsonObject, "True")

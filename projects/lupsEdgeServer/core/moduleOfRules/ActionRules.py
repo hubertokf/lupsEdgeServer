@@ -20,25 +20,13 @@ class ActionRules(BaseActions):
     def __init__ (self, parameters):
         self.parameters = parameters
 
-    @rule_action(params={"info_adicional": FIELD_TEXT })
+    @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,info_adicional): # ação que ativa o evento de publicação
-        #json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,info_adicional,self.parameters.value)
-        #resp = 'entrou no publicador {0}\n\n '.format(self.parameters.id)
-        #----------------------------------------------------------------------------------------------------
-        #headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
-        #print("---------------"+id_sensor+"------------------------")
-
-        #date_now = datetime.datetime.now()
-        #date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
-
-        #payload = {'collectDate': date_str, 'value': value, 'sensor': '1', 'contextServer':'1'}
-
-        #r = requests.post("http://localhost:8000/persistances/", data=payload, headers=headers)
-        #----------------------------------------------------------------------------------------------------
-        #chamar tratador de evento
-        print("----------"+info_adicional)
-
-        pass
+                data_send_context['sensor']      =  uuid_sensor
+                data_send_context['value']       =  parameters[uuid_sensor]
+                data_send_context['event']       =  "publisher"
+                obj_event                        = Event_Treatment()
+                obj_event.event(data_send_context)
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
@@ -121,8 +109,8 @@ class ActionRules(BaseActions):
 
                 for id_rule_set in rules:
                     payload = {'status':False}
-                    url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
-                    r       = requests.put(url, data=payload, headers=headers)
+                    url    ="http://localhost:8000/rules/{0}".format(id_rule_set)
+                    r    = requests.put(url, data=payload, headers=headers)
 
     @rule_action(params = {"uuid": FIELD_TEXT,"url": FIELD_TEXT})
     def get_extern_sensor(self,uuid,url):
@@ -134,3 +122,5 @@ class ActionRules(BaseActions):
     @rule_action(params={"foo": FIELD_TEXT})
     def get_sensor(self,foo ):
         pass
+
+from core.Event_Treatment import *
