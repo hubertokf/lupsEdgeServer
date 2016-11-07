@@ -1,8 +1,18 @@
 class Parameters(object):
 
-    def __init__(self,ide,value,id_gateway):
+    def __init__(self):
+        self.vector = {}
+        self.i = 0;
 
-        self.id = ide
-        self.value = value
-        self.id_gateway = id_gateway
-        
+    def avanced(self):
+        self.i = self.i + 1
+        self.vector[self.i]
+
+    def getvalue(self,a):
+        return self.vector[a]
+
+    def set_i(self,a):
+        self.vector[a] = a
+
+    def get_i(self,a):
+        return self.vector
