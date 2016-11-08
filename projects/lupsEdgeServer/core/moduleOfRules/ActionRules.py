@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append("")
+
 from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC,FIELD_SELECT, FIELD_TEXT
 from business_rules import run_all
@@ -5,7 +10,6 @@ from business_rules.actions import BaseActions, rule_action
 from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
 from core.moduleOfRules.ConditionsRules import ConditionsRules
 from core.moduleOfRules.Parameters import Parameters
-import os
 import json
 import email
 import requests
@@ -13,7 +17,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
 import smtplib
-from core.event_treatment import *
+import core.event_treatment
 
 class ActionRules(BaseActions):
 
@@ -22,23 +26,31 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
+                # print("Perigo")
+                object_events = core.event_treatment.Event_Treatment()
                 try:
+                    # print("JUCA amigão do LJ")
                     headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
                     url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
                     r         = requests.get(url, headers=headers)
                     getSensor = r.json()
                     id_sensor =  getSensor[0]['id']
                     data_send_context           = {}
-                    data_send_context['sensor'] = getSensor   # Mudar para sensor
-                    data_send_context['value']      = self.parameters.get_i(uuid_sensor)
+                    data = self.parameters.get_i(uuid_sensor)
+                    print(data['value'])
+                    data_send_context['value']  = data['value']
+                    data_send_context['sensor'] = id_sensor   # Mudar para sensor
+                    data_send_context['collectDate'] =data['collectDate']
                     data_send_context['event'] = "publisher"
                     super_json                 = json.dumps(data_send_context)
-                    # object_events = Event_Treatment()
-                    # object_events.event(super_json)
+
+                    object_events.event(super_json)
                 except Exception as inst:
-                    print("Erro aqui")
+                    # print("Erro aqui")
                     print(type(inst))
-                    print(inst.args)     # arguments stored in .args
+                    print(inst.args)
+                    raise
+                       # arguments stored in .args
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
@@ -77,7 +89,7 @@ class ActionRules(BaseActions):
         # except :
         #   print ("Error: unable to send email")
         #   smtpObj.quit()
-        print(" ")
+        print("okkkkkkkkkkk")
 
     @rule_action(params = {"ruler": FIELD_TEXT})
     def gathering_error(self,ruler):

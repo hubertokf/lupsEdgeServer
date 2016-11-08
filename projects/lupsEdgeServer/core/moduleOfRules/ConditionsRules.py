@@ -29,8 +29,9 @@ class ConditionsRules(BaseVariables):
         data_condition          = json.loads(params)
         uuid['uuID']            = data_condition['sensor']
         info_gateway_and_sensor = gateways.coleting_value_of_sensor(uuid)
+        colletcDate             = datetime.datetime.now()
         value                   = info_gateway_and_sensor
-        self.parameters.create_obj_and_set_value(uuid['uuID'],value)
+        self.parameters.create_obj_and_set_value(uuid['uuID'],value,colletcDate)
         return value
     @numeric_rule_variable
     def diff_values_sensor(self,params):

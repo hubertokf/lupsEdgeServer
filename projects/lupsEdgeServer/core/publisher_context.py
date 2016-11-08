@@ -82,7 +82,10 @@ class Publisher(object):
 
     def publish_to_rules(self, jsonObject):
         try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
-            juca = self.publish_context(jsonObjectjsonObject)
-            set_publisher_local(jsonObject, "True")
-        except:
-            set_publisher_local(jsonObject, "False")
+            juca = self.publish_context(jsonObject)
+            self.set_publisher_local(jsonObject, "True")
+        except Exception as inst:
+            print(inst.args)
+            print(type(inst))
+            raise
+            self.set_publisher_local(jsonObject, "False")
