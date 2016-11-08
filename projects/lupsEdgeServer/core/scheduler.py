@@ -9,7 +9,7 @@ from array import array
 from io import BytesIO
 from core.event_treatment import *
 from apscheduler.schedulers.background import BackgroundScheduler
-from core.publish_context import *
+from core.publisher_context import *
 
 
 class SchedulerEdge(object):

@@ -21,8 +21,13 @@ class ActionRules(BaseActions):
         self.parameters = parameters
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
-    def publisher(self,info_adicional): # ação que ativa o evento de publicação
-                data_send_context['sensor']      =  uuid_sensor     # Mudar para sensor
+    def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
+                headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+                url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
+                r         = requests.get(url, headers=headers)
+                getSensor = r.json()
+                id_sensor =  getSensor[0]['id']
+                data_send_context['sensor']      =  getSensor   # Mudar para sensor
                 data_send_context['value']       =  parameters[uuid_sensor]
                 data_send_context['event']       =  "publisher"
                 obj_event                        = Event_Treatment()
@@ -123,4 +128,4 @@ class ActionRules(BaseActions):
     def get_sensor(self,foo ):
         pass
 
-from core.Event_Treatment import *
+from core.event_treatment import *

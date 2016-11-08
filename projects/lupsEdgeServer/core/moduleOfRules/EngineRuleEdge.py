@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 # Em teste
-from business_rules import run_all
-from business_rules.actions import BaseActions, rule_action
-from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
-from core.moduleOfRules.ActionRules import ActionRules
-from core.moduleOfRules.ConditionsRules import ConditionsRules
-from core.moduleOfRules.Parameters import Parameters
-import requests
-import json
-import os
+try:
+    from business_rules import run_all
+    from business_rules.actions import BaseActions, rule_action
+    from business_rules.fields import FIELD_NUMERIC, FIELD_TEXT
+    from core.moduleOfRules.ActionRules import ActionRules
+    from core.moduleOfRules.ConditionsRules import ConditionsRules
+    from core.moduleOfRules.Parameters import Parameters
+    import requests
+    import json
+    import os
+except Exception as inst:
+    print(type(inst))    # the exception instance
+    print(inst.args)     # arguments stored in .args
+
 #metodo que recebe o json que contem regras de contigencia
 class EngineRule(object):
     """docstring for EngineRule"""
@@ -38,7 +43,9 @@ class EngineRule(object):
     def run_rules(self,a): # executa a regra
 
         parameters = self.get_parameters(a)
-        obj_parameters= Parameters(parameters['id'],parameters['valor'],parameters['id_gateway']) #id_gateway futuramente será trabalhado
+        # obj_parameters= Parameters(parameters['id'],parameters['valor'],parameters['id_gateway']) #id_gateway futuramente será trabalhado
+        obj_parameters= Parameters() #id_gateway futuramente será trabalhado
+
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
 
