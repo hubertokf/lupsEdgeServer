@@ -13,7 +13,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
 import smtplib
-
+from core.event_treatment import *
 
 class ActionRules(BaseActions):
 
@@ -22,16 +22,23 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
-                headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
-                url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
-                r         = requests.get(url, headers=headers)
-                getSensor = r.json()
-                id_sensor =  getSensor[0]['id']
-                data_send_context['sensor']      =  getSensor   # Mudar para sensor
-                data_send_context['value']       =  parameters[uuid_sensor]
-                data_send_context['event']       =  "publisher"
-                obj_event                        = Event_Treatment()
-                obj_event.event(data_send_context)
+                try:
+                    headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+                    url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
+                    r         = requests.get(url, headers=headers)
+                    getSensor = r.json()
+                    id_sensor =  getSensor[0]['id']
+                    data_send_context           = {}
+                    data_send_context['sensor'] = getSensor   # Mudar para sensor
+                    data_send_context['value']      = self.parameters.get_i(uuid_sensor)
+                    data_send_context['event'] = "publisher"
+                    super_json                 = json.dumps(data_send_context)
+                    # object_events = Event_Treatment()
+                    # object_events.event(super_json)
+                except Exception as inst:
+                    print("Erro aqui")
+                    print(type(inst))
+                    print(inst.args)     # arguments stored in .args
 
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
@@ -128,4 +135,4 @@ class ActionRules(BaseActions):
     def get_sensor(self,foo ):
         pass
 
-from core.event_treatment import *
+# from core.event_treatment import *

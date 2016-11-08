@@ -1,19 +1,12 @@
 class Parameters(object):
 
     def __init__(self):
-        self.vector = []
+        self.disct = {}
 
-    def avanced(self):
-        self.i = self.i + 1
-        self.vector[self.i]
+    def create_obj_and_set_value(self,uuid,value):
+        self.disct[uuid] = value
+        print("Ocorreu tudo bem aqui\n. uuid = {0}\n valor = {1}".format(uuid,self.disct[uuid]))
 
-    def create_obj(self,all):
-        pass
-    def getvalue(self,a):
-        return self.vector[a]
-
-    def set_i(self,a):
-        self.vector[a] = a
 
     def get_i(self,a):
-        return self.vector
+        return  self.disct[a]

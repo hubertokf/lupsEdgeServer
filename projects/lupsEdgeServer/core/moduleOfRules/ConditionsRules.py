@@ -30,6 +30,7 @@ class ConditionsRules(BaseVariables):
         uuid['uuID']            = data_condition['sensor']
         info_gateway_and_sensor = gateways.coleting_value_of_sensor(uuid)
         value                   = info_gateway_and_sensor
+        self.parameters.create_obj_and_set_value(uuid['uuID'],value)
         return value
     @numeric_rule_variable
     def diff_values_sensor(self,params):
