@@ -4,7 +4,7 @@ import requests
 import json
 import datetime
 import math
-
+import core.event_treatment
 class ConditionsRules(BaseVariables):
     def __init__ (self, parameters):
         self.parameters = parameters
@@ -25,10 +25,13 @@ class ConditionsRules(BaseVariables):
     @numeric_rule_variable
     def get_verify_sensor(self,params):
         uuid                    = {}
-        gateways                = Gathering();
+        object_events = core.event_treatment.Event_Treatment()
         data_condition          = json.loads(params)
         uuid['uuID']            = data_condition['sensor']
-        info_gateway_and_sensor = gateways.coleting_value_of_sensor(uuid)
+        uuid['event']           = "gathering"
+        uuid['collect_to_rule'] = True
+        json_dumps_uuid = json.dumps(uuid)
+        info_gateway_and_sensor = object_events.event(json_dumps_uuid)
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
         self.parameters.create_obj_and_set_value(uuid['uuID'],value,format_colletcDate)

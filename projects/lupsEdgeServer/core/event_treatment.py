@@ -23,8 +23,12 @@ class Event_Treatment(object):
             #print('uuID: ', jsonObject['uuID'])
             event = Gathering()
             #print(jsonObject['id_sensor'])
-            event.processamento(jsonObject) # 1 em referencia ao sensor 1
-
+            if jsonObject['collect_to_rule']:
+                return_parameters = event.processamento1(jsonObject) # 1 em referencia ao sensor 1
+            else:
+                event.processamento(jsonObject)
+                return_parameters = None
+            return return_parameters
             #event.processamento(jsonObject['id_sensor'], select_features) # 1 em referencia ao sensor 1
         else:
             print("Nenhum do casos no TRATAMENTO EVENTO 2")

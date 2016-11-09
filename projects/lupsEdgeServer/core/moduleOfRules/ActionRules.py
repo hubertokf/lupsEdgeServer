@@ -43,10 +43,12 @@ class ActionRules(BaseActions):
                         data_send_context['value']       = data['value']
                         data_send_context['collectDate'] = data['collectDate']
                     else:
-                        gateways = Gathering();
                         obj_uuid = {}
-                        obj_uuid['uuID'] = uuid_sensor
-                        info_gateway_and_sensor = gateways.coleting_value_of_sensor(obj_uuid)
+                        obj_uuid['uuID']            = uuid_sensor
+                        obj_uuid['event']           = "gathering"
+                        obj_uuid['collect_to_rule'] = True
+                        obj_uuid                    = json.dumps(obj_uuid)
+                        info_gateway_and_sensor = object_events.event(obj_uuid)
                         data_send_context['value']       = info_gateway_and_sensor['value']
                         data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
 

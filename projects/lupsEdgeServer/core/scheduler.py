@@ -193,6 +193,7 @@ class SchedulerEdge(object):
                 info['year'] = "*"
 
                 job['info'] = info
+                job['collect_to_rule'] = False
                 #print(job)
                 return json.dumps(job)
         return 0;

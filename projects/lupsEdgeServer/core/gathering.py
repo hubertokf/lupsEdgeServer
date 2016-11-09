@@ -29,36 +29,22 @@ class Gathering(object):
                                 # Cria um objeto COMMUNICATION, que retorna um valor do sensor
                                 # Realiza um if, verificando se precisa criar um  REGRA ou apenas
                                 # retorna um dado
-        #valor_sensor =
+
         colecter_sensor = GetValuesSensor()
-        formation = colecter_sensor.get_values_on_gatway(json)            # <--------- Passar argumentos
-        #self.set_val_sensor(valor_sensor);
-        #print(type(formation))
-        #formation = json.loads(formation)
-
-        #print(json['id_sensor'])
-
-        id_g = formation['id_gateway']
-        id_s = formation['id_sensor']
-        value = formation['value']
-        # contador = formation['contador']
-
-        #print("VAL:  "+value)
-        #print("ID G: "+ id_g)
-        #print("ID S: "+ id_s)
-
-        #print(id_s)
-        #return self.get_val_sensor();
-
+        formation = colecter_sensor.get_values_on_gatway(json)            #
         self.regra(formation)
 
-        #id_sensor, value, contextServer
-        #publicacao = Publisher()
-        #publicacao.set_publisher_local(json['id_sensor'],value,id_g)
-        #publicacao.set_publisher_contexto(value,id_s,id_g)
+    def processamento1(self,json): # 0 = OBJECT or 1 = FUNCTION
+                                # Cria um objeto COMMUNICATION, que retorna um valor do sensor
+                                # Realiza um if, verificando se precisa criar um  REGRA ou apenas
+                                # retorna um dado
 
-        #print("REGRA 1")
-        #iasdhajkhsdjhad
+        colecter_sensor = GetValuesSensor()
+        formation = colecter_sensor.get_values_on_gatway(json)            #
+        #self.regra(formation)
+        return formation
+
+
     def coleting_value_of_sensor(self,parameters_essential_for_colect):
 
         colecter_sensor = GetValuesSensor()
