@@ -1,5 +1,6 @@
 import requests
 import json as prettyJson
+import datetime
 
 class GetValuesSensor(object):
 
@@ -14,7 +15,12 @@ class GetValuesSensor(object):
         # print(information_of_sensor)
         # information_of_sensor = fuckjson.loads(information_of_sensor)
         #print(type(information_of_sensor))
-        #print(information_of_sensor)
+        #print(information_of_sensor
+
+        date_now = datetime.datetime.now()
+        date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
+        information_of_sensor['collectDate']  = date_str
+
         if(type(information_of_sensor['value'])=="string"):
 
              information_of_sensor['value'] = 1000

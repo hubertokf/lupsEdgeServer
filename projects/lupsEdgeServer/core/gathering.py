@@ -16,10 +16,10 @@ class Gathering(object):
     def get_val_sensor(self):
         return self.vsensor
 
-    def regra(self,id_sensor,valor,id_gateway):   # Verificar argumentos e criar objeto p chamar regras
+    def regra(self,json_result_gathering):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
 
-        string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(id_sensor,valor,id_gateway)
+        string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(json_result_gathering['id_sensor'],json_result_gathering['value'],json_result_gathering['id_gateway'],json_result_gathering['collectDate'])
         #print(string_rule)
         engine.run_rules(string_rule)
 
@@ -49,7 +49,8 @@ class Gathering(object):
 
         #print(id_s)
         #return self.get_val_sensor();
-        self.regra(id_s,value,id_g)
+
+        self.regra(formation)
 
         #id_sensor, value, contextServer
         #publicacao = Publisher()
@@ -62,6 +63,6 @@ class Gathering(object):
 
         colecter_sensor = GetValuesSensor()
         formation       = colecter_sensor.get_values_on_gatway(parameters_essential_for_colect)
-        return float(formation['value'])            # <--------- Passar argumentos
+        return formation            # <--------- Passar argumentos
 
 from core.moduleOfRules.EngineRuleEdge import EngineRule

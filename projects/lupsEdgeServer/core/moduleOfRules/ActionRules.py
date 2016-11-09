@@ -29,21 +29,28 @@ class ActionRules(BaseActions):
                 # print("Perigo")
                 object_events = core.event_treatment.Event_Treatment()
                 try:
-                    # print("JUCA amigão do LJ")
-                    headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+                    data_send_context = {}
+                    headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
                     url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
                     r         = requests.get(url, headers=headers)
-                    getSensor = r.json()
-                    id_sensor =  getSensor[0]['id']
-                    data_send_context           = {}
-                    data = self.parameters.get_i(uuid_sensor)
-                    print(data['value'])
-                    data_send_context['value']  = data['value']
-                    data_send_context['sensor'] = id_sensor   # Mudar para sensor
-                    data_send_context['collectDate'] =data['collectDate']
-                    data_send_context['event'] = "publisher"
-                    super_json                 = json.dumps(data_send_context)
+                    getSensor                        = r.json()
+                    id_sensor                        =  getSensor[0]['id']
+                    data_send_context['sensor']      = id_sensor
+                    data_send_context['event']       = "publisher"
 
+                    if(uuid_sensor in self.parameters.get_dist()):
+                        data = self.parameters.get_i(uuid_sensor)
+                        data_send_context['value']       = data['value']
+                        data_send_context['collectDate'] = data['collectDate']
+                    else:
+                        gateways = Gathering();
+                        obj_uuid = {}
+                        obj_uuid['uuID'] = uuid_sensor
+                        info_gateway_and_sensor = gateways.coleting_value_of_sensor(obj_uuid)
+                        data_send_context['value']       = info_gateway_and_sensor['value']
+                        data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
+
+                    super_json = json.dumps(data_send_context)
                     object_events.event(super_json)
                 except Exception as inst:
                     # print("Erro aqui")
@@ -148,3 +155,4 @@ class ActionRules(BaseActions):
         pass
 
 # from core.event_treatment import *
+from core.gathering import Gathering

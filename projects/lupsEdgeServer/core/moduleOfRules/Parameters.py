@@ -13,3 +13,6 @@ class Parameters(object):
 
     def get_i(self,a):
         return  self.disct[a]
+
+    def get_dist(self):
+        return self.disct
