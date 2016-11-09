@@ -29,6 +29,27 @@ class Publisher(object):
         #print(r.text)
         return r.text
 
+    def publish_context1(self, jsonObject):
+
+        url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
+
+        date_now = datetime.datetime.now()
+        date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        id_sensor =         jsonObject['sensor']
+        date_str_coleta =   jsonObject['collectDate']
+        value =             jsonObject['value']
+
+        #date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
+
+        data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
+        headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        r = requests.post(url, data=json.dumps(data), headers=headers)
+
+        #r = requests.post(url, data=json.dumps(data), headers=headers)
+        #print(r.text)
+        return r.text
+
 
 
     def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
@@ -83,7 +104,7 @@ class Publisher(object):
     def publish_to_rules(self, jsonObject):
         print("birinha 2018")
         try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
-            juca = self.publish_context(jsonObject)
+            juca = self.publish_context1(jsonObject)
             self.set_publisher_local(jsonObject, "True")
         except Exception as inst:
             print(inst.args)
