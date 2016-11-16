@@ -37,7 +37,7 @@ class ActionRules(BaseActions):
                     id_sensor                            =  get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
                     data_send_context['event']           = "publisher" #para o tratador de eventos chmar a publicação
-                    data_send_context['tag_persistance'] = False # pra dizer que as datas não vem da persistencia
+                    data_send_context['persistance'] = False # pra dizer que as datas não vem da persistencia
 
                     if(uuid_sensor in self.parameters.get_dist()):
                         data = self.parameters.get_i(uuid_sensor)
