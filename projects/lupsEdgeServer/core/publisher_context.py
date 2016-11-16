@@ -8,8 +8,12 @@ import sqlite3
 
 class Publisher(object):
 
+    #deixar variavel com url da API borda e Token
+
+    #a publicação deve receber o servidor de contexto a ser publicado
     def publish_context(self, jsonObject):
 
+        #com o servidor de contexto, obter URL e Token através da API
         url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
 
         date_now = datetime.datetime.now()
@@ -21,8 +25,12 @@ class Publisher(object):
 
         date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
 
+        #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
+        #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
+
         data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_aux, "valorcoletado":str(value), "dispararegra":"true"}}
         headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        #utilizar aqui o Token anteriormente adquirido
         r = requests.post(url, data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
@@ -31,6 +39,7 @@ class Publisher(object):
 
     def publish_context1(self, jsonObject):
 
+        #com o servidor de contexto, obter URL e Token através da API
         url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
 
         date_now = datetime.datetime.now()
@@ -42,8 +51,12 @@ class Publisher(object):
 
         #date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
 
+        #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
+        #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
+
         data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
         headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        #utilizar aqui o Token anteriormente adquirido
         r = requests.post(url, data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
