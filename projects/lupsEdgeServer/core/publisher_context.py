@@ -23,7 +23,9 @@ class Publisher(object):
         date_str_coleta =   jsonObject['collectDate']
         value =             jsonObject['value']
 
-        date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
+        if jsonObject['persistance'] != True:
+            date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
+
 
         #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
         #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
@@ -37,31 +39,31 @@ class Publisher(object):
         #print(r.text)
         return r.text
 
-    def publish_context1(self, jsonObject):
-
-        #com o servidor de contexto, obter URL e Token através da API
-        url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
-
-        date_now = datetime.datetime.now()
-        date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
-
-        id_sensor =         jsonObject['sensor']
-        date_str_coleta =   jsonObject['collectDate']
-        value =             jsonObject['value']
-
-        #date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
-
-        #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
-        #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
-
-        data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
-        headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
-        #utilizar aqui o Token anteriormente adquirido
-        r = requests.post(url, data=json.dumps(data), headers=headers)
-
-        #r = requests.post(url, data=json.dumps(data), headers=headers)
-        #print(r.text)
-        return r.text
+    # def publish_context1(self, jsonObject):
+    #
+    #     #com o servidor de contexto, obter URL e Token através da API
+    #     url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
+    #
+    #     date_now = datetime.datetime.now()
+    #     date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
+    #
+    #     id_sensor =         jsonObject['sensor']
+    #     date_str_coleta =   jsonObject['collectDate']
+    #     value =             jsonObject['value']
+    #
+    #     #date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
+    #
+    #     #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
+    #     #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
+    #
+    #     data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
+    #     headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+    #     #utilizar aqui o Token anteriormente adquirido
+    #     r = requests.post(url, data=json.dumps(data), headers=headers)
+    #
+    #     #r = requests.post(url, data=json.dumps(data), headers=headers)
+    #     #print(r.text)
+    #     return r.text
 
 
 
@@ -105,19 +107,19 @@ class Publisher(object):
         dados_sensores = self.get_dados_SB()
 
         for sensor in dados_sensores:
-            self.publish_local(sensor)
+            #self.publish_local(sensor)
+            sensor['persistance'] = True
+
             try:
                 juca = self.publish_context(sensor)
                 self.publish_local(sensor)
-                #flag TRUE
             except:
-                #flag FALSE
                 print("Servidor Desligado")
 
     def publish_to_rules(self, jsonObject):
         print("birinha 2018")
         try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
-            juca = self.publish_context1(jsonObject)
+            juca = self.publish_context(jsonObject)
             self.set_publisher_local(jsonObject, "True")
         except Exception as inst:
             print(inst.args)
