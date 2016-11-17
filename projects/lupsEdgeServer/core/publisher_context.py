@@ -17,23 +17,18 @@ class Publisher(object):
         url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
 
         url_2 = 'http://localhost:8000/sensors/'+str(jsonObject['sensor'])+'/'
-        headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
+
         #utilizar aqui o Token anteriormente adquirido
         r = requests.get(url_2, headers=headers)
 
-        #r = requests.post(url, data=json.dumps(data), headers=headers)
-        #print(r.text)
         uuID = r.json()['uuID']
-        #print(uuID)
-
 
         date_now = datetime.datetime.now()
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
 
-        #id_sensor =         jsonObject['sensor']
         date_str_coleta =   jsonObject['collectDate']
         value =             jsonObject['value']
-
 
 
         if jsonObject['persistance'] == True:
@@ -52,33 +47,6 @@ class Publisher(object):
         #print(data)
         #print(r.text)
         return r.text
-
-    # def publish_context1(self, jsonObject):
-    #
-    #     #com o servidor de contexto, obter URL e Token através da API
-    #     url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
-    #
-    #     date_now = datetime.datetime.now()
-    #     date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
-    #
-    #     id_sensor =         jsonObject['sensor']
-    #     date_str_coleta =   jsonObject['collectDate']
-    #     value =             jsonObject['value']
-    #
-    #     #date_aux = datetime.datetime.strptime(date_str_coleta,'%Y-%m-%dT%H:%M:%S').strftime("%Y-%m-%d %H:%M:%S")
-    #
-    #     #o servidor de contexto necessita do uuid para publicação, deve ser recebido atraves do paramentro "sensor_uuid"
-    #     #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
-    #
-    #     data = {"content": {"sensor_id":str(id_sensor), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
-    #     headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
-    #     #utilizar aqui o Token anteriormente adquirido
-    #     r = requests.post(url, data=json.dumps(data), headers=headers)
-    #
-    #     #r = requests.post(url, data=json.dumps(data), headers=headers)
-    #     #print(r.text)
-    #     return r.text
-
 
 
     def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
