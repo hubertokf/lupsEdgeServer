@@ -99,7 +99,7 @@ class Publisher(object):
                 print("Servidor Desligado")
 
     def publish_to_rules(self, jsonObject):
-        print("birinha 2018")
+        #print("birinha 2018")
         try:    #Se não publica no CONTEXTO, então publica na PERSISTENCIA com a flag FALSE
             juca = self.publish_context(jsonObject)
             self.set_publisher_local(jsonObject, "True")

@@ -9,7 +9,7 @@ class GetValuesSensor(object):
 
 
         #-------Acessa o gateways cadastrados, pegando o
-        print("-----------------"+str(json))
+        #print("-----------------"+str(json))
         url = 'http://localhost:8000/gateways/' + str(json['gateway'])
         request = requests.get(url, headers=headers)
         json_gateway = request.json()
