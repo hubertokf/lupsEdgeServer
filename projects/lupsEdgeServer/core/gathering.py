@@ -4,18 +4,6 @@ import json
 
 class Gathering(object):
 
-    def set_id(self, id_sensor):
-        self.id_sensor = id_sensor
-
-    def get_id(self):
-        return self.id_sensor
-
-    def set_val_sensor(self, vsensor):
-        self.vsensor = vsensor
-
-    def get_val_sensor(self):
-        return self.vsensor
-
     def regra(self,json_result_gathering):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
 

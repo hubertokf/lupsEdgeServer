@@ -182,7 +182,7 @@ class SchedulerEdge(object):
                 job['id_sensor'] = str(sensor['id'])
                 job['uuID'] = str(sensor['uuID'])
                 job['event'] = "gathering"
-                job['id_gateway'] = sensor['gateway']
+                job['gateway'] = sensor['gateway']
 
                 info['second'] = "*/{}".format(row['minute'])
                 info['minute']  = "*"
