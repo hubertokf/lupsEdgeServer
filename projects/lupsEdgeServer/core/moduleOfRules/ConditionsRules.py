@@ -8,6 +8,7 @@ import core.event_treatment
 class ConditionsRules(BaseVariables):
     def __init__ (self, parameters):
         self.parameters = parameters
+        self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda
 
     @numeric_rule_variable
     def getNumber(self,a):
@@ -30,7 +31,11 @@ class ConditionsRules(BaseVariables):
         uuid['uuID']            = data_condition['sensor']
         uuid['event']           = "gathering"
         uuid['collect_to_rule'] = True
-        json_dumps_uuid = json.dumps(uuid)
+        url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
+        info_gateway            = requests.get(url_gateway,self.headers).json()
+        id_gateway              = info_gateway[0]['gateway']
+        uuid['gateway']         = id_gateway
+        json_dumps_uuid         = json.dumps(uuid)
         info_gateway_and_sensor = object_events.event(json_dumps_uuid)
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
