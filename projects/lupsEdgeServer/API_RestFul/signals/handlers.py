@@ -6,25 +6,25 @@ import requests
 
 @receiver(post_save, sender=Schedule)
 def post_save_sched(sender, instance, created, **kwargs):
-    data =  {"id": instance,"status": instance.status,"year": instance.year,"month": instance.month,"day": instance.day,"hour": instance.hour,"minute": instance.minute,"sensor": instance.sensor}
+    data =  {"id": str(instance),"status": str(instance.status),"year": str(instance.year),"month": str(instance.month),"day": str(instance.day),"hour": str(instance.hour),"minute": str(instance.minute),"sensor": str(instance.sensor.id)}
     headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSchedule', data=json.dumps(data), headers=headers)
 
 
 @receiver(post_delete, sender=Schedule)
 def post_delete_sched(sender, instance, **kwargs):
-    data =  {"id": instance,"status": instance.status,"year": instance.year,"month": instance.month,"day": instance.day,"hour": instance.hour,"minute": instance.minute,"sensor": instance.sensor}
+    data =  {"id": str(instance),"status": str(instance.status),"year": str(instance.year),"month": str(instance.month),"day": str(instance.day),"hour": str(instance.hour),"minute": str(instance.minute),"sensor": str(instance.sensor.id)}
     headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSchedule', data=json.dumps(data), headers=headers)
 
 @receiver(post_save, sender=Sensor)
 def post_save_sensor(sender, instance, created, **kwargs):
-    data =  {"id": instance,"uuID": instance.uuID,"model": instance.model,"gateway": instance.gateway,"manufacturer": instance.manufacturer,"sensorType": instance.sensorType}
+    data =  {"id": str(instance.id),"uuID": str(instance.uuID),"model": str(instance.model),"gateway": str(instance.gateway),"manufacturer": str(instance.manufacturer),"sensorType": str(instance.sensorType)}
     headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSensor', data=json.dumps(data), headers=headers)
 
 @receiver(post_delete, sender=Sensor)
 def post_delete_sensor(sender, instance, **kwargs):
-    data =  {"id": instance,"uuID": instance.uuID,"model": instance.model,"gateway": instance.gateway,"manufacturer": instance.manufacturer,"sensorType": instance.sensorType}
+    data =  {"id": str(instance.id),"uuID": str(instance.uuID),"model": str(instance.model),"gateway": str(instance.gateway),"manufacturer": str(instance.manufacturer),"sensorType": str(instance.sensorType)}
     headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSensor', data=json.dumps(data), headers=headers)
