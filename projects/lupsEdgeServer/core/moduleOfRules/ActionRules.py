@@ -48,6 +48,11 @@ class ActionRules(BaseActions):
                         obj_uuid['uuID']            = uuid_sensor
                         obj_uuid['event']           = "gathering"
                         obj_uuid['collect_to_rule'] = True
+                        url_gateway                 = "http://localhost:8000/sensors/?format=json&uuID={0}".format(obj_uuid['uuID'])
+                        info_gateway                = requests.get(url_gateway,self.headers).json()
+                        id_gateway                  = info_gateway[0]['gateway']
+                        obj_uuid['gateway']         = True
+
                         obj_uuid                    = json.dumps(obj_uuid)
                         info_gateway_and_sensor = object_events.event(obj_uuid)
                         data_send_context['value']       = info_gateway_and_sensor['value']
