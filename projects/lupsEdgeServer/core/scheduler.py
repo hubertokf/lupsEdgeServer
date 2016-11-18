@@ -20,14 +20,14 @@ class SchedulerEdge(object):
 
     def __init__(self):             #instância do objeto e inicia o escalonador
 
-        def run_thread():
-            while(True):
-                time.sleep(1)
+        # def run_thread():
+        #     while(True):
+        #         time.sleep(1)
 
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
-        self.th = threading.Thread(target= run_thread)  # thread executa outtro fluxo para o agendador rodar
-        self.th.start()
+        # self.th = threading.Thread(target= run_thread)  # thread executa outtro fluxo para o agendador rodar
+        # self.th.start()
 
     def add_job(self, a): # cria uma nova tarefa no escalonador
         jsonObject = json.loads(a)
@@ -36,7 +36,7 @@ class SchedulerEdge(object):
 
         if(jsonObject['modo']=='cron'):
             self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
-            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a],max_instances=3)
+            hour = jsonObject['info']['hour'], day = jsonObject['info']['day'], month = jsonObject['info']['month'], year = jsonObject['info']['year'],id = jsonObject['id_sensor'], args = [a],max_instances=20)
 
         elif(jsonObject['modo']=='publish'):    #Modificar function a chamar!
             self.scheduler.add_job(self.function_publisher, jsonObject['modo'], second = jsonObject['info']['second'], minute = jsonObject['info']['minute'],
