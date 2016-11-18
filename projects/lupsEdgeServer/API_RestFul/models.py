@@ -15,7 +15,7 @@ class Manufacturer(models.Model):
 
 class Gateway(models.Model):
 	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
-	uuID = models.CharField(max_length=36)
+	uuID = models.CharField(max_length=36,unique=True)
 	url = models.URLField(max_length=200,null=True)
 
 	def __str__(self):
@@ -24,7 +24,7 @@ class Gateway(models.Model):
 class Actuator(models.Model):
 	gateway = models.ForeignKey(Gateway, on_delete=models.CASCADE)
 	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
-	uuID = models.CharField(max_length=36)
+	uuID = models.CharField(max_length=36,unique=True)
 
 	def __str__(self):
 		return self.uuID
@@ -55,14 +55,14 @@ class Sensor(models.Model):
 	gateway = models.ForeignKey(Gateway, on_delete=models.CASCADE)
 	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
 	sensorType = models.ForeignKey(SensorType, on_delete=models.SET_NULL,null=True)
-	uuID = models.CharField(max_length=36)
+	uuID = models.CharField(max_length=36,unique=True)
 	model = models.CharField(max_length=30)
 
 	def __str__(self):
 		return self.uuID
 
 class Persistance(models.Model):
-	sensor = models.ForeignKey(Sensor, on_delete=models.PROTECT)
+	sensor = models.ForeignKey(Sensor, on_delete=models.DO_NOTHING)
 	contextServer = models.ForeignKey(ContextServer, on_delete=models.PROTECT)
 	collectDate = models.DateTimeField(auto_now=False, auto_now_add=False)
 	publisher = models.BooleanField(default=False)
