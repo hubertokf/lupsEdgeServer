@@ -43,23 +43,23 @@ class Core:
                 url = url+"&"+key+"="+value
 
         if (method == "post"):
-        	if(data != None):
-            	r = requests.post(url, data=json.dumps(data), headers=headers)
-        	else:
-            	r = requests.post(url, headers=headers)
-            	
+            if(data != None):
+                r = requests.post(url, data=json.dumps(data), headers=headers)
+            else:
+                r = requests.post(url, headers=headers)
+                
         elif (method == "get"):
-        	    r = requests.get(url, headers=headers)
+                r = requests.get(url, headers=headers)
         elif (method == "put"):
-        	if(data != None):
-    	        r = requests.put(url, data=json.dumps(data), headers=headers)
-        	else:
-        		r = requests.put(url, headers=headers)
+            if(data != None):
+                r = requests.put(url, data=json.dumps(data), headers=headers)
+            else:
+                r = requests.put(url, headers=headers)
         elif (method == "patch"):
-        	if(data != None):
-	            r = requests.patch(url, data=json.dumps(data), headers=headers)
-	        else
-	            r = requests.patch(url, headers=headers)
+            if(data != None):
+                r = requests.patch(url, data=json.dumps(data), headers=headers)
+            else:
+                r = requests.patch(url, headers=headers)
 
         return r.json()
 

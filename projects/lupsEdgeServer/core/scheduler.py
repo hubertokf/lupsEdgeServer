@@ -16,7 +16,7 @@ class SchedulerEdge(object):
 
     sensor_ant = []
     sensor_add = []
-    scheduler_data_ant = []
+    scheduler_data_ant = [1]
 
     def __init__(self):             #instância do objeto e inicia o escalonador
 
@@ -64,8 +64,6 @@ class SchedulerEdge(object):
 #-------------------------------------------------------------------------------
 
     def start_process(self):
-        global scheduler_data_ant
-
         sensors_data = self.check_sensor()
         scheduler_data = self.check_schedules()
 
@@ -78,14 +76,13 @@ class SchedulerEdge(object):
         self.compara_DB(sensors_actual)         # Repassa um JSON com todos os dados de sensores cadastrados "NOVOS"
 
         aux_sensor_add = self.sensor_add
-
         if len(aux_sensor_add) != 0:            # Por algum motivo não funciona colocando direto o "self.sensor_add"
                                                             #                oO
             self.activa_scheduler(scheduler_data)     # Repassa os dados e cria objeto scheduler para adicionar no CRON as tarefas
         else:                                   # Teve modificação apenas no scheduler, sem add ou remove sensor/atuador
-            self.measure_schedulers(scheduler_data_ant, scheduler_data, sensors_data)
+            self.measure_schedulers(self.scheduler_data_ant, scheduler_data, sensors_data)
 
-        scheduler_data_ant = scheduler_data
+        self.scheduler_data_ant = scheduler_data
         #print("------------------------------------------------------")
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
