@@ -14,8 +14,8 @@ class Core:
 
     def __init__(self):
         #asd = Asd();
-        new_scheduler = SchedulerEdge()
-        new_scheduler.start_process();
+        new_scheduler = SchedulerEdge(self)
+        new_scheduler.start_process()
         #juca = Analisador_Complexo(asd)
         #juca.start()
         http_server = MTServer(new_scheduler)
@@ -61,6 +61,5 @@ class Core:
             else:
                 r = requests.patch(url, headers=headers)
 
-        return r.json()
-
+        return r
     

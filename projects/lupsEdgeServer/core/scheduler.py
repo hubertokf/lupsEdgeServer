@@ -16,14 +16,16 @@ class SchedulerEdge(object):
 
     sensor_ant = []
     sensor_add = []
-    scheduler_data_ant = [1]
+    scheduler_data_ant = []
+    core = None
 
-    def __init__(self):             #instância do objeto e inicia o escalonador
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
 
         # def run_thread():
         #     while(True):
         #         time.sleep(1)
 
+        self.core = parent
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
         # self.th = threading.Thread(target= run_thread)  # thread executa outtro fluxo para o agendador rodar
@@ -90,19 +92,13 @@ class SchedulerEdge(object):
 
     def check_sensor(self):
         #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
-        url = 'http://localhost:8000/sensors/?format=json'
-        request = requests.get(url, headers=headers)
-        jsonObject = request.json()
+        jsonObject = self.core.API_access("get", "sensors").json()
         #-------------------------------------------------------------------------------
         return jsonObject
 
     def check_schedules(self):
         #-------------------Usado para pegar dados em formato JSON----------------------
-        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
-        url = 'http://localhost:8000/schedules/?format=json'
-        request = requests.get(url, headers=headers)
-        jsonObject = request.json()
+        jsonObject = self.core.API_access("get", "schedules").json()
         #-------------------------------------------------------------------------------
         return jsonObject
 
