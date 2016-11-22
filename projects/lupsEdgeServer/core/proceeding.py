@@ -6,6 +6,12 @@ class Proceeding(object):
     device_folder = ""
     device_file = ""
 
+    core = None
+
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
+
     def set_id(self, id):
         self.id = id
 

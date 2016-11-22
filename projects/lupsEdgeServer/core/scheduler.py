@@ -51,11 +51,11 @@ class SchedulerEdge(object):
 
     def function(self,response):        # response - É JSON passado como argumento
         jsonObject = json.loads(response)
-        object_events = Event_Treatment()
+        object_events = Event_Treatment(self.core)
         object_events.event(response)
 
     def function_publisher(self,response):# Modificar
-        publicador = Publisher()
+        publicador = Publisher(self.core)
         publicador.start()
 
         #jsonObject = json.loads(response)

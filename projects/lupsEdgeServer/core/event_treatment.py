@@ -5,6 +5,11 @@ from core.gathering import *
 import json
 
 class Event_Treatment(object):
+    core = None
+
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
 
     def event(self, response):
         #print(response)
@@ -15,13 +20,13 @@ class Event_Treatment(object):
                 #event = Proceeding()
         elif jsonObject['event'] == "publisher":
             print('Publisher')
-            event = Publisher()
+            event = Publisher(self.core)
             # print(dir(Publisher))
             event.publish_to_rules(jsonObject)
         elif jsonObject['event'] == "gathering":
             #print('Sensor: ', jsonObject['id_sensor'])
             #print('uuID: ', jsonObject['uuID'])
-            event = Gathering()
+            event = Gathering(self.core)
             #print(jsonObject['id_sensor'])
             if jsonObject['collect_to_rule']:
                 return_parameters = event.processamento1(jsonObject) # 1 em referencia ao sensor 1

@@ -4,6 +4,12 @@ import json
 
 class Gathering(object):
 
+    core = None
+
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
+
     def regra(self,json_result_gathering):   # Verificar argumentos e criar objeto p chamar regras
         engine = EngineRule()
 

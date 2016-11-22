@@ -34,7 +34,6 @@ class Core:
         if (model_id != None):
             url  += str(model_id)+"/"
 
-        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
 
         url += "?format=json"
 
@@ -42,24 +41,43 @@ class Core:
             for key, value in param:
                 url = url+"&"+key+"="+value
 
-        if (method == "post"):
-            if(data != None):
-                r = requests.post(url, data=json.dumps(data), headers=headers)
-            else:
-                r = requests.post(url, headers=headers)
+        method = getattr(self, "_api_access_"+method)
+        return method(url, data)
+
+    def _api_access_post(self, url, data):
+        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
+
+        if(data != None):
+            r = requests.post(url, data=json.dumps(data), headers=headers)
+        else:
+            r = requests.post(url, headers=headers)
+
+        return r
+
+    def _api_access_get(self, url, data):
+        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
                 
-        elif (method == "get"):
-                r = requests.get(url, headers=headers)
-        elif (method == "put"):
-            if(data != None):
-                r = requests.put(url, data=json.dumps(data), headers=headers)
-            else:
-                r = requests.put(url, headers=headers)
-        elif (method == "patch"):
-            if(data != None):
-                r = requests.patch(url, data=json.dumps(data), headers=headers)
-            else:
-                r = requests.patch(url, headers=headers)
+        r = requests.get(url, headers=headers)
+
+        return r
+
+    def _api_access_put(self, url, data):
+        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
+
+        if(data != None):
+            r = requests.put(url, data=json.dumps(data), headers=headers)
+        else:
+            r = requests.put(url, headers=headers)
+
+        return r
+
+    def _api_access_patch(self, url, data):
+        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
+
+        if(data != None):
+            r = requests.patch(url, data=json.dumps(data), headers=headers)
+        else:
+            r = requests.patch(url, headers=headers)
 
         return r
     
