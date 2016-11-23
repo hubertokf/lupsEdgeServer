@@ -24,6 +24,7 @@ class Event_Treatment(object):
             # print(dir(Publisher))
             event.publish_to_rules(jsonObject)
         elif jsonObject['event'] == "gathering":
+            print('Gathering')
             #print('Sensor: ', jsonObject['id_sensor'])
             #print('uuID: ', jsonObject['uuID'])
             event = Gathering(self.core)

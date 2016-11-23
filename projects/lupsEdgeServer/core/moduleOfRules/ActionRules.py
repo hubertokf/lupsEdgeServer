@@ -20,14 +20,15 @@ import smtplib
 import core.event_treatment
 
 class ActionRules(BaseActions):
-
-    def __init__ (self, parameters):
+    core_father = None
+    def __init__ (self, parameters,parent):
+        self.core_father = parent
         self.parameters = parameters
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
-                # print("Perigo")
-                object_events = core.event_treatment.Event_Treatment()
+                print("Perigo")
+                object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     data_send_context = {}
                     headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
@@ -111,7 +112,7 @@ class ActionRules(BaseActions):
 
         contador = self.parameters.contador - 1
         json = '{{"id_sensor": {0}, "event": "e", "valor":{1}, "contador": {2}}}'.format(self.parameters.id,self.parameters.value,contador)
-        object_events = Event_Treatment()
+        object_events = Event_Treatment(self.core_father)
         object_events.event(1,json)
 
     '''Método de transição para proximo regra, desabilita o conjunto de regra acionadas,bem como regra atual.

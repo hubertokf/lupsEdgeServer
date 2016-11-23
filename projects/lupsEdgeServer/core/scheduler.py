@@ -33,7 +33,6 @@ class SchedulerEdge(object):
 
     def add_job(self, a): # cria uma nova tarefa no escalonador
         jsonObject = json.loads(a)
-
         #print(jsonObject['id_sensor'])
 
         if(jsonObject['modo']=='cron'):

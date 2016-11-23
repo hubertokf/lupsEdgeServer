@@ -19,10 +19,13 @@ class Publisher(object):
     def publish_context(self, jsonObject):
 
         #com o servidor de contexto, obter URL e Token através da API
-        url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
+        #url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
+
+        context = self.core.API_access("get", "contextServers").json()[0]
 
         #utilizar aqui o Token anteriormente adquirido
-        r = self.core.API_access("get", "sensors", str(jsonObject['sensor'])).json()
+        r = self.core.API_access("get", "sensors", model_id=str(jsonObject['sensor'])).json()
+
 
         uuID = r['uuID']
 
@@ -41,9 +44,9 @@ class Publisher(object):
         #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
 
         data = {"content": {"sensor_uuid":str(uuID), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
-        headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
-        r = requests.post(url, data=json.dumps(data), headers=headers)
+        r = requests.post(context['addressUrl'], data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
         #print(data)

@@ -30,10 +30,9 @@ class Core:
         #data(DICT) armazena os dados a serem enviados para o metodo
         #param(DICT) parametros para ser colocados na url. (&publisher=False)
 
-        url  = self.API_url+model
+        url  = self.API_url+model+"/"
         if (model_id != None):
             url  += str(model_id)+"/"
-
 
         url += "?format=json"
 

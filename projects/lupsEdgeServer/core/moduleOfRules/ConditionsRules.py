@@ -6,7 +6,9 @@ import datetime
 import math
 import core.event_treatment
 class ConditionsRules(BaseVariables):
-    def __init__ (self, parameters):
+    core_father = None
+    def __init__ (self, parameters,parent):
+        self.core_father = parent
         self.parameters = parameters
         self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda
 
@@ -26,7 +28,7 @@ class ConditionsRules(BaseVariables):
     @numeric_rule_variable
     def get_verify_sensor(self,params):
         uuid                    = {}
-        object_events = core.event_treatment.Event_Treatment()
+        object_events           = core.event_treatment.Event_Treatment(self.core_father)
         data_condition          = json.loads(params)
         uuid['uuID']            = data_condition['sensor']
         uuid['event']           = "gathering"
@@ -40,12 +42,13 @@ class ConditionsRules(BaseVariables):
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
         self.parameters.create_obj_and_set_value(uuid['uuID'],value,format_colletcDate)
+        print(value)
         return value
 
     @numeric_rule_variable
     def diff_values_sensor(self,params):
 
-        gateways        = Gathering();
+        gateways        = Gathering(self.core_father);
         data_condition  = json.loads(params)
         uuid['uuID']    = data_condition['sensor']
         current_value   = gateways.coleting_value_of_sensor(uuid['uuID'])
