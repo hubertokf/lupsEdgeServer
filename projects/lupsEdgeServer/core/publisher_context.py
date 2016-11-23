@@ -21,13 +21,14 @@ class Publisher(object):
         #com o servidor de contexto, obter URL e Token através da API
         #url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
 
+        #trocar isso aqui quando receber o servidor de contexto a ser publicado
         context = self.core.API_access("get", "contextServers").json()[0]
 
         #utilizar aqui o Token anteriormente adquirido
-        r = self.core.API_access("get", "sensors", model_id=str(jsonObject['sensor'])).json()
+        sensor = self.core.API_access("get", "sensors", model_id=str(jsonObject['sensor'])).json()
 
 
-        uuID = r['uuID']
+        uuID = sensor['uuID']
 
         date_now = datetime.datetime.now()
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
@@ -46,12 +47,12 @@ class Publisher(object):
         data = {"content": {"sensor_uuid":str(uuID), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
         headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
-        r = requests.post(context['addressUrl'], data=json.dumps(data), headers=headers)
+        context_publication = requests.post(context['addressUrl'], data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
         #print(data)
         #print(r.text)
-        return r.text
+        return context_publication.text
 
 
     def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
