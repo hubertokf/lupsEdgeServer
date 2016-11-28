@@ -14,5 +14,7 @@ new_scheduler = SchedulerEdge()
 #new_scheduler.start_process();
 #juca = Analisador_Complexo(asd)
 #juca.start()
+#new_scheduler.start()
 http_server = MTServer(new_scheduler)
+#new_scheduler.start()
 http.start()

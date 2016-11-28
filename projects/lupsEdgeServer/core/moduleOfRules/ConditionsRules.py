@@ -28,14 +28,24 @@ class ConditionsRules(BaseVariables):
         uuid                    = {}
         object_events = core.event_treatment.Event_Treatment()
         data_condition          = json.loads(params)
+        print("visionnnnnnnn",data_condition['sensor'])
         uuid['uuID']            = data_condition['sensor']
         uuid['event']           = "gathering"
         uuid['collect_to_rule'] = True
+
         url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
         info_gateway            = requests.get(url_gateway,self.headers).json()
         id_gateway              = info_gateway[0]['gateway']
+
         uuid['gateway']         = id_gateway
-        json_dumps_uuid         = json.dumps(uuid)
+
+        json_dumps_uuid         = uuid
+
+
+        #json_dumps_uuid         = json.dumps(uuid)
+
+        print(json_dumps_uuid)
+
         info_gateway_and_sensor = object_events.event(json_dumps_uuid)
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])

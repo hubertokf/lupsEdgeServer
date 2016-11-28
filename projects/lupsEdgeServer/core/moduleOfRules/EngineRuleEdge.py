@@ -34,17 +34,19 @@ class EngineRule(object):
         return rules
 
     def get_parameters(self,obj_json): # pega os parametros enviados pelo tratador de evento e retorna um disct destes parametros
-
+        # print(obj_json)
         parameters = json.loads(obj_json)
-        #print(parameters['valor'])
+        # print(type(parameters))
         return parameters
+        #return parameters
 
 
     def run_rules(self,a): # executa a regra
-
         parameters = self.get_parameters(a)
         # obj_parameters= Parameters(parameters['id'],parameters['valor'],parameters['id_gateway']) #id_gateway futuramente será trabalhado
         obj_parameters= Parameters() #id_gateway futuramente será trabalhado
+
+        #print("oi"+str(parameters['id']))
 
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras

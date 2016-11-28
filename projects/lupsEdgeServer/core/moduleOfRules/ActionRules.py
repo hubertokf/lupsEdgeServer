@@ -58,7 +58,10 @@ class ActionRules(BaseActions):
                         data_send_context['value']       = info_gateway_and_sensor['value']
                         data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
 
-                    super_json = json.dumps(data_send_context)
+                    #super_json = json.dumps(data_send_context)
+                    super_json = data_send_context
+
+                    print("oiiiiiiiiiiiiiiiii",super_json)
                     object_events.event(super_json)
                 except Exception as inst:
                     # print("Erro aqui")

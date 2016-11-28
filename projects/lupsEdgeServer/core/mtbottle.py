@@ -43,15 +43,17 @@ class MTServer(bottle.ServerAdapter):
         def index():
 
             print("----------------------SCHEDULER-----------------------")
+
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
             #print(str_data)#this goes to log file only, not to client
-            str_data['modo'] = 'cron'
+            #str_data['modo'] = 'cron'
+            print(str_data)
             print("------------------------------------------------------------")
 
             #print("ENTROU")
 
-            #scheduler.remove_job(str_data);
+            scheduler.remove_job(str_data);
 
         app.run(host='0.0.0.0', port=8081, thread_count=3)
 

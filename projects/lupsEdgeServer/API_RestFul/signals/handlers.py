@@ -6,7 +6,7 @@ import requests
 
 @receiver(post_save, sender=Schedule)
 def post_save_sched(sender, instance, created, **kwargs):
-    data =  {"id": str(instance.id),"status": str(instance.status),"year": str(instance.year),"month": str(instance.month),"day": str(instance.day),"hour": str(instance.hour),"minute": str(instance.minute), "second": str(instance.second),"sensor": str(instance.sensor.id),"signal":"saved"}
+    data =  {"id": str(instance.id), "event": str(instance.event),"status": str(instance.status),"year": str(instance.year),"month": str(instance.month),"day": str(instance.day),"hour": str(instance.hour),"minute": str(instance.minute), "second": str(instance.second),"sensor": str(instance.sensor.id),"signal":"saved"}
     headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSchedule_add', data=json.dumps(data), headers=headers)
 
