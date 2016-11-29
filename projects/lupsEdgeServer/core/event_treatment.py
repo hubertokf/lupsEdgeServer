@@ -3,11 +3,11 @@ from core.gathering import *
 import json
 
 class Event_Treatment(object):
+    core = None
 
-    request_API_to_DB = None
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
 
-    def __init__(self, request_API):
-        self.request_API_to_DB = request_API
+        self.core = parent
 
     def event(self, jsonObject):
 
@@ -17,15 +17,13 @@ class Event_Treatment(object):
 
         elif jsonObject['event'] == "publisher":
             print('Publisher')
-            event = Publisher()
+            event = Publisher(self.core)
             # print(dir(Publisher))
             event.publish_to_rules(jsonObject)
 
         elif jsonObject['event'] == "gathering":
-
-            event = Gathering(self.request_API_to_DB)
+            event = Gathering(self.core)
             return_parameters = event.processamento(jsonObject) # 1 em referencia ao sensor 1
-
             return return_parameters
         else:
             print("Nenhum do casos no TRATAMENTO EVENTO 2")

@@ -17,14 +17,12 @@ class MTServer(bottle.ServerAdapter):
 
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
-            print(str_data)
+
         @app.route('/sigSensor_delete', method='POST')
         def index():
-            print("------------------------------------------------------------")
+
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
-            print(str_data)
-            print("------------------------------------------------------------")
 
         @app.route('/sigSchedule_add', method='POST')
         def index():
@@ -32,26 +30,16 @@ class MTServer(bottle.ServerAdapter):
 
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
-            #print(str_data)#this goes to log file only, not to client
-            str_data['modo'] = 'cron'
 
-            #print("ENTROU")
+            str_data['modo'] = 'cron'
 
             scheduler.add_job(str_data);
 
         @app.route('/sigSchedule_delete', method='POST')
         def index():
 
-            print("----------------------SCHEDULER-----------------------")
-
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
-            #print(str_data)#this goes to log file only, not to client
-            #str_data['modo'] = 'cron'
-            print(str_data)
-            print("------------------------------------------------------------")
-
-            #print("ENTROU")
 
             scheduler.remove_job(str_data);
 

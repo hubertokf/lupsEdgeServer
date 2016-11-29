@@ -6,11 +6,11 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 class SchedulerEdge(object):
 
-    request_API_to_DB = None
+    core = None
 
-    def __init__(self):             #instância do objeto e inicia o escalonador
-        self.request_API_to_DB = Manager_conect_DB()
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
 
+        self.core = parent
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
 
@@ -38,13 +38,13 @@ class SchedulerEdge(object):
 
     def function(self, jsonObject):        # response - É JSON passado como argumento
 
-        #print(jsonObject['id'])
+        print(jsonObject['id'])
         #print("SENSOR ADD"+jsonObject['id_sensor'])
-        object_events = Event_Treatment(self.request_API_to_DB)
+        object_events = Event_Treatment(self.core)
         object_events.event(jsonObject)
 
     def check_persistence(self):# Modificar
-        persistence_publisher = Publisher()
+        persistence_publisher = Publisher(self.core)
         persistence_publisher.start()
 
 #-------------------------------------------------------------------------------
@@ -53,8 +53,8 @@ class SchedulerEdge(object):
 # Adiciona uma TAREFA no CRON, tornando resposavél pela publicação no contexto
 # quando não ocorreu com sucesso este ato no módulo de gathering.
 
-    def create_job_check_persistence(self):
-
+    def create_job_check_persistence(self):  # Cria um JSON no formato exato que SCHEDULER
+                                    # irá utilizar. QQ tratamento deve ocorrer aqui.
         job = {}
 
         job['modo'] = 'cron'
@@ -73,8 +73,8 @@ class SchedulerEdge(object):
 
     def check_scheduler_reactivave(self):
 
-        jsonObject = self.request_API_to_DB.get_all_scheduler()
+        jsonSchedules = self.core.API_access("get", "schedules").json()
 
-        for dados in jsonObject:
-            dados['modo'] = 'cron'
-            self.add_job(dados)
+        for schedule in jsonSchedules:
+            schedule['modo'] = 'cron'
+            self.add_job(schedule)

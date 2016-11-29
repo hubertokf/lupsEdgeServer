@@ -58,7 +58,7 @@ class Manager_conect_DB(object):
         return jsonObject
 
     def get_gateway(self, id):
-        
+
         url = 'http://localhost:8000/gateways/' + str(id)
         request = requests.get(url, headers=self.headers)
         jsonObject = request.json()

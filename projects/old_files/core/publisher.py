@@ -4,6 +4,12 @@ import json
 
 class Publisher(object):
 
+    core = None
+
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
+
     def set_publisher_local(self, id_sensor, value, contextServer):
 
         headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}

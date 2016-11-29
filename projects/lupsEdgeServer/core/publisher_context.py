@@ -9,20 +9,26 @@ import sqlite3
 class Publisher(object):
 
     #deixar variavel com url da API borda e Token
+    core = None
+
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
 
     #a publicação deve receber o servidor de contexto a ser publicado
     def publish_context(self, jsonObject):
 
         #com o servidor de contexto, obter URL e Token através da API
-        url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
+        #url = 'http://exehda-dev.ufpel.edu.br/contextServer/api/publicacoes'
 
-        url_2 = 'http://localhost:8000/sensors/'+str(jsonObject['sensor'])+'/'
-        headers = {'Content-type': 'application/json', 'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
+        #trocar isso aqui quando receber o servidor de contexto a ser publicado
+        context = self.core.API_access("get", "contextServers").json()[0]
 
         #utilizar aqui o Token anteriormente adquirido
-        r = requests.get(url_2, headers=headers)
+        sensor = self.core.API_access("get", "sensors", model_id=str(jsonObject['sensor'])).json()
 
-        uuID = r.json()['uuID']
+
+        uuID = sensor['uuID']
 
         date_now = datetime.datetime.now()
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
@@ -39,29 +45,27 @@ class Publisher(object):
         #fazer uma nova consulta na API para requisitar o UUID do sensor em questão
 
         data = {"content": {"sensor_uuid":str(uuID), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
-        headers = {'Content-type': 'application/json', 'X-API-KEY': 'cfb281929c3574091ad2a7cf80274421e6a87c59'}
+        headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
-        r = requests.post(url, data=json.dumps(data), headers=headers)
+        context_publication = requests.post(context['addressUrl'], data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
         #print(data)
         #print(r.text)
-        return r.text
+        return context_publication.text
 
 
     def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
-        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
+        data = {'publisher': True}
 
-        payload = {'publisher': True}
+        r = self.core.API_access("patch", "persistances", str(jsonObject['id']), data).json()
 
-        r = requests.patch("http://localhost:8000/persistances/"+str(jsonObject['id'])+"/", data=payload, headers=headers)
     #------------------------------------------------------------------------------------------------------------------------
 
 
 
     def set_publisher_local(self, jsonObject, flag): # Publica na PERSISTENCIA
 
-        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
         #print("---------------"+id_sensor+"------------------------")
 
         date_now = datetime.datetime.now()
@@ -71,17 +75,15 @@ class Publisher(object):
         date_str_coleta =   date_str
         value =             jsonObject['value']
 
-        payload = {'collectDate': date_str, 'value': str(value), 'sensor': str(id_sensor), 'contextServer':'1', 'publisher': str(flag)}
+        data = {'collectDate': date_str, 'value': str(value), 'sensor': str(id_sensor), 'contextServer':'1', 'publisher': str(flag)}
 
-        r = requests.post("http://localhost:8000/persistances/", data=payload, headers=headers)
+        r = self.core.API_access("post", "persistances", model_id=None, data=data, param=None).json()
 
         #print(r.text)
 
     def get_dados_SB(self):
-        headers = {'Authorization':'token %s' % "878559b6d7baf6fcede17397fc390c5b9d7cbb77"}
-        url = 'http://localhost:8000/persistances/?format=json&publisher=False'
-        request = requests.get(url, headers=headers)
-        jsonObject = request.json()
+        param = {"publisher":"False"}
+        jsonObject = self.core.API_access("get", "persistances", model_id=None, data=None, param=param).json()
 
         return jsonObject
 

@@ -17,12 +17,11 @@ except Exception as inst:
 #metodo que recebe o json que contem regras de contigencia
 class EngineRule(object):
     """docstring for EngineRule"""
+    core = None
 
-    request_API_to_DB = None
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
 
-    def __init__(self, request_API):
-        self.request_API_to_DB = request_API
-
+        self.core = parent
 
     def get_rules(self,a): # método encarrgado de extrair a regra do bd por meio de APU restfull e retorna um json da regra
 
@@ -32,6 +31,7 @@ class EngineRule(object):
         r         = requests.get(url, headers=headers)
         getSensor = r.json()
         id_sensor =  getSensor[0]['id']
+        #print(id_sensor)
         url       = 'http://localhost:8000/rules/?format=json&sensor={0}'.format(id_sensor)
         r         = requests.get(url, headers=headers)
         rules     = r.json() # coleta os dados recebidos da APIrestfull
@@ -51,16 +51,15 @@ class EngineRule(object):
         # obj_parameters= Parameters(parameters['id'],parameters['valor'],parameters['id_gateway']) #id_gateway futuramente será trabalhado
         obj_parameters= Parameters() #id_gateway futuramente será trabalhado
 
-        #print("oi"+str(parameters['id']))
-
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
-
+            #print(type(rules[i]['status']))
             if(rules[i]['status']):
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
                 run_all(rule_list=rule,
-                defined_variables=ConditionsRules(obj_parameters, self.request_API_to_DB),
-                defined_actions=ActionRules(obj_parameters, self.request_API_to_DB),
+
+                defined_variables=ConditionsRules(obj_parameters,self.core),
+                defined_actions=ActionRules(obj_parameters,self.core),
                 stop_on_first_trigger=True
                 )
 
@@ -68,13 +67,14 @@ class EngineRule(object):
 
         obj_parameters= Parameters(10,30,10) #id_gateway futuramente será trabalhado
         rules = self.get_rules(a)
-        # print(rules)
+        #print("aioeuoaieuaeioea")
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
             #print(i)
             if(rules[i]['status']):
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
                 run_all(rule_list=rule,
-                defined_variables=ConditionsRules(obj_parameters, self.request_API_to_DB),
-                defined_actions=ActionRules(obj_parameters, self.request_API_to_DB),
+
+                defined_variables=ConditionsRules(obj_parameters,self.core),
+                defined_actions=ActionRules(obj_parameters,self.core),
                 stop_on_first_trigger=True
                 )

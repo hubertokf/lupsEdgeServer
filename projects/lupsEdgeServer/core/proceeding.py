@@ -3,14 +3,15 @@ import json
 
 class Proceeding(object):
 
-    request_API_to_DB = None
+    core = None
 
-    def __init__(self, request_API):
-        self.request_API_to_DB = request_API
+    def __init__(self, parent):             #instância do objeto e inicia o escalonador
+
+        self.core = parent
 
     def processamento(self, jsonObject):
 
-        acting_actuador = Communication(self.request_API_to_DB)
+        acting_actuador = Communication(self.core)
 
         acting_actuador.set_values_on_gatwat(jsonObject)
 
