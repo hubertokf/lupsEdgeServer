@@ -1,19 +1,20 @@
-#from core.proceeding import *
-#from core.publisher import *
 from core.publisher_context import *
 from core.gathering import *
 import json
 
 class Event_Treatment(object):
 
+    request_API_to_DB = None
+
+    def __init__(self, request_API):
+        self.request_API_to_DB = request_API
+
     def event(self, jsonObject):
-        #print(response)
-        #jsonObject = json.loads(response)
-        # print(jsonObject)
+
         if jsonObject['event'] == "proceeding":
             print('Proceeding')
-                #event = Proceeding()
-                
+                #event = Proceeding(self.request_API_to_DB)
+
         elif jsonObject['event'] == "publisher":
             print('Publisher')
             event = Publisher()
@@ -22,7 +23,7 @@ class Event_Treatment(object):
 
         elif jsonObject['event'] == "gathering":
 
-            event = Gathering()
+            event = Gathering(self.request_API_to_DB)
             return_parameters = event.processamento(jsonObject) # 1 em referencia ao sensor 1
 
             return return_parameters

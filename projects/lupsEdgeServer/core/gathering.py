@@ -1,11 +1,15 @@
-from core.GetValuesSensor import *
-# from core.publisher import *
+from core.communication import *
 import json
 
 class Gathering(object):
 
+    request_API_to_DB = None
+
+    def __init__(self, request_API):
+        self.request_API_to_DB = request_API
+
     def regra(self, json_result_gathering):   # Verificar argumentos e criar objeto p chamar regras
-        engine = EngineRule()
+        engine = EngineRule(self.request_API_to_DB)
 
         string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(json_result_gathering['id_sensor'],json_result_gathering['value'],json_result_gathering['id_gateway'],json_result_gathering['collectDate'])
         #print(string_rule)
@@ -17,11 +21,8 @@ class Gathering(object):
                                 # Realiza um if, verificando se precisa criar um  REGRA ou apenas
                                 # retorna um dado
 
-        colecter_sensor = GetValuesSensor()
+        colecter_sensor = Communication(self.request_API_to_DB)
         formation = colecter_sensor.get_values_on_gatway(jsonObject)            #
-        #self.regra(formation)
-
-        #print(formation)
 
         if jsonObject['collect_to_rule']:
             return formation

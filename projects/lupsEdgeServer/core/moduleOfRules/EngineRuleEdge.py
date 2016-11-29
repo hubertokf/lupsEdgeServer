@@ -18,6 +18,11 @@ except Exception as inst:
 class EngineRule(object):
     """docstring for EngineRule"""
 
+    request_API_to_DB = None
+
+    def __init__(self, request_API):
+        self.request_API_to_DB = request_API
+
 
     def get_rules(self,a): # método encarrgado de extrair a regra do bd por meio de APU restfull e retorna um json da regra
 
@@ -54,8 +59,8 @@ class EngineRule(object):
             if(rules[i]['status']):
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
                 run_all(rule_list=rule,
-                defined_variables=ConditionsRules(obj_parameters),
-                defined_actions=ActionRules(obj_parameters),
+                defined_variables=ConditionsRules(obj_parameters, self.request_API_to_DB),
+                defined_actions=ActionRules(obj_parameters, self.request_API_to_DB),
                 stop_on_first_trigger=True
                 )
 
@@ -69,7 +74,7 @@ class EngineRule(object):
             if(rules[i]['status']):
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
                 run_all(rule_list=rule,
-                defined_variables=ConditionsRules(obj_parameters),
-                defined_actions=ActionRules(obj_parameters),
+                defined_variables=ConditionsRules(obj_parameters, self.request_API_to_DB),
+                defined_actions=ActionRules(obj_parameters, self.request_API_to_DB),
                 stop_on_first_trigger=True
                 )

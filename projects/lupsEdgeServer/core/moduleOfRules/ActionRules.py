@@ -20,14 +20,16 @@ import smtplib
 import core.event_treatment
 
 class ActionRules(BaseActions):
+    request_API_to_DB = None
 
-    def __init__ (self, parameters):
+    def __init__ (self, parameters, request_API):
+        self.request_API_to_DB = request_API
         self.parameters = parameters
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
                 # print("Perigo")
-                object_events = core.event_treatment.Event_Treatment()
+                object_events = core.event_treatment.Event_Treatment(self.request_API_to_DB)
                 try:
                     data_send_context = {}
                     headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}

@@ -6,7 +6,11 @@ import datetime
 import math
 import core.event_treatment
 class ConditionsRules(BaseVariables):
-    def __init__ (self, parameters):
+
+    request_API_to_DB = None
+
+    def __init__ (self, parameters, request_API):
+        self.request_API_to_DB = request_API
         self.parameters = parameters
         self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda
 
@@ -26,7 +30,7 @@ class ConditionsRules(BaseVariables):
     @numeric_rule_variable
     def get_verify_sensor(self,params):
         uuid                    = {}
-        object_events = core.event_treatment.Event_Treatment()
+        object_events = core.event_treatment.Event_Treatment(self.request_API_to_DB)
         data_condition          = json.loads(params)
         print("visionnnnnnnn",data_condition['sensor'])
         uuid['uuID']            = data_condition['sensor']

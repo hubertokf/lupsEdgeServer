@@ -1,28 +1,19 @@
-from datetime import datetime
 import json
-import time
-import re
-import os
 import threading
-import pycurl
-from array import array
-from io import BytesIO
 from core.event_treatment import *
 from apscheduler.schedulers.background import BackgroundScheduler
-from core.publisher_context import *
-from core.manager_conect_DB import *
-
 
 
 class SchedulerEdge(object):
 
+    request_API_to_DB = None
+
     def __init__(self):             #instância do objeto e inicia o escalonador
+        self.request_API_to_DB = Manager_conect_DB()
 
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
 
-    # def start(self):
-    #     print("jasj")
         self.create_job_check_persistence()
         self.check_scheduler_reactivave()
 
@@ -49,7 +40,7 @@ class SchedulerEdge(object):
 
         #print(jsonObject['id'])
         #print("SENSOR ADD"+jsonObject['id_sensor'])
-        object_events = Event_Treatment()
+        object_events = Event_Treatment(self.request_API_to_DB)
         object_events.event(jsonObject)
 
     def check_persistence(self):# Modificar
@@ -82,8 +73,7 @@ class SchedulerEdge(object):
 
     def check_scheduler_reactivave(self):
 
-        conect_db = Manager_conect_DB()
-        jsonObject = conect_db.get_all_scheduler()
+        jsonObject = self.request_API_to_DB.get_all_scheduler()
 
         for dados in jsonObject:
             dados['modo'] = 'cron'
