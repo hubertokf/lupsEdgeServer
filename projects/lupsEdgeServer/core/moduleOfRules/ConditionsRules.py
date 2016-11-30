@@ -36,17 +36,12 @@ class ConditionsRules(BaseVariables):
         uuid['event']           = "gathering"
         uuid['collect_to_rule'] = True
 
-<<<<<<< HEAD
         # url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
         # info_gateway            = requests.get(url_gateway,self.headers).json()
 
         param = {"uuID":uuid['uuID']}
         info_gateway = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-                    
-=======
-        url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
-        info_gateway            = requests.get(url_gateway,self.headers).json()
->>>>>>> 5737b66495ed89cd8e63e8e3f9d7048a754fc883
+
         id_gateway              = info_gateway[0]['gateway']
 
         uuid['gateway']         = id_gateway
