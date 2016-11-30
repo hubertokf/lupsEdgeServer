@@ -10,7 +10,7 @@ class ConditionsRules(BaseVariables):
     def __init__ (self, parameters,parent):
         self.core_father = parent
         self.parameters = parameters
-        self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda
+        # self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda
 
     @numeric_rule_variable
     def getNumber(self,a):
@@ -33,8 +33,13 @@ class ConditionsRules(BaseVariables):
         uuid['uuID']            = data_condition['sensor']
         uuid['event']           = "gathering"
         uuid['collect_to_rule'] = True
-        url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
-        info_gateway            = requests.get(url_gateway,self.headers).json()
+
+        # url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
+        # info_gateway            = requests.get(url_gateway,self.headers).json()
+
+        param = {"uuID":uuid['uuID']}
+        info_gateway = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                    
         id_gateway              = info_gateway[0]['gateway']
         uuid['gateway']         = id_gateway
         json_dumps_uuid         = json.dumps(uuid)
@@ -53,12 +58,20 @@ class ConditionsRules(BaseVariables):
         uuid['uuID']    = data_condition['sensor']
         current_value   = gateways.coleting_value_of_sensor(uuid['uuID'])
         #problema do gathering/LJ?
-        url             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
-        r               = requests.get(url)
-        sensor          = r.json()
-        url             = "http://localhost:8000/persistence/?format=json&sensor={0}".format(sensor['id'])
-        r               = requests.get(url)
-        preceding_value = r.json()
+
+        # url             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
+        # r               = requests.get(url)
+        # sensor          = r.json()
+        param = {"uuID":uuid['uuID']}
+        sensor            = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+
+        # url             = "http://localhost:8000/persistence/?format=json&sensor={0}".format(sensor['id'])
+        # r               = requests.get(url)
+        # preceding_value = r.json()
+
+        param = {"sensor":sensor['id']}
+        preceding_value = self.core_father.API_access("get", "persistence", model_id=None, data=None, param=param).json()
+
         return math.fabs(current_value - preceding_value['value'])
 
     '''Método de verificação do tempo e habilita um conunto de regras, apenas um esboço. devo arrumar'''

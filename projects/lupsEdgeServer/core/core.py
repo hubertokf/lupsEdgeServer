@@ -37,8 +37,8 @@ class Core:
         url += "?format=json"
 
         if (param != None):
-            for key, value in param:
-                url = url+"&"+key+"="+value
+            for key, value in param.items():
+                url = url+"&"+str(key)+"="+str(value)
 
         method = getattr(self, "_api_access_"+method)
         return method(url, data)

@@ -27,15 +27,24 @@ class EngineRule(object):
     def get_rules(self,a): # método encarrgado de extrair a regra do bd por meio de APU restfull e retorna um json da regra
 
 
-        headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
-        url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(a)
-        r         = requests.get(url, headers=headers)
-        getSensor = r.json()
+        # headers   = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        # url       = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(a)
+        # r         = requests.get(url, headers=headers)
+        # getSensor = r.json()
+
+        param = {"uuID":a}
+        getSensor = self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+         
         id_sensor =  getSensor[0]['id']
         print(id_sensor)
-        url       = 'http://localhost:8000/rules/?format=json&sensor={0}'.format(id_sensor)
-        r         = requests.get(url, headers=headers)
-        rules     = r.json() # coleta os dados recebidos da APIrestfull
+
+        # url       = 'http://localhost:8000/rules/?format=json&sensor={0}'.format(id_sensor)
+        # r         = requests.get(url, headers=headers)
+        # rules     = r.json() # coleta os dados recebidos da APIrestfull
+
+        param = {"sensor":id_sensor}
+        rules = self.core.API_access("get", "rules", model_id=None, data=None, param=param).json()
+        
 
         return rules
 

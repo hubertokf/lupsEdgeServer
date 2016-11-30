@@ -31,9 +31,14 @@ class ActionRules(BaseActions):
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     data_send_context = {}
-                    headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
-                    url               = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
-                    r                 = requests.get(url, headers=headers)
+
+                    # headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+                    # url               = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
+                    # r                 = requests.get(url, headers=headers)
+
+                    param = {"uuID":uuid_sensor}
+                    r = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
+                    
                     get_sensor                            = r.json()
                     id_sensor                            =  get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
@@ -49,8 +54,12 @@ class ActionRules(BaseActions):
                         obj_uuid['uuID']            = uuid_sensor
                         obj_uuid['event']           = "gathering"
                         obj_uuid['collect_to_rule'] = True
-                        url_gateway                 = "http://localhost:8000/sensors/?format=json&uuID={0}".format(obj_uuid['uuID'])
-                        info_gateway                = requests.get(url_gateway,headers).json()
+
+                        # url_gateway                 = "http://localhost:8000/sensors/?format=json&uuID={0}".format(obj_uuid['uuID'])
+                        # info_gateway                = requests.get(url_gateway,headers).json()
+                        param2 = {"uuID":obj_uuid['uuID']}
+                        info_gateway                = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param2).json()
+
                         id_gateway                  = info_gateway[0]['gateway']
                         obj_uuid['gateway']         = id_gateway
 
@@ -122,18 +131,25 @@ class ActionRules(BaseActions):
     @rule_action(params={"rules": FIELD_SELECT,"id_next_rule": FIELD_NUMERIC,"id_current_rule":FIELD_NUMERIC})
     def next_rule(self,rules,id_next_rule,id_current_rule):
 
-        headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
+        # headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
         payload = {'status':False}
-        url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
-        r       = requests.put(url, data=payload, headers=id_current_rule)
+        # url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
+        # r       = requests.put(url, data=payload, headers=id_current_rule)
+
+        r = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
+
         payload = {'status':True}
-        url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
-        r       = requests.put(url, data=payload, headers=headers)
+        # url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
+        # r       = requests.put(url, data=payload, headers=headers)
+        
+        r = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
 
         for id_rule_set in rules:
             payload = {'status':False}
-            url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
-            r       = requests.put(url, data=payload, headers=headers)
+            # url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
+            # r       = requests.put(url, data=payload, headers=headers)
+            r = self.core_father.API_access("put", "rules", model_id=id_rule_set, data=payload, param=None)
+
 
 
 
@@ -141,16 +157,23 @@ class ActionRules(BaseActions):
     @rule_action
     def failure_transition(self,rules,id_rule,id_current_rule):
                 payload = {'status':False}
-                url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
-                r       = requests.put(url, data=payload, headers=id_current_rule)
+                # url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
+                # r       = requests.put(url, data=payload, headers=id_current_rule)
+
+                r = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
+
                 payload = {'status':False}
-                url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
-                r       = requests.put(url, data=payload, headers=headers)
+                # url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
+                # r       = requests.put(url, data=payload, headers=headers)
+                
+                r = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
 
                 for id_rule_set in rules:
                     payload = {'status':False}
-                    url    ="http://localhost:8000/rules/{0}".format(id_rule_set)
-                    r    = requests.put(url, data=payload, headers=headers)
+                    # url    ="http://localhost:8000/rules/{0}".format(id_rule_set)
+                    # r    = requests.put(url, data=payload, headers=headers)
+                    r = self.core_father.API_access("put", "rules", model_id=id_rule_set, data=payload, param=None)
+
 
     @rule_action(params = {"uuid": FIELD_TEXT,"url": FIELD_TEXT})
     def get_extern_sensor(self,uuid,url):
