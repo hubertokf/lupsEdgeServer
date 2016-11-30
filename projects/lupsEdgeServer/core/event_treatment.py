@@ -1,5 +1,3 @@
-#from core.proceeding import *
-#from core.publisher import *
 from core.publisher_context import *
 from core.gathering import *
 import json
@@ -11,30 +9,21 @@ class Event_Treatment(object):
 
         self.core = parent
 
-    def event(self, response):
-        #print(response)
-        jsonObject = json.loads(response)
-        # print(jsonObject)
+    def event(self, jsonObject):
+
         if jsonObject['event'] == "proceeding":
             print('Proceeding')
-                #event = Proceeding()
+                #event = Proceeding(self.request_API_to_DB)
+
         elif jsonObject['event'] == "publisher":
             print('Publisher')
             event = Publisher(self.core)
             # print(dir(Publisher))
             event.publish_to_rules(jsonObject)
+
         elif jsonObject['event'] == "gathering":
-            print('Gathering')
-            #print('Sensor: ', jsonObject['id_sensor'])
-            #print('uuID: ', jsonObject['uuID'])
             event = Gathering(self.core)
-            #print(jsonObject['id_sensor'])
-            if jsonObject['collect_to_rule']:
-                return_parameters = event.processamento1(jsonObject) # 1 em referencia ao sensor 1
-            else:
-                event.processamento(jsonObject)
-                return_parameters = None
+            return_parameters = event.processamento(jsonObject) # 1 em referencia ao sensor 1
             return return_parameters
-            #event.processamento(jsonObject['id_sensor'], select_features) # 1 em referencia ao sensor 1
         else:
             print("Nenhum do casos no TRATAMENTO EVENTO 2")

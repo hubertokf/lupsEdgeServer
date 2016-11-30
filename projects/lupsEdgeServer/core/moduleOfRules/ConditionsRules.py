@@ -6,6 +6,7 @@ import datetime
 import math
 import core.event_treatment
 class ConditionsRules(BaseVariables):
+
     core_father = None
     def __init__ (self, parameters,parent):
         self.core_father = parent
@@ -30,24 +31,38 @@ class ConditionsRules(BaseVariables):
         uuid                    = {}
         object_events           = core.event_treatment.Event_Treatment(self.core_father)
         data_condition          = json.loads(params)
+        #print("visionnnnnnnn",data_condition['sensor'])
         uuid['uuID']            = data_condition['sensor']
         uuid['event']           = "gathering"
         uuid['collect_to_rule'] = True
 
+<<<<<<< HEAD
         # url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
         # info_gateway            = requests.get(url_gateway,self.headers).json()
 
         param = {"uuID":uuid['uuID']}
         info_gateway = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
                     
+=======
+        url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
+        info_gateway            = requests.get(url_gateway,self.headers).json()
+>>>>>>> 5737b66495ed89cd8e63e8e3f9d7048a754fc883
         id_gateway              = info_gateway[0]['gateway']
+
         uuid['gateway']         = id_gateway
-        json_dumps_uuid         = json.dumps(uuid)
+
+        json_dumps_uuid         = uuid
+
+
+        #json_dumps_uuid         = json.dumps(uuid)
+
+        #print(json_dumps_uuid)
+
         info_gateway_and_sensor = object_events.event(json_dumps_uuid)
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
         self.parameters.create_obj_and_set_value(uuid['uuID'],value,format_colletcDate)
-        print(value)
+        #print(value)
         return value
 
     @numeric_rule_variable

@@ -15,7 +15,6 @@ class Core:
     def __init__(self):
         #asd = Asd();
         new_scheduler = SchedulerEdge(self)
-        new_scheduler.start_process()
         #juca = Analisador_Complexo(asd)
         #juca.start()
         http_server = MTServer(new_scheduler)
@@ -55,7 +54,7 @@ class Core:
 
     def _api_access_get(self, url, data):
         headers = {'Content-type': 'application/json', 'Authorization':'token %s' % self.API_token}
-                
+
         r = requests.get(url, headers=headers)
 
         return r
@@ -79,4 +78,3 @@ class Core:
             r = requests.patch(url, headers=headers)
 
         return r
-    

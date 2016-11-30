@@ -27,7 +27,6 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
-                print("Perigo")
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     data_send_context = {}
@@ -68,7 +67,9 @@ class ActionRules(BaseActions):
                         data_send_context['value']       = info_gateway_and_sensor['value']
                         data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
 
-                    super_json = json.dumps(data_send_context)
+                    #super_json = json.dumps(data_send_context)
+                    super_json = data_send_context
+
                     object_events.event(super_json)
                 except Exception as inst:
                     # print("Erro aqui")
@@ -89,6 +90,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"info_adicional": FIELD_TEXT})
     def test_post_Event(self, info_adicional):
+        pass
         #sender = 'tainaribeiro.rs@gmail.com'
         #receivers = ['tainaribeiro.rs@hotmail.com']
 
@@ -114,7 +116,7 @@ class ActionRules(BaseActions):
         # except :
         #   print ("Error: unable to send email")
         #   smtpObj.quit()
-        print("okkkkkkkkkkk")
+        #print("okkkkkkkkkkk")
 
     @rule_action(params = {"ruler": FIELD_TEXT})
     def gathering_error(self,ruler):
