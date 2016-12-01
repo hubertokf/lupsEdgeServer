@@ -47,7 +47,7 @@ class Publisher(object):
         data = {"content": {"sensor_uuid":str(uuID), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
         headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
-        context_publication = requests.post(context['addressUrl'], data=json.dumps(data), headers=headers)
+        context_publication = requests.post(context['addressUrl']+"publicacoes/", data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
         #print(data)
