@@ -80,14 +80,14 @@ class Rule(models.Model):
 		return self.jsonRule
 
 class Schedule(models.Model):
-	schedules_choices = (
-		('i', 'Interval'),
-		('d', 'Date'),
-		('c', 'Cron'),
+	event_choices = (
+		('gathering', 'Gather'),
+		('proceeding', 'Act'),
+		('publisher', 'Publish'),
 	)
 	sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
 	status = models.BooleanField()
-	event = models.CharField(max_length=30, null=True)
+	event = models.CharField(max_length=30, choices=event_choices, null=True)
 	models.CharField(max_length=30, null=True)
 	# year = models.IntegerField(default=date.today().year,blank=True,validators=[MinValueValidator(date.today().year-40),MaxValueValidator(date.today().year)])
 	# month = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(12)])
