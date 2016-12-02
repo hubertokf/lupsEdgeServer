@@ -85,4 +85,4 @@ class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
     filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['sensor', 'status', 'year', 'month', 'day', 'hour', 'minute', ]
+    filter_fields = ['sensor', 'status', 'year', 'month', 'day', 'hour', 'minute', 'second']

@@ -88,7 +88,6 @@ class Schedule(models.Model):
 	sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
 	status = models.BooleanField()
 	event = models.CharField(max_length=30, choices=event_choices, null=True)
-	models.CharField(max_length=30, null=True)
 	# year = models.IntegerField(default=date.today().year,blank=True,validators=[MinValueValidator(date.today().year-40),MaxValueValidator(date.today().year)])
 	# month = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(12)])
 	# day = models.IntegerField(default=1,blank=True,validators=[MinValueValidator(1),MaxValueValidator(31)])
