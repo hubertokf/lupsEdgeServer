@@ -1,5 +1,6 @@
 import json
 import threading
+import time
 from core.event_treatment import *
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -73,8 +74,14 @@ class SchedulerEdge(object):
 
     def check_scheduler_reactivave(self):
 
-        jsonSchedules = self.core.API_access("get", "schedules").json()
+        try:
+            jsonSchedules = self.core.API_access("get", "schedules").json()
 
-        for schedule in jsonSchedules:
-            schedule['modo'] = 'cron'
-            self.add_job(schedule)
+            for schedule in jsonSchedules:
+                schedule['modo'] = 'cron'
+                self.add_job(schedule)
+
+        except Exception as inst:
+            #print(type(inst))
+            time.sleep(10)
+            self.check_scheduler_reactivave()

@@ -32,6 +32,8 @@ class Communication(object):
 
         request = requests.get(url)#, headers=headers)
 
+        #print("REQUEST", url)
+
         information_of_sensor = request.json()
 
         date_now = datetime.datetime.now()
