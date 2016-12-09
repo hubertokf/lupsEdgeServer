@@ -43,9 +43,7 @@ class ConditionsRules(BaseVariables):
         info_gateway = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
 
         id_gateway              = info_gateway[0]['gateway']
-
         uuid['gateway']         = id_gateway
-
         json_dumps_uuid         = uuid
 
 
@@ -110,5 +108,25 @@ class ConditionsRules(BaseVariables):
                 contador = contador - 1
 
         return trigger
+
+    @numeric_rule_variable
+    def calcule_average(self,parameter):
+        object_events = core.event_treatment.Event_Treatment(self.core_father)
+        average       = 0
+        array_sensors = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=None).json()
+        
+        for sensor in array_sensors:
+            sensor['event']           = "gathering"
+            sensor['collect_to_rule'] = True
+            info_gateway_and_sensor   = object_events.event(sensor)
+            format_colletcDate        = info_gateway_and_sensor['collectDate']
+            value                     = float(info_gateway_and_sensor['value'])
+            average = average + value
+
+        average = average/len(array_sensors)
+        return average
+
+
+
 
 from core.gathering import Gathering

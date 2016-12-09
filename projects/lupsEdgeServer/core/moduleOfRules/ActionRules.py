@@ -13,6 +13,7 @@ from core.moduleOfRules.Parameters import Parameters
 import json
 import email
 import requests
+import logging
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
@@ -30,14 +31,9 @@ class ActionRules(BaseActions):
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     data_send_context = {}
-
-                    # headers           = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
-                    # url               = 'http://localhost:8000/sensors/?format=json&uuID={0}'.format(uuid_sensor)
-                    # r                 = requests.get(url, headers=headers)
-
                     param = {"uuID":uuid_sensor}
                     r = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
-                    
+
                     get_sensor                            = r.json()
                     id_sensor                            =  get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
@@ -83,40 +79,47 @@ class ActionRules(BaseActions):
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
         #chamar tratador de evento
 
-    @rule_action(params={"info_adicional":FIELD_NUMERIC })
-    def proceding(self,info_adicional): # ação que ativa o evento de atuação
-        json = '{{"id_sensor": {0}, "event": "{1}", "valor":{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
-        #chamar tratador de evento
+    @rule_action(params={"uuid":FIELD_TEXT,"timer":FIELD_TEXT })
+    def proceeding(self,uuid,timer): # ação que ativa o evento de atuação
+        # package_info_events = {}
+        # package_info_events['uuid']  = uuid
+        # package_info_events['timer'] = timer
+        # package_info_events['event'] = "proceeding"
+        # object_events = core.event_treatment.Event_Treatment(self.core_father)
+        # object_events.event(package_info_events)
+        logging.basicConfig(filename='myapp.log', level=logging.INFO)
+        logging.info('Irrigação acionada')
+        
 
-    @rule_action(params = {"info_adicional": FIELD_TEXT})
-    def test_post_Event(self, info_adicional):
-        pass
-        #sender = 'tainaribeiro.rs@gmail.com'
-        #receivers = ['tainaribeiro.rs@hotmail.com']
+    @rule_action(params = {"email": FIELD_TEXT})
+    def test_post_event(self, email):
+        # pass
+        sender = 'teste@teste.com.br'
+        receivers = [email]
 
-        #message = "Houve um erro de leitura no sensor{0}.\n Por favor, verifique a situação do sensor assim como a sua comunicação com o gateway".format(self.parameters.id)
-        #subject = "Problema no sensor {0}".format(self.parameters.id)
+        message = "Houve um erro de leitura no sensor{0}.\n Por favor, verifique a situação do sensor assim como a sua comunicação com o gateway".format(self.parameters.id)
+        subject = "Problema no sensor {0}".format(self.parameters.id)
 
-        # build the message
-        # msg = MIMEMultipart()
-        # msg['From'] = sender
-        # msg['To'] = ', '.join(receivers)
-        # msg['Date'] = formatdate(localtime=True)
-        # msg['Subject'] = subject
-        # msg.attach(MIMEText(message))
-        # print(msg.as_string())
-        # try:
-        #   smtpObj = smtplib.SMTP('smtp.gmail.com',587)
-        #   smtpObj.ehlo()
-        #   smtpObj.starttls()
-        #   smtpObj.login(sender,"3123123123121")
-        #   smtpObj.sendmail(sender, receivers, msg.as_string())
-        #   print ("Successfully sent email")
-        #   smtpObj.quit()
-        # except :
-        #   print ("Error: unable to send email")
-        #   smtpObj.quit()
-        #print("okkkkkkkkkkk")
+        #  build the message
+         msg            = MIMEMultipart()
+         msg['From']    = sender
+         msg['To']      = ', '.join(receivers)
+         msg['Date']    = formatdate(localtime=True)
+         msg['Subject'] = subject
+         msg.attach(MIMEText(message))
+        #  print(msg.as_string())
+         try:
+           smtpObj = smtplib.SMTP('smtp.gmail.com',587)
+           smtpObj.ehlo()
+           smtpObj.starttls()
+           smtpObj.login(sender,"3123123123121")
+           smtpObj.sendmail(sender, receivers, msg.as_string())
+           print ("Successfully sent email")
+           smtpObj.quit()
+         except :
+           print ("Error: unable to send email")
+           smtpObj.quit()
+        print("okkkkkkkkkkk")
 
     @rule_action(params = {"ruler": FIELD_TEXT})
     def gathering_error(self,ruler):
@@ -133,47 +136,26 @@ class ActionRules(BaseActions):
     @rule_action(params={"rules": FIELD_SELECT,"id_next_rule": FIELD_NUMERIC,"id_current_rule":FIELD_NUMERIC})
     def next_rule(self,rules,id_next_rule,id_current_rule):
 
-        # headers = {'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"}
         payload = {'status':False}
-        # url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
-        # r       = requests.put(url, data=payload, headers=id_current_rule)
-
-        r = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
+        r       = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
 
         payload = {'status':True}
-        # url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
-        # r       = requests.put(url, data=payload, headers=headers)
-        
         r = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
 
         for id_rule_set in rules:
             payload = {'status':False}
-            # url     ="http://localhost:8000/rules/{0}".format(id_rule_set)
-            # r       = requests.put(url, data=payload, headers=headers)
             r = self.core_father.API_access("put", "rules", model_id=id_rule_set, data=payload, param=None)
-
-
 
 
     '''Método que desabilita todas as regras, ele só vai setar novamente quando receber um ok'''
     @rule_action
     def failure_transition(self,rules,id_rule,id_current_rule):
+#Em construção
                 payload = {'status':False}
-                # url     ="http://localhost:8000/rules/{0}".format(id_current_rule)
-                # r       = requests.put(url, data=payload, headers=id_current_rule)
-
                 r = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
-
-                payload = {'status':False}
-                # url     ="http://localhost:8000/rules/{0}".format(id_next_rule)
-                # r       = requests.put(url, data=payload, headers=headers)
-                
-                r = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
 
                 for id_rule_set in rules:
                     payload = {'status':False}
-                    # url    ="http://localhost:8000/rules/{0}".format(id_rule_set)
-                    # r    = requests.put(url, data=payload, headers=headers)
                     r = self.core_father.API_access("put", "rules", model_id=id_rule_set, data=payload, param=None)
 
 
@@ -184,8 +166,9 @@ class ActionRules(BaseActions):
         r    = requests.get(url)
         #print(r.json())
 
-    @rule_action(params={"foo": FIELD_TEXT})
-    def get_sensor(self,foo ):
+    @rule_action(params = {"foo": FIELD_TEXT})
+    def notify_servers_edge(self,foo):
+        # inserir notificação
         pass
 
 # from core.event_treatment import *
