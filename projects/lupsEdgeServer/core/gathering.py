@@ -23,6 +23,9 @@ class Gathering(object):
                                 # retorna um dado
         colecter_sensor = Communication(self.core)
         formation = colecter_sensor.get_values_on_gatway(jsonObject)            #
+        #print("======================Gathering======================")
+        #print(jsonObject)
+        #print("=====================================================")
 
         if jsonObject['collect_to_rule']:
             return formation

@@ -29,12 +29,16 @@ class Communication(object):
             json_gateway['uuID'] = json_gateway2['uuID']
             url = str(json_gateway['url'])+'sensor/?uuId=' + str(json_gateway['uuID'])
 
+        try:
+            request = requests.get(url)#, headers=headers)
 
-        request = requests.get(url)#, headers=headers)
+            #print("REQUEST", url)
+            information_of_sensor = request.json()
+        except:
+            request = requests.get(url)#, headers=headers)
 
-        #print("REQUEST", url)
-
-        information_of_sensor = request.json()
+            #print("REQUEST", url)
+            information_of_sensor = request.json()
 
         date_now = datetime.datetime.now()
         date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")

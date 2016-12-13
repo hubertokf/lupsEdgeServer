@@ -1,12 +1,13 @@
 from core.publisher_context import *
 from core.gathering import *
+import threading
 import json
 
 class Event_Treatment(object):
     core = None
 
     def __init__(self, parent):             #instância do objeto e inicia o escalonador
-
+        #threading.Thread.__init__(self)
         self.core = parent
 
     def event(self, jsonObject):

@@ -110,7 +110,7 @@ class ConditionsRules(BaseVariables):
         return trigger
 
     @numeric_rule_variable
-    def calcule_average(self,parameter):
+    def calcule_average(self,parameter=None):
         object_events = core.event_treatment.Event_Treatment(self.core_father)
         average       = 0
         array_sensors = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=None).json()
@@ -122,7 +122,7 @@ class ConditionsRules(BaseVariables):
             format_colletcDate        = info_gateway_and_sensor['collectDate']
             value                     = float(info_gateway_and_sensor['value'])
             average                   = average + value
-            self.parameter.create_obj_and_set_value(sensor["uuID"],sensor["id"],value,format_colletcDate)
+            self.parameters.create_obj_and_set_value(sensor["uuID"],sensor["id"],value,format_colletcDate)
         average = average/len(array_sensors)
         return average
 

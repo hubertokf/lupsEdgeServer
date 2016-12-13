@@ -26,13 +26,13 @@ class SchedulerEdge(object):
                 try:
                     #print('klhashjkah')
                     self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['second'], minute = jsonObject['minute'],
-                    hour = jsonObject['hour'], day = jsonObject['day'], month = jsonObject['month'], year = jsonObject['year'], id = str(jsonObject['id']), args = [jsonObject],max_instances=20)
+                    hour = jsonObject['hour'], day = jsonObject['day'], month = jsonObject['month'], year = jsonObject['year'], id = str(jsonObject['id']), args = [jsonObject],max_instances=50,misfire_grace_time=120)
                 except:     # Utilizado quando tem uma tarefa com ID para reescalonar
                     self.scheduler.reschedule_job(jsonObject['id'], trigger='cron', second = jsonObject['second'],  minute = jsonObject['minute'],hour = jsonObject['hour'], day = jsonObject['day'], month = jsonObject['month'], year = jsonObject['year'])
 
             else:
                 self.scheduler.add_job(self.check_persistence, jsonObject['modo'], second = jsonObject['second'], minute = jsonObject['minute'],
-                hour = jsonObject['hour'], day = jsonObject['day'], month = jsonObject['month'], year = jsonObject['year'], id = jsonObject['id'], max_instances=1)
+                hour = jsonObject['hour'], day = jsonObject['day'], month = jsonObject['month'], year = jsonObject['year'], id = jsonObject['id'], max_instances=1,misfire_grace_time=120)
 
     def remove_job(self, jsonObject):    # id_tarefa - É ID do sensor/atuador a ser removido do CRON
         self.scheduler.remove_job(jsonObject['id'])
@@ -62,7 +62,7 @@ class SchedulerEdge(object):
         job['id'] = '0'
         job['status'] = 'True'
 
-        job['second'] = "*"
+        job['second'] = "0"
         job['minute']  = "*/10"
         job['hour'] = "*"
         job['day'] = "*"
