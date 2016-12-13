@@ -54,7 +54,7 @@ class ConditionsRules(BaseVariables):
         info_gateway_and_sensor = object_events.event(json_dumps_uuid)
         format_colletcDate      = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
-        self.parameters.create_obj_and_set_value(uuid['uuID'],value,format_colletcDate)
+        self.parameters.create_obj_and_set_value(uuid['uuID'],None,value,format_colletcDate)
         #print(value)
         return value
 
@@ -114,19 +114,17 @@ class ConditionsRules(BaseVariables):
         object_events = core.event_treatment.Event_Treatment(self.core_father)
         average       = 0
         array_sensors = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=None).json()
-        
+
         for sensor in array_sensors:
             sensor['event']           = "gathering"
             sensor['collect_to_rule'] = True
             info_gateway_and_sensor   = object_events.event(sensor)
             format_colletcDate        = info_gateway_and_sensor['collectDate']
             value                     = float(info_gateway_and_sensor['value'])
-            average = average + value
-
+            average                   = average + value
+            self.parameter.create_obj_and_set_value(sensor["uuID"],sensor["id"],value,format_colletcDate)
         average = average/len(array_sensors)
         return average
-
-
 
 
 from core.gathering import Gathering

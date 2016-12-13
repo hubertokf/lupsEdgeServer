@@ -24,7 +24,7 @@ class ActionRules(BaseActions):
     core_father = None
     def __init__ (self, parameters,parent):
         self.core_father = parent
-        self.parameters = parameters
+        self.parameters  = parameters
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
@@ -40,7 +40,7 @@ class ActionRules(BaseActions):
                     data_send_context['persistance']     = False # pra dizer que as datas não vem da persistencia
 
                     if(uuid_sensor in self.parameters.get_dist()): # verifica se o valor do sensor já foi coletado
-                        data = self.parameters.get_i(uuid_sensor)
+                        data = self.parameters.get_element_dist(uuid_sensor)
                         data_send_context['value']       = data['value']
                         data_send_context['collectDate'] = data['collectDate']
 
@@ -51,12 +51,10 @@ class ActionRules(BaseActions):
                         obj_uuid['collect_to_rule'] = True
                         param2 = {"uuID":obj_uuid['uuID']}
                         info_gateway                = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param2).json()
-
                         id_gateway                  = info_gateway[0]['gateway']
                         obj_uuid['gateway']         = id_gateway
-
                         obj_uuid                    = json.dumps(obj_uuid)
-                        info_gateway_and_sensor = object_events.event(obj_uuid)
+                        info_gateway_and_sensor     = object_events.event(obj_uuid)
                         data_send_context['value']       = info_gateway_and_sensor['value']
                         data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
 
@@ -69,7 +67,26 @@ class ActionRules(BaseActions):
                     print(inst.args)
                     raise
                        # arguments stored in .args
-
+    @rule_action(params={"uuid_sensor": FIELD_TEXT })
+    def publisher_all(self,uuid_sensor): # ação que ativa o evento de publicação
+                object_events = core.event_treatment.Event_Treatment(self.core_father)
+                try:
+                    datas_sensor_collect = self.parameters.get_dist()
+                    for data_sensor in datas_sensor_collect:
+                        data_send_context = {}
+                        data_send_context['id_sensor']       = data_sensor["id_sensor"]
+                        data_send_context['event']           = "publisher"
+                        data_send_context['persistance']     = True # pra dizer que as datas não vem da persistencia
+                        datas_sensor_collect["collectDate"]  = data_sensor["collectDate"]
+                        datas_sensor_collect["value"]        = data_sensor["value"]
+                        data_send_context
+                    object_events.event(data_send_context)
+                except Exception as inst:
+                    # print("Erro aqui")
+                    print(type(inst))
+                    print(inst.args)
+                    raise
+                       # arguments stored in .args
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
