@@ -32,26 +32,23 @@ class ActionRules(BaseActions):
                 try:
                     data_send_context = {}
                     param = {"uuID":uuid_sensor}
-                    r = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
-
-                    get_sensor                            = r.json()
+                    r     = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
+                    get_sensor                           = r.json()
                     id_sensor                            =  get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
                     data_send_context['event']           = "publisher" #para o tratador de eventos chmar a publicação
                     data_send_context['persistance']     = False # pra dizer que as datas não vem da persistencia
 
-                    if(uuid_sensor in self.parameters.get_dist()):
+                    if(uuid_sensor in self.parameters.get_dist()): # verifica se o valor do sensor já foi coletado
                         data = self.parameters.get_i(uuid_sensor)
                         data_send_context['value']       = data['value']
                         data_send_context['collectDate'] = data['collectDate']
-                    else:
+
+                    else: # caso o valor do sensor não tenha sido coletado, realiza a coleta e publica
                         obj_uuid = {}
                         obj_uuid['uuID']            = uuid_sensor
                         obj_uuid['event']           = "gathering"
                         obj_uuid['collect_to_rule'] = True
-
-                        # url_gateway                 = "http://localhost:8000/sensors/?format=json&uuID={0}".format(obj_uuid['uuID'])
-                        # info_gateway                = requests.get(url_gateway,headers).json()
                         param2 = {"uuID":obj_uuid['uuID']}
                         info_gateway                = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param2).json()
 
@@ -65,7 +62,6 @@ class ActionRules(BaseActions):
 
                     #super_json = json.dumps(data_send_context)
                     super_json = data_send_context
-
                     object_events.event(super_json)
                 except Exception as inst:
                     # print("Erro aqui")
@@ -89,7 +85,7 @@ class ActionRules(BaseActions):
         # object_events.event(package_info_events)
         logging.basicConfig(filename='myapp.log', level=logging.INFO)
         logging.info('Irrigação acionada')
-        
+
 
     @rule_action(params = {"email": FIELD_TEXT})
     def test_post_event(self, email):
@@ -138,9 +134,8 @@ class ActionRules(BaseActions):
 
         payload = {'status':False}
         r       = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
-
         payload = {'status':True}
-        r = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
+        r       = self.core_father.API_access("put", "rules", model_id=id_next_rule, data=payload, param=None)
 
         for id_rule_set in rules:
             payload = {'status':False}
