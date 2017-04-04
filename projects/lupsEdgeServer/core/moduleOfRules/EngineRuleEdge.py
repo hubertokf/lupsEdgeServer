@@ -31,7 +31,6 @@ class EngineRule(object):
 
         param     = {"sensor":id_sensor}
         rules     = self.core.API_access("get", "rules", model_id=None, data=None, param=param).json()
-
         return rules
 
     def get_parameters(self,obj_json): # pega os parametros enviados pelo tratador de evento e retorna um disct destes parametros
@@ -43,7 +42,7 @@ class EngineRule(object):
     def run_rules(self,parameters_of_gateway): # executa a regra
 
         parameters     = self.get_parameters(parameters_of_gateway)
-        obj_parameters = Parameters() #id_gateway futuramente será trabalhado
+        obj_parameters = Parameters() #
 
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
@@ -56,18 +55,16 @@ class EngineRule(object):
                 stop_on_first_trigger=True
                 )
 
-    # def run_rules_t(self,a): # executa a regra ESSE É teste
+    def run_rules_event(self,datas_of_rules): # atributos do datas_of_rules: id da regra que gerou o evento, o status de execução, o valor de sensor, a regra a ser executada
 
-    #     obj_parameters= Parameters(10,30,10) #id_gateway futuramente será trabalhado
-    #     rules = self.get_rules(a)
-    #     #print("aioeuoaieuaeioea")
-    #     for i in range(0,len(rules),1): # percorre a lista que contem as regras
-    #         #print(i)
-    #         if(rules[i]['status']):
-    #             rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
-    #             run_all(rule_list=rule,
-
-    #             defined_variables=ConditionsRules(obj_parameters,self.core),
-    #             defined_actions=ActionRules(obj_parameters,self.core),
-    #             stop_on_first_trigger=True
-    #             )
+        obj_parameters = Parameters(datas_of_rules) #gera os parametros para executar a regra
+        rules          = self.get_rules(datas_of_rules)
+        obj_parameters = Parameters() #aqui vai passar o true/false da regra que gerou o evento
+        for i in range(0,len(rules),1): # percorre a lista que contem as regras
+            if(rules[i]['status']):
+            rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
+            run_all(rule_list=rule,
+                    defined_variables=ConditionsRules(obj_parameters,self.core),
+                    defined_actions=ActionRules(obj_parameters,self.core),
+                    stop_on_first_trigger=True
+                )

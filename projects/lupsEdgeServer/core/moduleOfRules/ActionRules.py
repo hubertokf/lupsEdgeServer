@@ -28,7 +28,9 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
+
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
+
                 try:
                     data_send_context = {}
                     param = {"uuID":uuid_sensor}
@@ -44,31 +46,30 @@ class ActionRules(BaseActions):
                         data_send_context['value']       = data['value']
                         data_send_context['collectDate'] = data['collectDate']
 
-                    else: # caso o valor do sensor não tenha sido coletado, realiza a coleta e publica
-                        obj_uuid = {}
-                        obj_uuid['uuID']            = uuid_sensor
-                        obj_uuid['event']           = "gathering"
-                        obj_uuid['collect_to_rule'] = True
-                        param2 = {"uuID":obj_uuid['uuID']}
-                        info_gateway                = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param2).json()
-                        id_gateway                  = info_gateway[0]['gateway']
-                        obj_uuid['gateway']         = id_gateway
-                        obj_uuid                    = json.dumps(obj_uuid)
-                        info_gateway_and_sensor     = object_events.event(obj_uuid)
+                    else: # caso o valor do sensor não tenha sido coletado, realiza a coleta
+                        collect_data                     = {}
+                        collect_data['uuID']             = uuid_sensor
+                        collect_data['event']            = "gathering"
+                        collect_data['collect_to_rule']  = True
+                        uuid                             = {"uuID":collect_data['uuID']}
+                        info_gateway                     = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=uuid).json()
+                        id_gateway                       = info_gateway[0]['gateway']
+                        collect_data['gateway']          = id_gateway
+                        collect_data                     = json.dumps(collect_data)
+                        info_gateway_and_sensor          = object_events.event(collect_data)
                         data_send_context['value']       = info_gateway_and_sensor['value']
                         data_send_context['collectDate'] = info_gateway_and_sensor['collectDate']
 
-                    #super_json = json.dumps(data_send_context)
-                    super_json = data_send_context
-                    object_events.event(super_json)
+                    object_events.event(data_send_context)
+
                 except Exception as inst:
-                    # print("Erro aqui")
                     print(type(inst))
                     print(inst.args)
                     raise
-                       # arguments stored in .args
+                    
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
-    def publisher_all(self,uuid_sensor): # ação que ativa o evento de publicação
+    def publisher_all(self,uuid_sensor): # ação que ativa o evento de publicação de todos os sensores envolvidos.
+
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     datas_sensor_collect = self.parameters.get_dist()
@@ -79,10 +80,9 @@ class ActionRules(BaseActions):
                         data_send_context['persistance']     = True # pra dizer que as datas não vem da persistencia
                         datas_sensor_collect["collectDate"]  = data_sensor["collectDate"]
                         datas_sensor_collect["value"]        = data_sensor["value"]
-                        data_send_context
-                    object_events.event(data_send_context)
-                except Exception as inst:
-                    # print("Erro aqui")
+                        object_events.event(data_send_context)
+                except Exception as inst: #problema de comunicação
+
                     print(type(inst))
                     print(inst.args)
                     raise
