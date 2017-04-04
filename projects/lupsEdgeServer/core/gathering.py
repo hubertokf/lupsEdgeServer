@@ -9,7 +9,7 @@ class Gathering(object):
 
         self.core = parent
 
-    def regra(self,json_result_gathering):   # Verificar argumentos e criar objeto p chamar regras
+    def regra(self,json_result_gathering):   # Verifica argumentos e criar objeto p chamar regras
         engine = EngineRule(self.core)
 
         string_rule = '{{ "evento": "e", "id": "{0}","valor": {1}, "id_gateway": {2} }}'.format(json_result_gathering['id_sensor'],json_result_gathering['value'],json_result_gathering['id_gateway'],json_result_gathering['collectDate'])
