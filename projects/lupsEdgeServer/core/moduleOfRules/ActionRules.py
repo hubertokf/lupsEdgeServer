@@ -33,9 +33,9 @@ class ActionRules(BaseActions):
 
                 try:
                     data_send_context = {}
-                    param = {"uuID":uuid_sensor}
-                    r     = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
-                    get_sensor                           = r.json()
+                    param                                = {"uuID":uuid_sensor}
+                    data_sensors                         = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
+                    get_sensor                           = data_sensors.json()
                     id_sensor                            =  get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
                     data_send_context['event']           = "publisher" #para o tratador de eventos chmar a publicação
@@ -66,7 +66,7 @@ class ActionRules(BaseActions):
                     print(type(inst))
                     print(inst.args)
                     raise
-                    
+
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher_all(self,uuid_sensor): # ação que ativa o evento de publicação de todos os sensores envolvidos.
 
@@ -91,7 +91,7 @@ class ActionRules(BaseActions):
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
         #chamar tratador de evento
-
+m
     @rule_action(params={"uuid":FIELD_TEXT,"timer":FIELD_TEXT })
     def proceeding(self,uuid,timer): # ação que ativa o evento de atuação
         # package_info_events = {}
