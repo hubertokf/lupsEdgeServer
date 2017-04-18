@@ -62,8 +62,8 @@ class EngineRule(object):
         obj_parameters = Parameters() #aqui vai passar o true/false da regra que gerou o evento
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
             if(rules[i]['status']):
-            rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
-            run_all(rule_list=rule,
+                rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
+                run_all(rule_list=rule,
                     defined_variables=ConditionsRules(obj_parameters,self.core),
                     defined_actions=ActionRules(obj_parameters,self.core),
                     stop_on_first_trigger=True
