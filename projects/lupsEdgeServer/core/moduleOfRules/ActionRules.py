@@ -91,7 +91,7 @@ class ActionRules(BaseActions):
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
         #chamar tratador de evento
-m
+
     @rule_action(params={"uuid":FIELD_TEXT,"timer":FIELD_TEXT })
     def proceeding(self,uuid,timer): # ação que ativa o evento de atuação
         # package_info_events = {}
