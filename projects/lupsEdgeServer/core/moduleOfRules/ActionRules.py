@@ -36,7 +36,7 @@ class ActionRules(BaseActions):
                     param                                = {"uuID":uuid_sensor}
                     data_sensors                         = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
                     get_sensor                           = data_sensors.json()
-                    id_sensor                            =  get_sensor[0]['id']
+                    id_sensor                            = get_sensor[0]['id']
                     data_send_context['sensor']          = id_sensor # dizer qual é o sensor para adicionar o valor na persistencia
                     data_send_context['event']           = "publisher" #para o tratador de eventos chmar a publicação
                     data_send_context['persistance']     = False # pra dizer que as datas não vem da persistencia

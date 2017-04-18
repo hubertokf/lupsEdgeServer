@@ -5,7 +5,7 @@ Publish some messages to queue
 """
 import paho.mqtt.publish as publish
 
-class publish(object):
+class Publish(object):
     """docstring for publish."""
     #def __init__(self, arg):
 
