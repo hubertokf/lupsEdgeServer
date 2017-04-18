@@ -55,6 +55,7 @@ class EngineRule(object):
                 stop_on_first_trigger=True
                 )
 
+
     def run_rules_event(self,datas_of_rules): # atributos do datas_of_rules: id da regra que gerou o evento, o status de execução, o valor de sensor, a regra a ser executada
 
         obj_parameters = Parameters(datas_of_rules) #gera os parametros para executar a regra
@@ -62,9 +63,16 @@ class EngineRule(object):
         obj_parameters = Parameters() #aqui vai passar o true/false da regra que gerou o evento
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
             if(rules[i]['status']):
-            rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
-            run_all(rule_list=rule,
+                rule  = json.loads(rules[i]['jsonRule']) # extrai as regras do json
+                condiction_satisfied = run_all(rule_list=rule,
                     defined_variables=ConditionsRules(obj_parameters,self.core),
                     defined_actions=ActionRules(obj_parameters,self.core),
                     stop_on_first_trigger=True
                 )
+                topic           = #self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                ip_edge_receive = #self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                pay_load        = {}
+                pay_load['condiction_satisfied'] = condiction_satisfied
+                pay_load['id_rule']               = rules[i]['id']
+
+from core.gathering import Gathering
