@@ -20,42 +20,31 @@ class ConditionsRules(BaseVariables):
         return 9
 
     @numeric_rule_variable
-    def get_extern_sensor(self):
-        #problema do gathering/LJ
-        uuid = "tenho que inserir"
-        url  = "http://10.0.50.184:8081/sensor={0}".uuid
-        r    = requests.get(url)
-
-    @numeric_rule_variable
     def get_verify_sensor(self,params):
-        uuid                    = {}
+
+        ''' Método responsável pela leitura de um dispostivo e retorna o valor coletado para analise na condição ao qual está vinculado.
+         '''
+
+        collect_data            = {}
         object_events           = core.event_treatment.Event_Treatment(self.core_father)
         data_condition          = json.loads(params)
-        #print("visionnnnnnnn",data_condition['sensor'])
-        uuid['uuID']            = data_condition['sensor']
-        uuid['event']           = "gathering"
-        uuid['collect_to_rule'] = True
 
-        # url_gateway             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
-        # info_gateway            = requests.get(url_gateway,self.headers).json()
+        collect_data['uuID']            = data_condition['sensor']
+        collect_data['event']           = "gathering"
+        collect_data['collect_to_rule'] = True
 
-        param = {"uuID":uuid['uuID']}
+        param        = {"uuID":collect_data['uuID']}
         info_gateway = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
 
         id_gateway              = info_gateway[0]['gateway']
-        uuid['gateway']         = id_gateway
-        json_dumps_uuid         = uuid
+        collect_data['gateway'] = id_gateway
+        json_dumps_collect_data = collect_data
 
-
-        #json_dumps_uuid         = json.dumps(uuid)
-
-        #print(json_dumps_uuid)
-
-        info_gateway_and_sensor = object_events.event(json_dumps_uuid)
-        format_colletcDate      = info_gateway_and_sensor['collectDate']
+        info_gateway_and_sensor = object_events.event(json_dumps_collect_data)# tratar erro de comunicação, gateway e/ou sensor
+        format_colletc_date     = info_gateway_and_sensor['collectDate']
         value                   = float(info_gateway_and_sensor['value'])
-        self.parameters.create_obj_and_set_value(uuid['uuID'],None,value,format_colletcDate)
-        #print(value)
+        self.parameters.create_obj_and_set_value(collect_data['uuID'],None,value,format_colletc_date)
+
         return value
 
     @numeric_rule_variable
@@ -65,17 +54,9 @@ class ConditionsRules(BaseVariables):
         data_condition  = json.loads(params)
         uuid['uuID']    = data_condition['sensor']
         current_value   = gateways.coleting_value_of_sensor(uuid['uuID'])
-        #problema do gathering/LJ?
 
-        # url             = "http://localhost:8000/sensors/?format=json&uuID={0}".format(uuid['uuID'])
-        # r               = requests.get(url)
-        # sensor          = r.json()
         param = {"uuID":uuid['uuID']}
         sensor            = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-
-        # url             = "http://localhost:8000/persistence/?format=json&sensor={0}".format(sensor['id'])
-        # r               = requests.get(url)
-        # preceding_value = r.json()
 
         param = {"sensor":sensor['id']}
         preceding_value = self.core_father.API_access("get", "persistence", model_id=None, data=None, param=param).json()
