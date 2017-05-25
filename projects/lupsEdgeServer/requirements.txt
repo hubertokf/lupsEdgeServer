@@ -16,7 +16,9 @@ Django >= 1.9.5, < 1.10
 # API REST
 djangorestframework >=3.3.3
 Markdown >= 2.1.0
-django-filter >= 0.9.2
+#django-filter >= 0.9.2
+#tava dando erro no django filter mais novo.. por isso fixei o pacote nessa versão
+django-filter==0.15.3
 #django-crispy-forms
 django-guardian >= 1.1.1
 django-url-filter
