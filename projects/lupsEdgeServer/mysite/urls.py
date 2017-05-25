@@ -33,6 +33,7 @@ router.register(r'sensors', SensorViewSet)
 router.register(r'persistances', PersistanceViewSet)
 router.register(r'rules', RuleViewSet)
 router.register(r'schedules', ScheduleViewSet)
+router.register(r'topicos', TopicosViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

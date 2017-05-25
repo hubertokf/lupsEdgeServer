@@ -103,6 +103,12 @@ class Schedule(models.Model):
 	def __str__(self):
 		return str(self.sensor)
 
+class Topicos(models.Model):
+	name = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.name
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
 	if created:

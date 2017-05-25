@@ -35,6 +35,8 @@ django-url-filter
 pytz >= 2016.4
 #sorl-thumbnail >= 12.3
 requests
+paho-mqtt
+
 
 # Debugging
 django-debugtools >= 1.6

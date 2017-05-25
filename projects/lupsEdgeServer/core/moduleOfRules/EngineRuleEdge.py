@@ -114,5 +114,5 @@ class EngineRule(object):
          #finaliza a a coleta do sensor.
             return float(info_gateway_and_sensor['value'])
 
-from core.publisher_mqtt import
+from core.publisher_mqtt import *
 from core.gathering import Gathering

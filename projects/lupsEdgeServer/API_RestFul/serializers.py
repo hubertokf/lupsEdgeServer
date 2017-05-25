@@ -64,3 +64,7 @@ class ScheduleSerializer(serializers.ModelSerializer):
         model = Schedule
         fields = '__all__'
 
+class TopicosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topicos
+        fields = '__all__'

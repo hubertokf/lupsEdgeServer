@@ -22,6 +22,8 @@ class RuleAdmin(admin.ModelAdmin):
 	list_display = ('sensor', 'jsonRule', 'status')
 class ScheduleAdmin(admin.ModelAdmin):
 	list_display = ('sensor', 'status', 'year', 'month', 'day', 'hour', 'minute')
+class TopicosAdmin(admin.ModelAdmin):
+	list_display = ('name',)
 
 admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Gateway, GatewayAdmin)
@@ -33,6 +35,8 @@ admin.site.register(Sensor, SensorAdmin)
 admin.site.register(Persistance, PersistanceAdmin)
 admin.site.register(Rule, RuleAdmin)
 admin.site.register(Schedule, ScheduleAdmin)
+admin.site.register(Topicos, TopicosAdmin)
+
 
 
 
