@@ -15,8 +15,8 @@ class SchedulerEdge(object):
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
 
-        self.create_job_check_persistence()
-        self.check_scheduler_reactivave()
+        #self.create_job_check_persistence()
+        #self.check_scheduler_reactivave()
 
     def add_job(self, jsonObject): # cria uma nova tarefa no escalonador
         #print(type(jsonObject['status']))

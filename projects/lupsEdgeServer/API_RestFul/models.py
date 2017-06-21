@@ -75,6 +75,8 @@ class Rule(models.Model):
 	sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL,null=True)
 	jsonRule = models.TextField()
 	status = models.BooleanField()
+	topico = models.CharField(max_length=200, default='SOME STRING')
+	#topico = models.CharField(max_length=200)
 
 	def __str__(self):
 		return self.jsonRule
