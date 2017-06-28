@@ -23,11 +23,14 @@ import core.event_treatment
 class ActionRules(BaseActions):
     core_father = None
     def __init__ (self, parameters,parent):
+        print("ActionRules")
         self.core_father = parent
         self.parameters  = parameters
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
+
+                print("publisher")
 
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
 
@@ -69,7 +72,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"uuid_sensor": FIELD_TEXT })
     def publisher_all(self,uuid_sensor): # ação que ativa o evento de publicação de todos os sensores envolvidos.
-
+                print("publisher all")
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
                 try:
                     datas_sensor_collect = self.parameters.get_dist()
@@ -89,11 +92,13 @@ class ActionRules(BaseActions):
                        # arguments stored in .args
     @rule_action(params={"info_adicional":FIELD_NUMERIC })
     def gathering(self,info_adicional): # ação que ativa o evento de coleta
+        print("gathering")
         json = '{{"id_sensor": {0}, "event": "{1}", "valor",{2}}}'.format(self.parameters.id,self.parameters.event,self.parameters.value)
         #chamar tratador de evento
 
     @rule_action(params={"uuid":FIELD_TEXT,"timer":FIELD_TEXT })
     def proceeding(self,uuid,timer): # ação que ativa o evento de atuação
+        print("proceeding")
         # package_info_events = {}
         # package_info_events['uuid']  = uuid
         # package_info_events['timer'] = timer
@@ -106,6 +111,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"email": FIELD_TEXT})
     def test_post_event(self, email):
+        print("test_post_event")
         # pass
         sender = 'teste@teste.com.br'
         receivers = [email]
@@ -136,6 +142,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"ruler": FIELD_TEXT})
     def gathering_error(self,ruler):
+        print("gathering_error")
 
         contador = self.parameters.contador - 1
         json = '{{"id_sensor": {0}, "event": "e", "valor":{1}, "contador": {2}}}'.format(self.parameters.id,self.parameters.value,contador)
@@ -148,7 +155,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params={"rules": FIELD_SELECT,"id_next_rule": FIELD_NUMERIC,"id_current_rule":FIELD_NUMERIC})
     def next_rule(self,rules,id_next_rule,id_current_rule):
-
+        print("next_rule")
         payload = {'status':False}
         r       = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
         payload = {'status':True}
@@ -163,6 +170,7 @@ class ActionRules(BaseActions):
     @rule_action
     def failure_transition(self,rules,id_rule,id_current_rule):
 #Em construção
+                print("failure_transition")
                 payload = {'status':False}
                 r = self.core_father.API_access("put", "rules", model_id=id_current_rule, data=payload, param=None)
 
@@ -173,6 +181,7 @@ class ActionRules(BaseActions):
 
     @rule_action(params = {"uuid": FIELD_TEXT,"url": FIELD_TEXT})
     def get_extern_sensor(self,uuid,url):
+        print("get_extern_sensor")
         #problema do gathring/LJ
         url  = "http://10.0.50.184:8081/sensor={0}".format(uuid)
         r    = requests.get(url)

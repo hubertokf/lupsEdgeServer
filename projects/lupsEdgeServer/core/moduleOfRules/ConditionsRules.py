@@ -9,6 +9,7 @@ class ConditionsRules(BaseVariables):
 
     core_father = None
     def __init__ (self, parameters,parent):
+        print("ConditionsRules")
         self.core_father = parent
         self.parameters = parameters
         # self.headers ={'Authorization':'token %s' % "9517048ac92b9f9b5c7857e988580a66ba5d5061"} # este token sera coletado na base de parametros do bd de borda

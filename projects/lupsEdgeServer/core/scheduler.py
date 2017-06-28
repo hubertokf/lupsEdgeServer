@@ -15,8 +15,10 @@ class SchedulerEdge(object):
         self.scheduler = BackgroundScheduler()          # atribui um agendador background
         self.scheduler.start()                          # inicia o agendador
 
-        #self.create_job_check_persistence()
-        #self.check_scheduler_reactivave()
+        print("passouuuu")
+        self.create_job_check_persistence()
+        print("passouuuu2")
+        self.check_scheduler_reactivave()
 
     def add_job(self, jsonObject): # cria uma nova tarefa no escalonador
         #print(type(jsonObject['status']))
@@ -73,15 +75,22 @@ class SchedulerEdge(object):
         self.add_job(job)
 
     def check_scheduler_reactivave(self):
+        #print("check_scheduler_reactivave")
 
         try:
+            print("check_scheduler_reactivave   TRY")
             jsonSchedules = self.core.API_access("get", "schedules").json()
+            #print(jsonSchedules)
 
             for schedule in jsonSchedules:
                 schedule['modo'] = 'cron'
+                print(schedule)
                 self.add_job(schedule)
 
         except Exception as inst:
+            print("check_scheduler_reactivave   EXCEPTION")
             #print(type(inst))
             time.sleep(10)
             self.check_scheduler_reactivave()
+
+        print("check_scheduler_reactivave2")

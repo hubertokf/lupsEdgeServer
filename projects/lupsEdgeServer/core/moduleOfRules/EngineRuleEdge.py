@@ -53,12 +53,22 @@ class EngineRule(object):
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
 
             if(rules[i]['status']):
+                #print("CHEGOU AKIIIIIIIIIIIIIIIII")
+
                 rule = json.loads(rules[i]['jsonRule']) # extrai as regras do json
+
+                #print(rule)
+                #print("SAIUUUU AKIIIIIIIIIIIIIIIII")
+
+
                 condiction_satisfied = run_all(rule_list=rule,
                 defined_variables=ConditionsRules(obj_parameters,self.core),
                 defined_actions=ActionRules(obj_parameters,self.core),
                 stop_on_first_trigger=True
                 )
+                print("SAIUUUU AKI222222222222222222222222222")
+
+
                 '''De interesse do povo da fog
                     envio  de dado o id da regra, a data de execução (com delay) da regra e um atributo informando
                     se as condições foram satisfeitas ou não.
@@ -74,8 +84,9 @@ class EngineRule(object):
                 pay_load['date']                 = date_str
                 pay_load['value_sensor']         = self.get_value_sensor()
                 pay_load['uuID']                 = self.uuid_sensor
-                mqtt_broker                      = Publish()
-                mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
+                print("SAIUUUU AKIIIIIIIIIIIIIIIII")
+                #mqtt_broker                      = Publish()
+                #mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
 
 
     def run_rules_event(self,datas_of_rules): # atributos do datas_of_rules: id da regra que gerou o evento, o status de execução, o valor de sensor, a regra a ser executada

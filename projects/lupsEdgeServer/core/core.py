@@ -10,7 +10,7 @@ from core.scheduler import *
 
 class Core:
     API_url = "http://localhost:8000/"
-    API_token = "878559b6d7baf6fcede17397fc390c5b9d7cbb77"
+    API_token = "03986a715b41657a909e8ab66ba800d6fdea7f71"
 
     def __init__(self):
         #asd = Asd();

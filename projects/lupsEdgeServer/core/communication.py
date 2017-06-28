@@ -19,7 +19,8 @@ class Communication(object):
 
             jsonGateway = self.core.API_access("get", "gateways", model_id=jsonObject['gateway']).json()
 
-            url = str(jsonGateway['url'])+'sensor/?uuId=' + str(jsonObject['uuID'])
+            #url = str(jsonGateway['url'])+'sensor/?uuId=' + str(jsonObject['uuID'])
+            url = str(jsonGateway['url'])+'sensor=' + str(jsonObject['uuID'])
 
         else:
             json_gateway2 = self.core.API_access("get", "sensors", model_id=jsonObject['sensor']).json()
@@ -27,7 +28,8 @@ class Communication(object):
             json_gateway = self.core.API_access("get", "gateways", model_id=json_gateway2['gateway']).json()
 
             json_gateway['uuID'] = json_gateway2['uuID']
-            url = str(json_gateway['url'])+'sensor/?uuId=' + str(json_gateway['uuID'])
+            #url = str(json_gateway['url'])+'sensor/?uuId=' + str(json_gateway['uuID'])
+            url = str(json_gateway['url'])+'sensor=' + str(json_gateway['uuID'])
 
         try:
             request = requests.get(url)#, headers=headers)
