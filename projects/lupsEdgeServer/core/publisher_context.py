@@ -47,6 +47,7 @@ class Publisher(object):
         data = {"content": {"sensor_uuid":str(uuID), "datacoleta":date_str_coleta, "valorcoletado":str(value), "dispararegra":"true"}}
         headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
+        print(context['addressUrl']+"publicacoes/")
         context_publication = requests.post(context['addressUrl']+"publicacoes/", data=json.dumps(data), headers=headers)
 
         #r = requests.post(url, data=json.dumps(data), headers=headers)
@@ -89,14 +90,19 @@ class Publisher(object):
 
     def start(self):
         dados_sensores = self.get_dados_SB()
+        print("START")
 
         for sensor in dados_sensores:
             #self.publish_local(sensor)
             sensor['persistance'] = True
 
             try:
+                print("TRY")
                 juca = self.publish_context(sensor)
+                #sensor['persistance'] = True
+                #print(juca)
                 self.publish_local(sensor)
+                print("TRY")
             except:
                 print("Servidor Desligado")
 
