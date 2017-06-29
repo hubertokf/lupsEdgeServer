@@ -93,11 +93,19 @@ def _do_operator_comparison(operator_type, operator_name, comparison_value):
 
 
 def do_actions(actions, defined_actions):
+
     for action in actions:
         method_name = action['name']
         def fallback(*args, **kwargs):
             raise AssertionError("Action {0} is not defined in class {1}"\
                     .format(method_name, defined_actions.__class__.__name__))
         params = action.get('params') or {}
+        print("-----------------------")
+        print(params)
+
         method = getattr(defined_actions, method_name, fallback)
+        print(method)
+        print("-----------------------")
         method(**params)
+
+    print('DO_ACTIONS_OUT')

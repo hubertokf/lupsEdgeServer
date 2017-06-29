@@ -14,10 +14,10 @@ class Parameters(object):
 
 
     def get_element_dist(self,a):
-        return  self.disct[a]
+        return  self.dict[a]
 
     def get_dist(self):
-        return self.disct
+        return self.dict
 
     def get_dict_for_event(self):
         return None

@@ -66,25 +66,27 @@ class EngineRule(object):
                 defined_actions=ActionRules(obj_parameters,self.core),
                 stop_on_first_trigger=True
                 )
-                print("SAIUUUU AKI222222222222222222222222222")
+                #print("SAIUUUU AKI222222222222222222222222222")
 
 
                 '''De interesse do povo da fog
                     envio  de dado o id da regra, a data de execução (com delay) da regra e um atributo informando
                     se as condições foram satisfeitas ou não.
                    topic (topico), ip_edge_receive (ip destino) devem ser implementados'''
-                date_now        = datetime.datetime.now()
-                date_str        = date_now.strftime("%Y-%m-%d %H:%M:%S")
-                topic           = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-                ip_edge_receive = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-                pay_load        = {}
-                pay_load['condiction_satisfied'] = condiction_satisfied
-                pay_load['id_rule']              = rules[i]['id']
-                pay_load['rule']                 = rules[i]['jsonRule']
-                pay_load['date']                 = date_str
-                pay_load['value_sensor']         = self.get_value_sensor()
-                pay_load['uuID']                 = self.uuid_sensor
-                print("SAIUUUU AKIIIIIIIIIIIIIIIII")
+                # date_now        = datetime.datetime.now()
+                # date_str        = date_now.strftime("%Y-%m-%d %H:%M:%S")
+                # topic           = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                # ip_edge_receive = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                # pay_load        = {}
+                #
+                # pay_load['condiction_satisfied'] = condiction_satisfied
+                # pay_load['id_rule']              = rules[i]['id']
+                # pay_load['rule']                 = rules[i]['jsonRule']
+                # pay_load['date']                 = date_str
+                # pay_load['value_sensor']         = self.get_value_sensor()
+                # print("SAIUUUU AKIrrrrrrrrrrrrrrrrrrrrr")
+                # pay_load['uuID']                 = self.uuid_sensor
+                # print("SAIUUUU AKIIIIIIIIIIIIIIIII")
                 #mqtt_broker                      = Publish()
                 #mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
 

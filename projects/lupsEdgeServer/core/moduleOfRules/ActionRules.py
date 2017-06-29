@@ -27,16 +27,17 @@ class ActionRules(BaseActions):
         self.core_father = parent
         self.parameters  = parameters
 
-    @rule_action(params={"uuid_sensor": FIELD_TEXT })
-    def publisher(self,uuid_sensor): # ação que ativa o evento de publicação
+    @rule_action(params={"uuid": FIELD_TEXT })
+    def publish(self,uuid): # ação que ativa o evento de publicação
 
                 print("publisher")
+                #print(uuid_sensor)
 
                 object_events = core.event_treatment.Event_Treatment(self.core_father)
 
                 try:
                     data_send_context = {}
-                    param                                = {"uuID":uuid_sensor}
+                    param                                = {"uuID":uuid}
                     data_sensors                         = self.core_father.API_access("get", "sensors", model_id=None, data=None, param=param)
                     get_sensor                           = data_sensors.json()
                     id_sensor                            = get_sensor[0]['id']
@@ -44,8 +45,8 @@ class ActionRules(BaseActions):
                     data_send_context['event']           = "publisher" #para o tratador de eventos chmar a publicação
                     data_send_context['persistance']     = False # pra dizer que as datas não vem da persistencia
 
-                    if(uuid_sensor in self.parameters.get_dist()): # verifica se o valor do sensor já foi coletado
-                        data = self.parameters.get_element_dist(uuid_sensor)
+                    if(uuid in self.parameters.get_dist()): # verifica se o valor do sensor já foi coletado
+                        data = self.parameters.get_element_dist(uuid)
                         data_send_context['value']       = data['value']
                         data_send_context['collectDate'] = data['collectDate']
 
