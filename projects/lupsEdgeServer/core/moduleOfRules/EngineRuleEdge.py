@@ -98,7 +98,7 @@ class EngineRule(object):
                 #pay_load['uuID']                 = parameters_of_gateway['id']
 
 
-                print("-----------------------\n"+topic+"\n-----------------------------")
+                #print("-----------------------\n"+topic+"\n-----------------------------")
                 #mqtt_broker                      = Publish()
                 #mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
 

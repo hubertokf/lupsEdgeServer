@@ -17,7 +17,7 @@ class Event_Treatment(object):
                 #event = Proceeding(self.request_API_to_DB)
 
         elif jsonObject['event'] == "publisher":
-            print('Publisher')
+            #print('Publisher')
             event = Publisher(self.core)
             # print(dir(Publisher))
             event.publish_to_rules(jsonObject)

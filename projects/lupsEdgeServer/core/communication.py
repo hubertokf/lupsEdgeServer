@@ -54,7 +54,7 @@ class Communication(object):
 
     def set_values_on_gatwat(self, jsonObject):
 
-        print("Verificar o JSON", jsonObject)
+        #print("Verificar o JSON", jsonObject)
 
         if jsonObject['collect_to_rule']:
 

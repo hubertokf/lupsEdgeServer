@@ -41,13 +41,13 @@ class SchedulerEdge(object):
 
     def function(self, jsonObject):        # response - É JSON passado como argumento
 
-        print(jsonObject['id'])
+        #print(jsonObject['id'])
         #print("SENSOR ADD"+jsonObject['id_sensor'])
         object_events = Event_Treatment(self.core)
         object_events.event(jsonObject)
 
     def check_persistence(self):# Modificar
-        print("Tentou publicar a persistencia")
+        #print("Tentou publicar a persistencia")
         persistence_publisher = Publisher(self.core)
         persistence_publisher.start()
 
@@ -81,19 +81,19 @@ class SchedulerEdge(object):
         #print("check_scheduler_reactivave")
 
         try:
-            print("check_scheduler_reactivave   TRY")
+            #print("check_scheduler_reactivave   TRY")
             jsonSchedules = self.core.API_access("get", "schedules").json()
             #print(jsonSchedules)
 
             for schedule in jsonSchedules:
                 schedule['modo'] = 'cron'
-                print(schedule)
+                #print(schedule)
                 self.add_job(schedule)
 
         except Exception as inst:
-            print("check_scheduler_reactivave   EXCEPTION")
+            #print("check_scheduler_reactivave   EXCEPTION")
             #print(type(inst))
             time.sleep(10)
             self.check_scheduler_reactivave()
 
-        print("check_scheduler_reactivave2")
+        #print("check_scheduler_reactivave2")
