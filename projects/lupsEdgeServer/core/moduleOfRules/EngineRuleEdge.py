@@ -49,6 +49,8 @@ class EngineRule(object):
         parameters     = self.get_parameters(parameters_of_gateway)
         obj_parameters = Parameters() #
 
+        print(parameters_of_gateway)
+
         rules = self.get_rules(parameters['id'])
         for i in range(0,len(rules),1): # percorre a lista que contem as regras
 
@@ -73,20 +75,30 @@ class EngineRule(object):
                     envio  de dado o id da regra, a data de execução (com delay) da regra e um atributo informando
                     se as condições foram satisfeitas ou não.
                    topic (topico), ip_edge_receive (ip destino) devem ser implementados'''
-                # date_now        = datetime.datetime.now()
-                # date_str        = date_now.strftime("%Y-%m-%d %H:%M:%S")
-                # topic           = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-                # ip_edge_receive = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
-                # pay_load        = {}
-                #
-                # pay_load['condiction_satisfied'] = condiction_satisfied
-                # pay_load['id_rule']              = rules[i]['id']
-                # pay_load['rule']                 = rules[i]['jsonRule']
-                # pay_load['date']                 = date_str
-                # pay_load['value_sensor']         = self.get_value_sensor()
-                # print("SAIUUUU AKIrrrrrrrrrrrrrrrrrrrrr")
-                # pay_load['uuID']                 = self.uuid_sensor
-                # print("SAIUUUU AKIIIIIIIIIIIIIIIII")
+                date_now        = datetime.datetime.now()
+                date_str        = date_now.strftime("%Y-%m-%d %H:%M:%S")
+                param = {"uuid":parameters['id']}
+                id_sensor       = self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                param = {"sensor":id_sensor[0]['id']}
+                rule           = self.core.API_access("get", "rules", model_id=None, param=param).json()
+                topic = rule[0]['topico']
+                # for key, value in param.items():
+                print(topic)
+                print("-----------------------------------------------------------------------")
+
+                #ip_edge_receive = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                pay_load        = {}
+
+                pay_load['condiction_satisfied'] = condiction_satisfied
+                pay_load['id_rule']              = rules[i]['id']
+                pay_load['rule']                 = rules[i]['jsonRule']
+                pay_load['date']                 = date_str
+                #pay_load['value_sensor']         = parameters_of_gateway['valor']
+
+                #pay_load['uuID']                 = parameters_of_gateway['id']
+
+
+                print("-----------------------\n"+topic+"\n-----------------------------")
                 #mqtt_broker                      = Publish()
                 #mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
 
