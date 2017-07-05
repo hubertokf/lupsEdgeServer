@@ -7,6 +7,7 @@ try:
     from core.moduleOfRules.ActionRules import ActionRules
     from core.moduleOfRules.ConditionsRules import ConditionsRules
     from core.moduleOfRules.Parameters import Parameters
+    from core.publisher_mqtt import *
     import requests
     import datetime
     import json
@@ -87,20 +88,23 @@ class EngineRule(object):
                 print("-----------------------------------------------------------------------")
 
                 #ip_edge_receive = None#self.core.API_access("get", "sensors", model_id=None, data=None, param=param).json()
+                ip_edge_receive = "localhost"
                 pay_load        = {}
 
                 pay_load['condiction_satisfied'] = condiction_satisfied
                 pay_load['id_rule']              = rules[i]['id']
                 pay_load['rule']                 = rules[i]['jsonRule']
                 pay_load['date']                 = date_str
-                #pay_load['value_sensor']         = parameters_of_gateway['valor']
+                pay_load['value_sensor']         = parameters['valor']
 
-                #pay_load['uuID']                 = parameters_of_gateway['id']
+                pay_load['uuID']                 = parameters['id']
 
+                #print(pay_load)
+                #print("=====================AAAAAAAAAAAA")
 
                 #print("-----------------------\n"+topic+"\n-----------------------------")
-                #mqtt_broker                      = Publish()
-                #mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
+                mqtt_broker                      = Publish()
+                mqtt_broker.send_message(topic,json.dumps(pay_load),ip_edge_receive)
 
 
     def run_rules_event(self,datas_of_rules): # atributos do datas_of_rules: id da regra que gerou o evento, o status de execução, o valor de sensor, a regra a ser executada

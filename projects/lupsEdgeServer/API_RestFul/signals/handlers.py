@@ -28,3 +28,9 @@ def post_delete_sensor(sender, instance, **kwargs):
     data =  {"id": str(instance.id),"uuID": str(instance.uuID),"model": str(instance.model),"gateway": str(instance.gateway.id),"manufacturer": str(instance.manufacturer),"sensorType": str(instance.sensorType),"signal":"deleted"}
     #headers = {'Content-type': 'application/json'}
     r = requests.post('http://localhost:8081/sigSensor_delete', data=json.dumps(data))#, headers=headers)
+
+@receiver(post_save, sender=Rule)
+def post_delete_sensor(sender, instance, **kwargs):
+    data =  {"topico": str(instance.topico),"signal":"saved"}
+    #headers = {'Content-type': 'application/json'}
+    r = requests.post('http://localhost:8081/sigTopico_add', data=json.dumps(data))#, headers=headers)
