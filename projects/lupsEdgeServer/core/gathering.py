@@ -30,7 +30,14 @@ class Gathering(object):
         if jsonObject['collect_to_rule']:
             return formation
         else:
-            self.regra(formation)
-            return None
+            try:
+                self.regra(formation)
+                return None
+            except TypeError:
+                print("ARGUMENTO REGRA NULL - VERIFICAR ACESSO AO GATWAY")
+                return None
+            except:
+                print("ERRO NO GATHERING - VERIFICAR TIPO DE ERRO")
+                return None
 
 from core.moduleOfRules.EngineRuleEdge import EngineRule

@@ -33,24 +33,30 @@ class Communication(object):
 
         try:
             request = requests.get(url)#, headers=headers)
-
-            #print("REQUEST", url)
+            #print(url)
+            #print(request)
             information_of_sensor = request.json()
+
+            date_now = datetime.datetime.now()
+            date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
+            information_of_sensor['collectDate']  = date_str
+
+            if(type(information_of_sensor['value'])=="string"):
+
+                information_of_sensor['value'] = 1000
+
+            return information_of_sensor
+
+        except requests.exceptions.ConnectionError:
+            print("GATWAY OFFLINE")
+            return None
+
         except:
-            request = requests.get(url)#, headers=headers)
+            print("ERRO NO COMMUNICATION - VERIFICAR TIPO DE ERRO")
+            return None
+            
 
-            #print("REQUEST", url)
-            information_of_sensor = request.json()
-
-        date_now = datetime.datetime.now()
-        date_str = date_now.strftime("%Y-%m-%d %H:%M:%S")
-        information_of_sensor['collectDate']  = date_str
-
-        if(type(information_of_sensor['value'])=="string"):
-
-             information_of_sensor['value'] = 1000
-
-        return information_of_sensor
+        
 
     def set_values_on_gatwat(self, jsonObject):
 
