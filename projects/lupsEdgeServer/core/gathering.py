@@ -34,7 +34,7 @@ class Gathering(object):
                 self.regra(formation)
                 return None
             except TypeError:
-                print("ARGUMENTO REGRA NULL - VERIFICAR ACESSO AO GATWAY")
+                print("ARGUMENTO REGRA NULL - VERIFICAR ACESSO AO GETWAY")
                 return None
             except:
                 print("ERRO NO GATHERING - VERIFICAR TIPO DE ERRO")

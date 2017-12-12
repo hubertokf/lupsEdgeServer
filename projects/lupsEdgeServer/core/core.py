@@ -11,7 +11,7 @@ from core.subscriber_mqtt import *
 
 class Core:
     API_url = "http://localhost:8000/"
-    API_token = "03986a715b41657a909e8ab66ba800d6fdea7f71"
+    API_token = "88fcc8e7b826668f83ab45c90351ee00e8ba77b8"
 
     def __init__(self):
         #asd = Asd();

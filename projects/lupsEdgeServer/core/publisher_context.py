@@ -48,12 +48,17 @@ class Publisher(object):
         headers = {'Content-type': 'application/json', 'X-API-KEY': context['accessToken']}
         #utilizar aqui o Token anteriormente adquirido
         #print(context['addressUrl']+"publicacoes/")
-        context_publication = requests.post(context['addressUrl']+"publicacoes/", data=json.dumps(data), headers=headers)
 
+        try:
+            context_publication = requests.post(context['addressUrl']+"publicacoes/", data=json.dumps(data), headers=headers)
+            return context_publication.text
+        except:
+            print("OCORREU ERRO AO PUBLICAR NO SERVIDOR DE CONTEXTO")
+            return None
         #r = requests.post(url, data=json.dumps(data), headers=headers)
         #print(data)
         #print(r.text)
-        return context_publication.text
+        #return context_publication.text
 
 
     def publish_local(self, jsonObject):  # Altera a flag para TRUE ao publicar no CONTEXTO
@@ -94,7 +99,7 @@ class Publisher(object):
 
         for sensor in dados_sensores:
             #self.publish_local(sensor)
-            sensor['persistance'] = True
+            #sensor["persistance"] = True
 
             try:
                 #print("TRY")

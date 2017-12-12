@@ -25,6 +25,7 @@ class SchedulerEdge(object):
         jsonObject['collect_to_rule'] = False
         if (jsonObject['status'] == 'True'or jsonObject['status'] == True):
             if jsonObject['id'] != '0':
+                #print("ADICIONOU SENSOR")
                 try:
                     #print('klhashjkah')
                     self.scheduler.add_job(self.function, jsonObject['modo'], second = jsonObject['second'], minute = jsonObject['minute'],
@@ -61,9 +62,9 @@ class SchedulerEdge(object):
                                     # irá utilizar. QQ tratamento deve ocorrer aqui.
         job = {}
 
-        job['modo'] = 'cron'
-        job['id'] = '0'
-        job['status'] = 'True'
+        job['modo'] = "cron"
+        job['id'] = "0"
+        job['status'] = "True"
 
         job['second'] = "*/30"
         #job['second'] = "0"
@@ -78,16 +79,16 @@ class SchedulerEdge(object):
         self.add_job(job)
 
     def check_scheduler_reactivave(self):
-        #print("check_scheduler_reactivave")
+        print("check_scheduler_reactivave")
 
         try:
             #print("check_scheduler_reactivave   TRY")
             jsonSchedules = self.core.API_access("get", "schedules").json()
-            #print(jsonSchedules)
+            print(jsonSchedules)
 
             for schedule in jsonSchedules:
                 schedule['modo'] = 'cron'
-                #print(schedule)
+                print(schedule)
                 self.add_job(schedule)
 
         except Exception as inst:
@@ -95,5 +96,8 @@ class SchedulerEdge(object):
             #print(type(inst))
             time.sleep(10)
             self.check_scheduler_reactivave()
+
+        except:
+            print("PODE SER ERRO DE ACESSO POR CAUSA DE TOKEN INVALIDO")
 
         #print("check_scheduler_reactivave2")

@@ -48,7 +48,7 @@ class Communication(object):
             return information_of_sensor
 
         except requests.exceptions.ConnectionError:
-            print("GATWAY OFFLINE")
+            print("GETWAY OFFLINE")
             return None
 
         except:
