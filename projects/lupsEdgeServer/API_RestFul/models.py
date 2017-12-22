@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
 from rest_framework.authtoken.models import Token
 from datetime import date
+from django_filters import rest_framework as filters
 
 class Manufacturer(models.Model):
 	name = models.CharField(max_length=200)
@@ -21,6 +22,11 @@ class Gateway(models.Model):
 	def __str__(self):
 		return self.uuID
 
+class GatewayFilter(filters.FilterSet):
+    class Meta:
+        model = Gateway
+        fields = ('uuID', 'manufacturer')
+
 class Actuator(models.Model):
 	gateway = models.ForeignKey(Gateway, on_delete=models.CASCADE)
 	manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_NULL,null=True)
@@ -28,6 +34,11 @@ class Actuator(models.Model):
 
 	def __str__(self):
 		return self.uuID
+
+class ActuatorFilter(filters.FilterSet):
+    class Meta:
+        model = Actuator
+        fields = ('uuID', 'gateway', 'manufacturer')
 
 class BaseParameter(models.Model):
 	parameter = models.CharField(max_length=200)
@@ -61,6 +72,11 @@ class Sensor(models.Model):
 	def __str__(self):
 		return self.uuID
 
+class SensorFilter(filters.FilterSet):
+    class Meta:
+        model = Sensor
+        fields = ('uuID', 'gateway', 'sensorType', 'manufacturer')
+
 class Persistance(models.Model):
 	sensor = models.ForeignKey(Sensor, on_delete=models.DO_NOTHING)
 	contextServer = models.ForeignKey(ContextServer, on_delete=models.PROTECT)
@@ -71,6 +87,11 @@ class Persistance(models.Model):
 	def __str__(self):
 		return str(self.value)
 
+class PersistanceFilter(filters.FilterSet):
+    class Meta:
+        model = Persistance
+        fields = ('sensor', 'collectDate', 'contextServer', 'publisher')
+
 class Rule(models.Model):
 	sensor = models.ForeignKey(Sensor, on_delete=models.SET_NULL,null=True)
 	jsonRule = models.TextField()
@@ -80,6 +101,11 @@ class Rule(models.Model):
 
 	def __str__(self):
 		return self.jsonRule
+
+class RuleFilter(filters.FilterSet):
+    class Meta:
+        model = Rule
+        fields = ('sensor', 'status')
 
 class Schedule(models.Model):
 	event_choices = (
@@ -104,6 +130,11 @@ class Schedule(models.Model):
 
 	def __str__(self):
 		return str(self.sensor)
+
+class ScheduleFilter(filters.FilterSet):
+    class Meta:
+        model = Schedule       
+        fields = ('sensor', 'status', 'year', 'month', 'day', 'hour', 'minute', 'second')
 
 class Topicos(models.Model):
 	name = models.CharField(max_length=200)

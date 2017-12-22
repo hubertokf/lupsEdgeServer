@@ -1,4 +1,4 @@
-import django_filters
+from django_filters import rest_framework as filters
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.contrib.auth.models import User, Group
@@ -31,14 +31,14 @@ class ManufacturerViewSet(viewsets.ModelViewSet):
 class GatewayViewSet(viewsets.ModelViewSet):
     queryset = Gateway.objects.all()
     serializer_class = GatewaySerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['uuID', 'manufacturer']
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('uuID', 'manufacturer')
 
 class ActuatorViewSet(viewsets.ModelViewSet):
     queryset = Actuator.objects.all()
     serializer_class = ActuatorSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['uuID', 'gateway', 'manufacturer']
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('uuID', 'gateway', 'manufacturer')
 
 class BaseParameterViewSet(viewsets.ModelViewSet):
     queryset = BaseParameter.objects.all()
@@ -55,8 +55,8 @@ class SensorTypeViewSet(viewsets.ModelViewSet):
 class SensorViewSet(viewsets.ModelViewSet):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['uuID', 'gateway', 'sensorType', 'manufacturer']
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('uuID', 'gateway', 'sensorType', 'manufacturer')
 
     @api_view(['GET',])
     def getSchedules(request, *args, **kwargs):
@@ -72,20 +72,20 @@ class SensorViewSet(viewsets.ModelViewSet):
 class PersistanceViewSet(viewsets.ModelViewSet):
     queryset = Persistance.objects.all()
     serializer_class = PersistanceSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['sensor', 'collectDate', 'contextServer', 'publisher']
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('sensor', 'collectDate', 'contextServer', 'publisher')
 
 class RuleViewSet(viewsets.ModelViewSet):
     queryset = Rule.objects.all()
     serializer_class = RuleSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['sensor', 'status']
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('sensor', 'status')
 
 class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_fields = ['sensor', 'status', 'year', 'month', 'day', 'hour', 'minute', 'second']
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('sensor', 'status', 'year', 'month', 'day', 'hour', 'minute', 'second')
 
 class TopicosViewSet(viewsets.ModelViewSet):
     queryset = Topicos.objects.all()
