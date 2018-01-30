@@ -16,9 +16,9 @@ class SchedulerEdge(object):
         self.scheduler.start()                          # inicia o agendador
 
 
-        self.create_job_check_persistence()
+        #self.create_job_check_persistence()
 
-        self.check_scheduler_reactivave()
+        #self.check_scheduler_reactivave()
 
     def add_job(self, jsonObject): # cria uma nova tarefa no escalonador
         #print(type(jsonObject['status']))
@@ -48,7 +48,7 @@ class SchedulerEdge(object):
         object_events.event(jsonObject)
 
     def check_persistence(self):# Modificar
-        #print("Tentou publicar a persistencia")
+        print("Tentou publicar a persistencia")
         persistence_publisher = Publisher(self.core)
         persistence_publisher.start()
 
@@ -79,7 +79,7 @@ class SchedulerEdge(object):
         self.add_job(job)
 
     def check_scheduler_reactivave(self):
-        print("check_scheduler_reactivave")
+        # print("check_scheduler_reactivave")
 
         try:
             #print("check_scheduler_reactivave   TRY")

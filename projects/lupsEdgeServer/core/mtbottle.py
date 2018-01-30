@@ -5,11 +5,12 @@ import json
 import core.mtwsgi
 
 from bottle import get, post, request
+from core.scheduler import *
 
 
 class MTServer(bottle.ServerAdapter):
 
-    def __init__(self, scheduler, subscriber):
+    def __init__(self, scheduler):#, subscriber):
         app = bottle.Bottle()
 
         @app.route('/sigSensor_add', method='POST')
@@ -49,7 +50,7 @@ class MTServer(bottle.ServerAdapter):
             postdata = request.body.read()
             str_data = json.loads(postdata.decode('utf-8'))
 
-            subscriber.add_subscribe(str_data);
+            #subscriber.add_subscribe(str_data);
 
         app.run(host='0.0.0.0', port=8081, thread_count=3)
 

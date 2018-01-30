@@ -5,7 +5,7 @@ import core.mtwsgi
 import _thread
 from core.mtbottle import *
 from core.scheduler import *
-from core.subscriber_mqtt import *
+# from core.subscriber_mqtt import *
 
 #----------------------------------MAIN-----------------------------------------
 
@@ -18,13 +18,14 @@ class Core:
         # Comentar a funcionalidade
         new_scheduler = SchedulerEdge(self)
         #juca = Analisador_Complexo(asd)
-
         # Verifica os TOPICOS existentes nas regras, criando o canal de comunicação
         # referente a esses TOPICOS.
         # Quando recebe mensagens, encaminha os dados ao motor de regras
-        new_subscriber = Subscriber(self)
+        
+        #new_subscriber = Subscriber(self)
         #juca.start()
-        http_server = MTServer(new_scheduler, new_subscriber)
+        
+        http_server = MTServer(new_scheduler)#, new_subscriber)
         http.start()
 
     def API_access(self, method, model, model_id=None, data=None, param=None):
