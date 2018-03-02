@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentação da Arquitetura &#8212; Pesquisa 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Documentação do Código" href="documentacaocodigo.html" />
+    <link rel="prev" title="Instalação" href="instalacao.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentacao-da-arquitetura">
+<h1>Documentação da Arquitetura<a class="headerlink" href="#documentacao-da-arquitetura" title="Permalink to this headline">¶</a></h1>
+<p>A Figura apresenta o diagrama do novo Servidor de Borda desenvolvido, ilustrando os módulos que o compõem e os caminhos no processamento de informações.</p>
+<img alt="SB_Fog.png" src="SB_Fog.png" />
+<div class="section" id="sb-api">
+<h2>SB-API<a class="headerlink" href="#sb-api" title="Permalink to this headline">¶</a></h2>
+<p>A SB-API é implementada sobre um web-server sendo responsável por toda e qualquer requisição proveniente de clientes ativos no momento, criando novos eventos para o mesmo. Os dados são recebidos via HTTP por requisição REST pela SB-API, e enviados tanto para o banco de dados, como para o Módulo de Interoperação em formato JSON.</p>
+<p>Através de um servidor RestFul utilizando o framework DJango (<a class="reference external" href="https://www.djangoproject.com/">https://www.djangoproject.com/</a>), as requisições são processadas nos padrões REST para o acesso às informações e aos serviços do Servidor de Borda.</p>
+<p>Na Tabela 1 são apresentados as possíveis URI’s de acesso à SB-API. Esses recursos podem ser acessados pelos seguintes endereços: groups, users, manufacturers, gateways, actuators, baseParameters, contextServers, sensorsTypes, sensors, persistances, rules, schedules e topicos.</p>
+<p>Tabela 1: Tabela URI do SBCore</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="26%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Verbo</th>
+<th class="head">URI</th>
+<th class="head">Descrição</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>IP</td>
+<td>Lista todos os tipos de recursos</td>
+</tr>
+<tr class="row-odd"><td>GET</td>
+<td>IP/Recurso</td>
+<td>Lista um tipo de recurso</td>
+</tr>
+<tr class="row-even"><td>POST</td>
+<td>IP/Recurso</td>
+<td>Insere um recurso</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>IP/Recurso/ID</td>
+<td>Atualiza informações do recurso</td>
+</tr>
+<tr class="row-even"><td>PATCH</td>
+<td>IP/Recurso/ID</td>
+<td>Atualiza informações do recurso</td>
+</tr>
+<tr class="row-odd"><td>GET</td>
+<td>IP/Recurso/ID</td>
+<td>Informações do recurso</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>IP/Recurso/ID</td>
+<td>Deleta o recurso</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sb-core">
+<h2>SB-Core<a class="headerlink" href="#sb-core" title="Permalink to this headline">¶</a></h2>
+<p>O SB-Core é responsável pela atuação e processamento dos dados cadastrados na SB-API, bem como pelo acionamento de regras sobre os eventos a serem tratados. As mensagens transferidas entre cada um dos módulos estão formatadas em JSON, dessa forma ocorre a padronização na passagem dos argumentos necessários para atuação de cada etapa do Servidor de Borda. Quando a SB-API recebe dados do Servidor de Contexto, a mesma salva as informações no Banco de Dados, comunicando o SB-Core sobre uma possível inserção de um novo sensor ou de um  agendamento. Os agendamentos são registrados para sensores previamente cadastrados. Na Tabela podem ser visualizadas as URI’s utilizadas.</p>
+<div class="section" id="agendador">
+<h3>Agendador<a class="headerlink" href="#agendador" title="Permalink to this headline">¶</a></h3>
+<p>O Agendador tem a funcionalidade de escalonar os eventos períodicos cadastrados no banco de dados da SB-API, como eventos típicos teríamos aqueles relacionados a leitura de sensores e a ativação de atuadores. Por sua vez, os eventos aperiódicos produzidos por outros Servidores de Borda são recebidos através do Módulo de Interoperação.</p>
+<p>Para a execução das tarefas segundo as demandas das aplicações dos usuários, utilizou-se uma biblioteca implementada em Python,    <em>Advanced Python Scheduler*(APScheduler). O *APScheduler</em> permite o cadastro de uma ação, considerando que a tal seja executada periodicamente ou apenas uma vez, permitindo a adição de novas tarefas e gerência de tarefas já cadastradas.</p>
+<p>A biblioteca <em>APScheduler</em> possui três modos de atuação que pode ser chamado, entre eles:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Cron-style scheduling</strong>: é o modo mais completo, possui todos requisitos do textit{CRON} e funcionalidades de adicionar horário de início e de fim nas atuações de tarefas;</li>
+<li><strong>Interval-based execution</strong>: executa as tarefas com intervalos regulares, com a opção de adicionar horário de início e término;</li>
+<li><strong>One-off delayed execution</strong>: executa uma única tarefa, determinada por data e horário específicos.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="gerenciador-de-operacao">
+<h3>Gerenciador de Operação<a class="headerlink" href="#gerenciador-de-operacao" title="Permalink to this headline">¶</a></h3>
+<p>Esse módulo tem como objetivo principal gerenciar a interoperação do Agendador com os demais módulos, ou seja, toda comunicação entre os módulos é direcionada pelo tratador de eventos, transformando cada comunicação em eventos.</p>
+<p>Ao receber os dados, este módulo verifica o tipo de evento a ser realizado, entre eles: atuação, coleta e publicação. Após a verificação, um novo caminho é instanciado, repassando os argumentos necessários para o processamento no próximo módulo.</p>
+</div>
+<div class="section" id="modulo-de-atuacao">
+<h3>Módulo de Atuação<a class="headerlink" href="#modulo-de-atuacao" title="Permalink to this headline">¶</a></h3>
+<p>Realiza a requisição de atuação através do módulo de comunicação, transmitindo uma mensagem JSON com os parâmetros necessários para identificar um determinado atuador conectado em um dos gateways ativos.</p>
+</div>
+<div class="section" id="modulo-de-publicacao">
+<h3>Módulo de Publicação<a class="headerlink" href="#modulo-de-publicacao" title="Permalink to this headline">¶</a></h3>
+<p>Responsável por efetuar a publicação do dado contextual no Servidor de Contexto e também por realizar a persistência local quando necessário. Recebe como parâmetros de publicação o <em>id</em> do Gateway, o <em>id</em> do sensor e o valor coletado. O endereço do Servidor de Contexto é montado através destas informações os dados contextuais são publicados no mesmo.</p>
+<p>Caso a publicação não possa ser efetuada, o dado é armazenado em banco de dados local, para que a publicação ocorra posteriormente. A cada inicialização do Servidor de Borda é verificado no banco local possíveis dados não enviados ao Servidor de Contexto, realizando os envios pendentes.</p>
+</div>
+<div class="section" id="modulo-de-coleta">
+<h3>Módulo de Coleta<a class="headerlink" href="#modulo-de-coleta" title="Permalink to this headline">¶</a></h3>
+<p>Este Módulo realiza a requisição de coleta ao Módulo de Comunicação, enviando uma mensagem no formato JSON com os parâmetros necessários para a ação de coleta. Após o recebimento dos dados, os mesmos são repassados ao Motor de Regras para o seu processamento.</p>
+</div>
+<div class="section" id="motor-de-regras">
+<h3>Motor de Regras<a class="headerlink" href="#motor-de-regras" title="Permalink to this headline">¶</a></h3>
+<p>Este motor de regras recebe os dados contextuais formatados em JSON e realiza o processamento das regras cadastradas, podendo também realizar a requisição de coleta para uma combinação de eventos de contexto, ou mesmo uma requisição de atuação sob o ambiente.</p>
+<p>O Motor de Regras(<a class="reference external" href="https://github.com/venmo/business-rules">https://github.com/venmo/business-rules</a>) é implementado em Python, de código aberto e sendo possível altera-lo para uso em fins específicos.</p>
+</div>
+<div class="section" id="modulo-de-comunicacao">
+<h3>Módulo de Comunicação<a class="headerlink" href="#modulo-de-comunicacao" title="Permalink to this headline">¶</a></h3>
+<p>O Módulo de Comunicação é responsável por realizar as requisições de atuação e coleta do Servidor de Borda aos gateways. Realizando uma combinação do <em>UUID</em> do sensor ou atuador, procurando o IP de acesso a este gateway. Pode-se observar na Tabela, o formato das URI’s utilizadas no acesso.</p>
+</div>
+<div class="section" id="modulo-de-interoperacao">
+<h3>Módulo de Interoperação<a class="headerlink" href="#modulo-de-interoperacao" title="Permalink to this headline">¶</a></h3>
+<p>O Módulo de Interoperação emprega um Servidor HTTP, recebendo notificações compostas de novos sensores e agendamentos cadastrados no Servidor de Borda pelo Servidor de Contexto, repassando ao Módulo Agendador em tempo real. Essas URI’s de acesso, podem ser visualizadas na Tabela.</p>
+<p>Outra funcionalidade provida pelo Módulo de Interoperação é permitir que os Servidores de Borda requisitem grandezas físicas do ambiente (dados contextuais) coletadas por outros Servidores de Borda.</p>
+</div>
+<div class="section" id="sb-ipc">
+<h3>SB-IPC<a class="headerlink" href="#sb-ipc" title="Permalink to this headline">¶</a></h3>
+<p>O Módulo SB-IPC utiliza o protocolo de comunicação <em>Message Queue Telemetry Transport*(MQTT) para troca de dados. Este protocolo de comunicação é baseado na arquitetura *publish/subscribe</em>, criado para redes inseguras e dispositivos restritos, com baixa largura de banda e alta latência.</p>
+<p>Como característica o MQTT utiliza o protocolo da camada de transporte TCP/IP para fornecer conectividade, pequena sobrecarga de transporte e trocas minimizadas de mensagens para reduzir o tráfego de dados transportados na rede. Possui também um mecanismo que notifica quando um cliente se desconecta da rede de forma não prevista.</p>
+<p>O protocolo segue o modelo cliente/servidor, onde os dispositivos sensoriados são os clientes que se conectam a um servidor chamado Broker, usando TCP/IP. Os clientes podem subscrever em diversos tópicos, e são capazes de receber as mensagens de diversos outros clientes que publicam neste tópico.</p>
+<p>Dessa forma, este módulo recebe dados de outros Servidores de Borda que são de seu interesse. Entre os dados recebidos, temos o dado contextual coletado e a regra relacionada a este dado. Os dados recebidos por este módulo são transmitidos ao Motor de Regras.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Pesquisa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instalacao.html">Instalação</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentação da Arquitetura</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sb-api">SB-API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sb-core">SB-Core</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentacaocodigo.html">Documentação do Código</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="instalacao.html" title="previous chapter">Instalação</a></li>
+      <li>Next: <a href="documentacaocodigo.html" title="next chapter">Documentação do Código</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, LJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/documentacaoarquitetura.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

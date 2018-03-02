@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Django Ping &#8212; Pesquisa 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="django-ping">
+<h1>Django Ping<a class="headerlink" href="#django-ping" title="Permalink to this headline">¶</a></h1>
+<p>Django Ping is utility that provides a lightweight endpoint for availability and uptime monitoring services. It
+also provides hooks for testing stack components and reporting them via JSON.</p>
+<p>Current Version: 0.3.0
+<a class="reference external" href="https://github.com/gpennington/django-ping">https://github.com/gpennington/django-ping</a></p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Use pip to download and install:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">django</span><span class="o">-</span><span class="n">ping</span>
+</pre></div>
+</div>
+<p>Add Django Ping to url conf:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^ping/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;ping.urls&#39;</span><span class="p">)),</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-configuration">
+<h2>Basic Configuration<a class="headerlink" href="#basic-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Hitting the endpoint returns a simple status 200 response.
+You can customize the message by adding to your Django settings:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PING_DEFAULT_RESPONSE</span> <span class="o">=</span> <span class="s2">&quot;All systems go!&quot;</span>
+<span class="n">PING_DEFAULT_MIMETYPE</span> <span class="o">=</span> <span class="s1">&#39;text/html&#39;</span>
+</pre></div>
+</div>
+<p>Hitting the url:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">ping</span>
+</pre></div>
+</div>
+<p>displays:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>All systems go!
+</pre></div>
+</div>
+</div>
+<div class="section" id="advanced-configuration">
+<h2>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enable-status-checks">
+<h3>Enable Status Checks<a class="headerlink" href="#enable-status-checks" title="Permalink to this headline">¶</a></h3>
+<p>Adding a <code class="docutils literal"><span class="pre">checks=true</span></code> parameter to the url tells Django Ping to run
+a series of status checks and reports the results.</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/ping?checks=true
+</pre></div>
+</div>
+<p>displays:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Your site is up!
+db_sessions True
+db_site True
+</pre></div>
+</div>
+<p>By default, Django Ping tests that your Database is responding
+by using supplying two tests.  You can supply your own tests
+to make sure everything is responding as expected. If you don’t
+use database sessions or the contrib.sites app, you can removed
+remove the ones you don’t need.</p>
+<p>To customize, include a tuple in your Django settings:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PING_CHECKS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;ping.checks.check_database_sessions&#39;</span><span class="p">,</span>
+    <span class="c1">#&#39;ping.checks.check_database_sites&#39;,</span>
+    <span class="s1">&#39;my_app.module.check_function&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;my_other_app.some_module.some_function&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Specifying a <code class="docutils literal"><span class="pre">fmt</span></code> parameter to <code class="docutils literal"><span class="pre">json</span></code> returns more detailed and serialized data.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/ping?fmt=json
+</pre></div>
+</div>
+<p>displays:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;db_sessions&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;db_site&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-status-checks">
+<h3>Custom Status Checks<a class="headerlink" href="#custom-status-checks" title="Permalink to this headline">¶</a></h3>
+<p>Checks should accept the request object and return
+two values. The name/key to be displayed
+and the value of the check. The value should be anything
+that can be serialized.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_sample</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1">#...do some things...</span>
+    <span class="k">return</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="kc">True</span>
+    <span class="c1">#or</span>
+    <span class="k">return</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="mf">123.456</span><span class="p">)</span>
+    <span class="c1">#or even</span>
+    <span class="k">return</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+</pre></div>
+</div>
+<p>Then, add that to the <code class="docutils literal"><span class="pre">PING_CHECKS</span></code> tuple to display:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can send <code class="docutils literal"><span class="pre">POST</span></code> requests too. As an example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_create_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+            <span class="n">u</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;create_user&#39;</span><span class="p">,</span> <span class="s2">&quot;User: </span><span class="si">%s</span><span class="s2"> has been created&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="o">.</span><span class="n">username</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;create_user&#39;</span><span class="p">,</span> <span class="s2">&quot;User: </span><span class="si">%s</span><span class="s2"> already exists&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="o">.</span><span class="n">username</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;create_user&#39;</span><span class="p">,</span> <span class="s2">&quot;User cannot be created with GET&quot;</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;create_user&#39;</span><span class="p">,</span> <span class="s2">&quot;User not created&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="included-status-checks">
+<h3>Included Status Checks<a class="headerlink" href="#included-status-checks" title="Permalink to this headline">¶</a></h3>
+<p>Django Ping includes a few checks to test various components
+live.</p>
+<p><strong>check_database_sessions</strong> - Hits your database and attempts to retrieve a single session.</p>
+<p><strong>check_database_sites</strong> - Hits your database and attempts to retrieve a single site instance.</p>
+<p><strong>check_cache_set</strong> - Attempts to cache a value using the current cache backend defined.</p>
+<p><strong>check_cache_get</strong> - Attempts to retrieve a cached value using the current cache backend defined.</p>
+<p><strong>check_celery</strong> - Adds a task to the queue and checks for celery to complete it.</p>
+</div>
+<div class="section" id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h3>
+<p>You can require HTTP Basic authentication to access the ping endpoint,
+set <code class="docutils literal"><span class="pre">PING_BASIC_AUTH</span></code> to <code class="docutils literal"><span class="pre">True</span></code> in your Django settings.</p>
+<p>Provide in the request the username/password of a valid User.</p>
+</div>
+<div class="section" id="complete-settings-list">
+<h3>Complete Settings List<a class="headerlink" href="#complete-settings-list" title="Permalink to this headline">¶</a></h3>
+<p>Check <code class="docutils literal"><span class="pre">ping.defaults</span></code> for default values.</p>
+<p>PING_RESPONSE = “Some string”
+PING_MIMETYPE = ‘text/html’ or valid content type
+PING_DEFAULT_CHECKS  = tuple of paths to check methods
+PING_BASIC_AUTH = Boolean (default is False)
+PING_CELERY_TIMEOUT = In seconds as integers (5 is default)</p>
+</div>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s Next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>Go sign up for a monitoring service or role your own.</p>
+<p><a class="reference external" href="https://www.pingdom.com/">https://www.pingdom.com/</a></p>
+<p><a class="reference external" href="http://www.panopta.com/">http://www.panopta.com/</a></p>
+<p><a class="reference external" href="http://binarycanary.com/">http://binarycanary.com/</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Pesquisa</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../instalacao.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentacaoarquitetura.html">Documentação da Arquitetura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentacaocodigo.html">Documentação do Código</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, LJ.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/src/django-ping/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
